@@ -4,17 +4,26 @@ import os
 # === GitHub ===
 REPO = "nmnhut-it/fine-tune-cocoos"
 
-# === Google Drive paths ===
-DRIVE_ROOT = "/content/drive/MyDrive/cocos2dx-finetune"
+# === Variant ===
+# Set by notebook before importing: "longform" or "api"
+# Default to "api" if not set via environment
+VARIANT = os.environ.get("COCOS_VARIANT", "api")
+
+# === Google Drive paths (variant-aware) ===
+DRIVE_ROOT = f"/content/drive/MyDrive/cocos2dx-finetune-{VARIANT}"
 DRIVE_CHECKPOINTS = f"{DRIVE_ROOT}/checkpoints"
 DRIVE_ADAPTER = f"{DRIVE_ROOT}/cocos2dx-lora-adapter"
 EVAL_RESULTS_PATH = f"{DRIVE_ROOT}/eval_results.json"
 EVAL_REPORT_PATH = f"{DRIVE_ROOT}/eval_report.json"
 EVAL_CHART_PATH = f"{DRIVE_ROOT}/eval_chart.png"
 
-# === Repo-relative data paths (set after clone) ===
-TRAIN_JSONL = "data/train.jsonl"
-TEST_JSONL = "data/test.jsonl"
+# === Repo-relative data paths (variant-aware) ===
+if VARIANT == "longform":
+    TRAIN_JSONL = "data/train-longform.jsonl"
+    TEST_JSONL = "data/test-longform.jsonl"
+else:
+    TRAIN_JSONL = "data/train.jsonl"
+    TEST_JSONL = "data/test.jsonl"
 DOCS_GLOB = "local-context7-cocos2d-x-only/docs/*.md"
 
 # === Model ===
