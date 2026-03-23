@@ -1,0 +1,7 @@
+node_modules/
+dummy/
+build/
+data/*.sqlite
+data/models/
+*.env
+package-lock.json

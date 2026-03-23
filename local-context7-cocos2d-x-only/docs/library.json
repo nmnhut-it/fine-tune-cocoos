@@ -1,0 +1,8 @@
+{
+    "library_id": "cocos2dx-js",
+    "library_name": "Cocos2d-x JavaScript API",
+    "description": "Cocos2d-x v3.1 JavaScript/TypeScript API — cc, ccui, ccs, sp namespaces",
+    "version": "3.1.0",
+    "docs_dir": "./docs",
+    "db_path": "./data/context7.sqlite"
+}
