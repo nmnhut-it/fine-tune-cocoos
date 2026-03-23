@@ -56,8 +56,8 @@ RAG_TOP_K = 5
 EMBED_MODEL = "all-MiniLM-L6-v2"
 
 # === Generation ===
-MAX_NEW_TOKENS = 512
-TEMPERATURE = 0.7
+MAX_NEW_TOKENS = 128 if VARIANT == "api" else 512
+TEMPERATURE = 0.3 if VARIANT == "api" else 0.7
 TOP_P = 0.9
 
 # === Prompts ===
