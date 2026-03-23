@@ -31,6 +31,7 @@ from scripts.config import (
     TEST_JSONL,
     TRAIN_JSONL,
     WARMUP_RATIO,
+    ALPACA_PROMPT,
     ALPACA_TEMPLATE,
     ensure_drive_dirs,
 )
