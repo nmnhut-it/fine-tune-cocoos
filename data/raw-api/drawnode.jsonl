@@ -1,0 +1,62 @@
+{"instruction": "How do I create a DrawNode in Cocos2d-x JS?", "input": "", "output": "new cc.DrawNode() or cc.DrawNode.create() — both return a cc.DrawNode instance."}
+{"instruction": "What class is cc.DrawNode based on?", "input": "", "output": "cc.DrawNode extends cc.Node."}
+{"instruction": "What method draws a filled dot on a DrawNode?", "input": "", "output": "draw.drawDot(pos: cc.Point, radius: number, color: cc.Color): void"}
+{"instruction": "What are the parameters of drawDot on cc.DrawNode?", "input": "", "output": "drawDot(pos: cc.Point, radius: number, color: cc.Color) — pos is the center, radius is the dot size, color is fill color."}
+{"instruction": "What does cc.DrawNode.drawDot return?", "input": "", "output": "void. drawDot draws directly and returns nothing."}
+{"instruction": "What method draws multiple dots at once on cc.DrawNode?", "input": "", "output": "draw.drawDots(points: cc.Point[], radius: number, color: cc.Color): void"}
+{"instruction": "What are the parameters of drawDots?", "input": "", "output": "drawDots(points: cc.Point[], radius: number, color: cc.Color) — points is an array of positions."}
+{"instruction": "How do I draw a line segment with cc.DrawNode?", "input": "", "output": "draw.drawSegment(from: cc.Point, to: cc.Point, lineWidth: number, color?: cc.Color): void"}
+{"instruction": "What are the parameters of drawSegment on cc.DrawNode?", "input": "", "output": "drawSegment(from: cc.Point, to: cc.Point, lineWidth: number, color?: cc.Color) — from/to are endpoints, lineWidth is thickness."}
+{"instruction": "Is cc.DrawNode.drawLine() a valid method?", "input": "", "output": "No. cc.DrawNode.drawLine() does not exist. Use draw.drawSegment(from, to, lineWidth, color) instead."}
+{"instruction": "How do I draw a rectangle with cc.DrawNode?", "input": "", "output": "draw.drawRect(origin: cc.Point, destination: cc.Point, fillColor?: cc.Color, lineWidth?: number, lineColor?: cc.Color): void"}
+{"instruction": "What are the parameters of drawRect on cc.DrawNode?", "input": "", "output": "drawRect(origin: cc.Point, destination: cc.Point, fillColor?: cc.Color | null, lineWidth?: number | null, lineColor?: cc.Color)"}
+{"instruction": "How do I draw a hollow rectangle with cc.DrawNode?", "input": "", "output": "draw.drawRect(cc.p(50, 50), cc.p(150, 100), null, 2, cc.color(255, 0, 0, 255)) — pass null for fillColor."}
+{"instruction": "What does drawRect return on cc.DrawNode?", "input": "", "output": "void."}
+{"instruction": "How do I draw a polygon with cc.DrawNode?", "input": "", "output": "draw.drawPoly(verts: cc.Point[], fillColor?: cc.Color, lineWidth?: number, lineColor?: cc.Color): void"}
+{"instruction": "What are the parameters of drawPoly?", "input": "", "output": "drawPoly(verts: cc.Point[], fillColor?: cc.Color, lineWidth?: number, lineColor?: cc.Color) — verts is an array of vertices."}
+{"instruction": "How do I draw a filled triangle with cc.DrawNode?", "input": "", "output": "draw.drawPoly([cc.p(100,0), cc.p(200,150), cc.p(0,150)], cc.color(0,255,0,100), 1, cc.color(0,200,0,255))"}
+{"instruction": "How do I draw a circle with cc.DrawNode?", "input": "", "output": "draw.drawCircle(center: cc.Point, radius: number, angle: number, segments: number, drawLineToCenter: boolean, lineWidth: number, color?: cc.Color): void"}
+{"instruction": "What are the parameters of drawCircle on cc.DrawNode?", "input": "", "output": "drawCircle(center: cc.Point, radius: number, angle: number, segments: number, drawLineToCenter: boolean, lineWidth: number, color?: cc.Color)"}
+{"instruction": "What does the segments parameter do in drawCircle?", "input": "", "output": "segments controls how many line segments approximate the circle. Higher = smoother."}
+{"instruction": "What does drawLineToCenter do in cc.DrawNode.drawCircle?", "input": "", "output": "drawLineToCenter: boolean — if true, draws a line from the circle edge to the center point."}
+{"instruction": "Is cc.DrawNode.drawFilledCircle() a valid method?", "input": "", "output": "No. cc.DrawNode.drawFilledCircle() does not exist. Use drawCircle with drawLineToCenter=false for outlines; drawDot for filled circles."}
+{"instruction": "How do I draw a quadratic Bezier curve with cc.DrawNode?", "input": "", "output": "draw.drawQuadBezier(origin: cc.Point, control: cc.Point, destination: cc.Point, segments: number, lineWidth: number, color?: cc.Color): void"}
+{"instruction": "What are the parameters of drawQuadBezier?", "input": "", "output": "drawQuadBezier(origin: cc.Point, control: cc.Point, destination: cc.Point, segments: number, lineWidth: number, color?: cc.Color)"}
+{"instruction": "What does drawQuadBezier return?", "input": "", "output": "void."}
+{"instruction": "How do I draw a cubic Bezier curve with cc.DrawNode?", "input": "", "output": "draw.drawCubicBezier(origin: cc.Point, control1: cc.Point, control2: cc.Point, destination: cc.Point, segments: number, lineWidth: number, color?: cc.Color): void"}
+{"instruction": "What are the parameters of drawCubicBezier on cc.DrawNode?", "input": "", "output": "drawCubicBezier(origin: cc.Point, control1: cc.Point, control2: cc.Point, destination: cc.Point, segments: number, lineWidth: number, color?: cc.Color)"}
+{"instruction": "What is the difference between drawQuadBezier and drawCubicBezier?", "input": "", "output": "drawQuadBezier has 1 control point (quadratic curve). drawCubicBezier has 2 control points (cubic curve) for more complex shapes."}
+{"instruction": "How do I draw a cardinal spline with cc.DrawNode?", "input": "", "output": "draw.drawCardinalSpline(config: cc.Point[], tension: number, segments: number, lineWidth: number, color?: cc.Color): void"}
+{"instruction": "What are the parameters of drawCardinalSpline?", "input": "", "output": "drawCardinalSpline(config: cc.Point[], tension: number, segments: number, lineWidth: number, color?: cc.Color)"}
+{"instruction": "What does the tension parameter do in drawCardinalSpline?", "input": "", "output": "tension controls curve tightness. 0 = smooth CatmullRom, 1 = straight lines between points."}
+{"instruction": "How do I draw a CatmullRom spline with cc.DrawNode?", "input": "", "output": "draw.drawCatmullRom(points: cc.Point[], segments: number, lineWidth: number, color?: cc.Color): void"}
+{"instruction": "What are the parameters of drawCatmullRom?", "input": "", "output": "drawCatmullRom(points: cc.Point[], segments: number, lineWidth: number, color?: cc.Color)"}
+{"instruction": "What is the difference between drawCardinalSpline and drawCatmullRom?", "input": "", "output": "drawCatmullRom is a cardinal spline with tension=0. drawCardinalSpline lets you specify custom tension."}
+{"instruction": "What does drawCatmullRom return?", "input": "", "output": "void."}
+{"instruction": "How do I clear all drawn shapes on a cc.DrawNode?", "input": "", "output": "draw.clear(): void — erases all drawn geometry."}
+{"instruction": "How do I get the current draw color of a DrawNode?", "input": "", "output": "draw.getDrawColor(): cc.Color"}
+{"instruction": "How do I set the draw color on cc.DrawNode?", "input": "", "output": "draw.setDrawColor(color: cc.Color): void"}
+{"instruction": "How do I get the line width of a cc.DrawNode?", "input": "", "output": "draw.getLineWidth(): number"}
+{"instruction": "How do I set the line width on cc.DrawNode?", "input": "", "output": "draw.setLineWidth(width: number): void"}
+{"instruction": "What does getLineWidth return on cc.DrawNode?", "input": "", "output": "number — the current default line width."}
+{"instruction": "How do I get the blend function of a cc.DrawNode?", "input": "", "output": "draw.getBlendFunc(): cc.BlendFunc"}
+{"instruction": "How do I set the blend function on cc.DrawNode?", "input": "", "output": "draw.setBlendFunc(blendFunc: cc.BlendFunc): void — or draw.setBlendFunc(src: cc.BlenderConst, dst: cc.BlenderConst): void"}
+{"instruction": "What are the two overloads of setBlendFunc on cc.DrawNode?", "input": "", "output": "setBlendFunc(blendFunc: cc.BlendFunc) or setBlendFunc(src: cc.BlenderConst, dst: cc.BlenderConst)"}
+{"instruction": "Is cc.DrawNode.drawArc() a valid method?", "input": "", "output": "No. cc.DrawNode.drawArc() does not exist. Use drawCircle with partial segments or drawQuadBezier to approximate arcs."}
+{"instruction": "Is cc.DrawNode.drawEllipse() a valid method?", "input": "", "output": "No. cc.DrawNode.drawEllipse() does not exist. Use drawCircle with setScaleX/setScaleY on the node to create ellipses."}
+{"instruction": "Is cc.DrawNode.erase() a valid method?", "input": "", "output": "No. cc.DrawNode.erase() does not exist. Use draw.clear() to erase all drawn geometry."}
+{"instruction": "Which class has the drawDot method?", "input": "", "output": "cc.DrawNode — draw.drawDot(pos: cc.Point, radius: number, color: cc.Color): void"}
+{"instruction": "Which class has the drawSegment method?", "input": "", "output": "cc.DrawNode — draw.drawSegment(from: cc.Point, to: cc.Point, lineWidth: number, color?: cc.Color): void"}
+{"instruction": "Which class has the drawPoly method?", "input": "", "output": "cc.DrawNode — draw.drawPoly(verts: cc.Point[], fillColor?: cc.Color, lineWidth?: number, lineColor?: cc.Color): void"}
+{"instruction": "Which class has the drawCircle method?", "input": "", "output": "cc.DrawNode — draw.drawCircle(center, radius, angle, segments, drawLineToCenter, lineWidth, color): void"}
+{"instruction": "Which class has the drawCubicBezier method?", "input": "", "output": "cc.DrawNode — draw.drawCubicBezier(origin, control1, control2, destination, segments, lineWidth, color): void"}
+{"instruction": "Which class has the clear() method for erasing vector graphics?", "input": "", "output": "cc.DrawNode — draw.clear(): void"}
+{"instruction": "What getter/setter pair controls the draw color on cc.DrawNode?", "input": "", "output": "getDrawColor(): cc.Color and setDrawColor(color: cc.Color): void"}
+{"instruction": "What getter/setter pair controls line width on cc.DrawNode?", "input": "", "output": "getLineWidth(): number and setLineWidth(width: number): void"}
+{"instruction": "How do I draw a debug bounding box that updates every frame?", "input": "", "output": "Call draw.clear() in update(), then draw.drawRect() with the target's getBoundingBoxToWorld() coordinates each frame."}
+{"instruction": "Is cc.DrawNode.create() a static method?", "input": "", "output": "Yes. cc.DrawNode.create(): cc.DrawNode is a static factory method."}
+{"instruction": "What is the difference between new cc.DrawNode() and cc.DrawNode.create()?", "input": "", "output": "Both create a cc.DrawNode instance. create() is the static factory pattern; new cc.DrawNode() is the constructor form."}
+{"instruction": "What is the difference between drawDot and drawDots on cc.DrawNode?", "input": "", "output": "drawDot draws a single dot at one position. drawDots draws multiple dots at an array of positions with the same radius and color."}
+{"instruction": "What is the difference between drawRect and drawPoly on cc.DrawNode?", "input": "", "output": "drawRect takes two corner points (origin, destination). drawPoly takes an arbitrary array of vertices for any polygon shape."}
+{"instruction": "What is the difference between drawSegment and drawRect on cc.DrawNode?", "input": "", "output": "drawSegment draws a line between two points. drawRect draws a rectangle between two corner points with optional fill."}
+{"instruction": "How do I draw a filled red dot at position (100, 100)?", "input": "", "output": "draw.drawDot(cc.p(100, 100), 5, cc.color(255, 0, 0, 255))"}

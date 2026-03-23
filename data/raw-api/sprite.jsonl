@@ -1,0 +1,57 @@
+{"instruction": "How do I create a cc.Sprite in Cocos2d-x JS?", "input": "", "output": "new cc.Sprite(filename: string) or cc.Sprite.create(filename: string): cc.Sprite"}
+{"instruction": "What class does cc.Sprite extend?", "input": "", "output": "cc.Sprite extends cc.Node. Default anchor is (0.5, 0.5)."}
+{"instruction": "What are the constructor overloads for cc.Sprite?", "input": "", "output": "new cc.Sprite(), new cc.Sprite(filename), new cc.Sprite(texture: cc.Texture2D), new cc.Sprite(texture, rect: cc.Rect), new cc.Sprite(spriteFrame: cc.SpriteFrame)"}
+{"instruction": "What are the overloads of cc.Sprite.create()?", "input": "", "output": "cc.Sprite.create(), cc.Sprite.create(filename: string), cc.Sprite.create(filename: string, rect: cc.Rect) — all return cc.Sprite."}
+{"instruction": "How do I create a sprite from a sprite frame?", "input": "", "output": "new cc.Sprite(cc.spriteFrameCache.getSpriteFrame('frameName.png'))"}
+{"instruction": "How do I create a sprite from a sub-rect of an image?", "input": "", "output": "new cc.Sprite('res/atlas.png', cc.rect(0, 0, 64, 64))"}
+{"instruction": "How do I get the texture of a cc.Sprite?", "input": "", "output": "sprite.getTexture(): cc.Texture2D"}
+{"instruction": "How do I set the texture of a cc.Sprite by filename?", "input": "", "output": "sprite.setTexture(filename: string): void"}
+{"instruction": "How do I set the texture of a cc.Sprite with a Texture2D object?", "input": "", "output": "sprite.setTexture(texture: cc.Texture2D): void"}
+{"instruction": "Is cc.Sprite.setImage() a valid method?", "input": "", "output": "No. cc.Sprite.setImage() does not exist. Use sprite.setTexture(filename) or sprite.setTexture(texture) instead."}
+{"instruction": "How do I get the texture rect of a cc.Sprite?", "input": "", "output": "sprite.getTextureRect(): cc.Rect"}
+{"instruction": "How do I set the texture rect on a cc.Sprite?", "input": "", "output": "sprite.setTextureRect(rect: cc.Rect) or sprite.setTextureRect(rect: cc.Rect, rotated: boolean, untrimmedSize: cc.Size)"}
+{"instruction": "How do I check if a sprite's texture rect is rotated?", "input": "", "output": "sprite.isTextureRectRotated(): boolean"}
+{"instruction": "How do I check if a sprite's texture is loaded?", "input": "", "output": "sprite.textureLoaded(): boolean"}
+{"instruction": "What does getTexture return on cc.Sprite?", "input": "", "output": "cc.Texture2D — the sprite's current texture."}
+{"instruction": "How do I get the current sprite frame of a cc.Sprite?", "input": "", "output": "sprite.getSpriteFrame(): cc.SpriteFrame"}
+{"instruction": "How do I set a sprite frame by name?", "input": "", "output": "sprite.setSpriteFrame(frameName: string): void — frameName must be in cc.spriteFrameCache."}
+{"instruction": "How do I set a sprite frame by object?", "input": "", "output": "sprite.setSpriteFrame(frame: cc.SpriteFrame): void"}
+{"instruction": "How do I check if a specific frame is currently displayed?", "input": "", "output": "sprite.isFrameDisplayed(frame: cc.SpriteFrame): boolean"}
+{"instruction": "How do I set a display frame from an animation?", "input": "", "output": "sprite.setDisplayFrameWithAnimationName(animationName: string, frameIndex: number): void"}
+{"instruction": "Is cc.Sprite.setFrame() a valid method?", "input": "", "output": "No. Use sprite.setSpriteFrame(frameName) or sprite.setSpriteFrame(frame: cc.SpriteFrame) instead."}
+{"instruction": "How do I flip a sprite horizontally?", "input": "", "output": "sprite.setFlippedX(true): void"}
+{"instruction": "How do I check if a sprite is flipped on the X axis?", "input": "", "output": "sprite.isFlippedX(): boolean"}
+{"instruction": "How do I flip a sprite vertically?", "input": "", "output": "sprite.setFlippedY(true): void"}
+{"instruction": "How do I check if a sprite is flipped on the Y axis?", "input": "", "output": "sprite.isFlippedY(): boolean"}
+{"instruction": "What getter/setter pair controls horizontal flip on cc.Sprite?", "input": "", "output": "isFlippedX(): boolean and setFlippedX(flippedX: boolean): void"}
+{"instruction": "What getter/setter pair controls vertical flip on cc.Sprite?", "input": "", "output": "isFlippedY(): boolean and setFlippedY(flippedY: boolean): void"}
+{"instruction": "How do I get the blend function of a cc.Sprite?", "input": "", "output": "sprite.getBlendFunc(): cc.BlendFunc"}
+{"instruction": "How do I set the blend function on cc.Sprite?", "input": "", "output": "sprite.setBlendFunc(blendFunc: cc.BlendFunc): void"}
+{"instruction": "How do I get the batch node of a cc.Sprite?", "input": "", "output": "sprite.getBatchNode(): cc.SpriteBatchNode | null"}
+{"instruction": "How do I set the batch node on cc.Sprite?", "input": "", "output": "sprite.setBatchNode(batchNode: cc.SpriteBatchNode): void"}
+{"instruction": "How do I get the atlas index of a cc.Sprite?", "input": "", "output": "sprite.getAtlasIndex(): number"}
+{"instruction": "How do I set the atlas index on cc.Sprite?", "input": "", "output": "sprite.setAtlasIndex(index: number): void"}
+{"instruction": "How do I get the texture atlas of a cc.Sprite?", "input": "", "output": "sprite.getTextureAtlas(): cc.TextureAtlas"}
+{"instruction": "How do I check if a sprite is dirty?", "input": "", "output": "sprite.isDirty(): boolean"}
+{"instruction": "How do I mark a sprite as dirty?", "input": "", "output": "sprite.setDirty(dirty: boolean): void"}
+{"instruction": "How do I initialize a sprite with a texture?", "input": "", "output": "sprite.initWithTexture(texture: cc.Texture2D): boolean — or sprite.initWithTexture(texture, rect: cc.Rect): boolean"}
+{"instruction": "How do I initialize a sprite with a sprite frame?", "input": "", "output": "sprite.initWithSpriteFrame(frame: cc.SpriteFrame): boolean"}
+{"instruction": "How do I initialize a sprite with a sprite frame name?", "input": "", "output": "sprite.initWithSpriteFrameName(frameName: string): boolean"}
+{"instruction": "How do I initialize a sprite with a file?", "input": "", "output": "sprite.initWithFile(filename: string, rect?: cc.Rect): boolean"}
+{"instruction": "How do I create a cc.SpriteFrame?", "input": "", "output": "new cc.SpriteFrame(filename: string | cc.Texture2D, rect: cc.Rect) or new cc.SpriteFrame(filename, rect, rotated, offset, originalSize)"}
+{"instruction": "What does cc.SpriteFrame.getTexture() return?", "input": "", "output": "cc.Texture2D — the frame's underlying texture."}
+{"instruction": "What does cc.SpriteFrame.getOriginalSize() return?", "input": "", "output": "cc.Size — the original untrimmed size of the frame."}
+{"instruction": "What does cc.SpriteFrame.getRectInPixels() return?", "input": "", "output": "cc.Rect — the frame's rect in pixel coordinates."}
+{"instruction": "How do I check if a sprite frame is rotated?", "input": "", "output": "frame.isRotated(): boolean"}
+{"instruction": "How do I load sprite frames from a plist file?", "input": "", "output": "cc.spriteFrameCache.addSpriteFrames(url: string, texture: string): void"}
+{"instruction": "How do I get a sprite frame from the cache?", "input": "", "output": "cc.spriteFrameCache.getSpriteFrame(path: string): cc.SpriteFrame"}
+{"instruction": "How do I remove unused sprite frames from the cache?", "input": "", "output": "cc.spriteFrameCache.removeUnusedSpriteFrames(): void"}
+{"instruction": "How do I remove sprite frames loaded from a specific plist?", "input": "", "output": "cc.spriteFrameCache.removeSpriteFramesFromFile(url: string): void"}
+{"instruction": "How do I create a cc.SpriteBatchNode?", "input": "", "output": "new cc.SpriteBatchNode(filename: string, capacity?: number) — all children must share the same texture."}
+{"instruction": "How do I add an image to cc.textureCache?", "input": "", "output": "cc.textureCache.addImage(path: string): void"}
+{"instruction": "How do I get a texture by key from cc.textureCache?", "input": "", "output": "cc.textureCache.getTextureForKey(key: string): cc.Texture2D"}
+{"instruction": "How do I remove a texture by key from cc.textureCache?", "input": "", "output": "cc.textureCache.removeTextureForKey(key: string): void"}
+{"instruction": "How do I remove unused textures from cc.textureCache?", "input": "", "output": "cc.textureCache.removeUnusedTextures(): void"}
+{"instruction": "How do I remove all textures from cc.textureCache?", "input": "", "output": "cc.textureCache.removeAllTextures(): void"}
+{"instruction": "What does cc.Texture2D.getContentSize() return?", "input": "", "output": "cc.Size — the content size in points."}
+{"instruction": "What does cc.Texture2D.getContentSizeInPixels() return?", "input": "", "output": "cc.Size — the content size in pixels."}

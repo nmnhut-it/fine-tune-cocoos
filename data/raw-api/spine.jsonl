@@ -1,0 +1,48 @@
+{"instruction":"How do you create a sp.SkeletonAnimation from a JSON file?","input":"","output":"new sp.SkeletonAnimation('path.json', 'path.atlas', scale) or sp.SkeletonAnimation.createWithJsonFile('path.json', 'path.atlas', scale)."}
+{"instruction":"What is the static method to create a SkeletonAnimation from a binary .skel file?","input":"","output":"sp.SkeletonAnimation.createWithBinaryFile(skeletonDataFile: string, atlasFile: string, scale: number): sp.SkeletonAnimation"}
+{"instruction":"What are the parameters of sp.SkeletonAnimation.setAnimation?","input":"","output":"skel.setAnimation(trackIndex: number, name: string, loop: boolean): spine.TrackEntry | null — trackIndex is the track slot, name is the animation name, loop controls looping."}
+{"instruction":"What does sp.SkeletonAnimation.setAnimation return?","input":"","output":"spine.TrackEntry | null"}
+{"instruction":"What method queues an animation after the current one on a track?","input":"","output":"skel.addAnimation(trackIndex: number, name: string, loop: boolean, delay: number): spine.TrackEntry | null"}
+{"instruction":"What are the parameters of addAnimation on sp.SkeletonAnimation?","input":"","output":"trackIndex: number, name: string, loop: boolean, delay: number. delay is seconds before the queued animation starts."}
+{"instruction":"What does addAnimation return in sp.SkeletonAnimation?","input":"","output":"spine.TrackEntry | null"}
+{"instruction":"How do you stop a specific animation track in Spine?","input":"","output":"skel.clearTrack(trackIndex: number): void"}
+{"instruction":"How do you stop all animation tracks in sp.SkeletonAnimation?","input":"","output":"skel.clearTracks(): void"}
+{"instruction":"What method gets the current TrackEntry for a given track?","input":"","output":"skel.getCurrent(trackIndex: number): spine.TrackEntry | null"}
+{"instruction":"What does getCurrent return on sp.SkeletonAnimation?","input":"","output":"spine.TrackEntry | null — the current track entry for the given trackIndex."}
+{"instruction":"How do you register an animation event listener on sp.SkeletonAnimation?","input":"","output":"skel.setAnimationListener(target: object, callback: Function): void — callback receives (trackEntry: spine.TrackEntry, type: number, event: spine.Event)."}
+{"instruction":"What are the parameters of setAnimationListener?","input":"","output":"target: object (the callback context), callback: Function with signature (trackEntry: spine.TrackEntry, type: number, event: spine.Event) => void."}
+{"instruction":"What method sets a listener for animation start events?","input":"","output":"skel.setStartListener(listener: Function): void"}
+{"instruction":"What method sets a listener for animation end events?","input":"","output":"skel.setEndListener(listener: Function): void"}
+{"instruction":"What are the valid values of sp.AnimationEventType?","input":"","output":"sp.AnimationEventType.START, sp.AnimationEventType.END, sp.AnimationEventType.COMPLETE, sp.AnimationEventType.EVENT"}
+{"instruction":"Is sp.AnimationEventType.FINISH a valid enum value?","input":"","output":"No. The correct values are sp.AnimationEventType.START, END, COMPLETE, and EVENT. There is no FINISH."}
+{"instruction":"How do you set a crossfade blend between two Spine animations?","input":"","output":"skel.setMix(fromAnimation: string, toAnimation: string, duration: number): void"}
+{"instruction":"What are the parameters of setMix on sp.SkeletonAnimation?","input":"","output":"fromAnimation: string, toAnimation: string, duration: number (blend duration in seconds)."}
+{"instruction":"What method sets a custom AnimationStateData on sp.SkeletonAnimation?","input":"","output":"skel.setAnimationStateData(stateData: spine.AnimationStateData): void"}
+{"instruction":"How do you switch skins in sp.Skeleton?","input":"","output":"skel.setSkin(skinName: string): void"}
+{"instruction":"How do you show or hide an attachment on a Spine skeleton?","input":"","output":"skel.setAttachment(slotName: string, attachmentName: string): void — pass null as attachmentName to hide."}
+{"instruction":"What are the parameters of setAttachment on sp.Skeleton?","input":"","output":"slotName: string, attachmentName: string (or null to hide the attachment)."}
+{"instruction":"How do you find a slot by name in sp.Skeleton?","input":"","output":"skel.findSlot(slotName: string): spine.Slot | null"}
+{"instruction":"How do you find a bone by name in sp.Skeleton?","input":"","output":"skel.findBone(boneName: string): spine.Bone | null"}
+{"instruction":"What does findBone return on sp.Skeleton?","input":"","output":"spine.Bone | null"}
+{"instruction":"What does findSlot return on sp.Skeleton?","input":"","output":"spine.Slot | null"}
+{"instruction":"How do you get the bounding box of a Spine skeleton?","input":"","output":"skel.getBoundingBox(): cc.Rect"}
+{"instruction":"What does getBoundingBox return on sp.Skeleton?","input":"","output":"cc.Rect"}
+{"instruction":"How do you change animation playback speed in sp.Skeleton?","input":"","output":"skel.setTimeScale(scale: number): void — 1.0 is normal speed, 0.5 is half speed, 2.0 is double."}
+{"instruction":"How do you get the current time scale of a Spine skeleton?","input":"","output":"skel.getTimeScale(): number"}
+{"instruction":"What method resets all bones and slots to setup pose?","input":"","output":"skel.setToSetupPose(): void"}
+{"instruction":"What is the difference between setToSetupPose, setBonesToSetupPose, and setSlotsToSetupPose?","input":"","output":"setToSetupPose() resets everything. setBonesToSetupPose() resets only bone transforms. setSlotsToSetupPose() resets only slot attachments and colors."}
+{"instruction":"How do you enable bone debug rendering in Spine?","input":"","output":"skel.setDebugBonesEnabled(enabled: boolean): void"}
+{"instruction":"How do you enable slot debug rendering in Spine?","input":"","output":"skel.setDebugSlotsEnabled(enabled: boolean): void"}
+{"instruction":"What does updateWorldTransform do on sp.Skeleton?","input":"","output":"skel.updateWorldTransform(): void — recalculates the world transforms of all bones."}
+{"instruction":"Which class does sp.SkeletonAnimation extend?","input":"","output":"sp.SkeletonAnimation extends sp.Skeleton, which extends cc.Node."}
+{"instruction":"Which class has the setAnimation method for Spine playback?","input":"","output":"sp.SkeletonAnimation — skel.setAnimation(trackIndex: number, name: string, loop: boolean): spine.TrackEntry | null"}
+{"instruction":"Which class has the setSkin method?","input":"","output":"sp.Skeleton — skel.setSkin(skinName: string): void"}
+{"instruction":"What properties does spine.TrackEntry have?","input":"","output":"animation: spine.Animation, loop: boolean, delay: number, trackTime: number, trackEnd: number, timeScale: number, alpha: number, mixDuration: number."}
+{"instruction":"How do you get the current animation time from a TrackEntry?","input":"","output":"track.getAnimationTime(): number"}
+{"instruction":"What is the type of spine.TrackEntry.alpha?","input":"","output":"number — blend weight from 0 to 1."}
+{"instruction":"What is spine.TrackEntry.timeScale used for?","input":"","output":"Per-track speed scale (number). Set to 2.0 for double speed on that track only."}
+{"instruction":"How do you access the animation name from a spine.TrackEntry?","input":"","output":"track.animation.name — track.animation is spine.Animation, which has a name property."}
+{"instruction":"Is sp.Skeleton.playAnimation a valid method?","input":"","output":"No. The correct method is sp.SkeletonAnimation.setAnimation(trackIndex, name, loop)."}
+{"instruction":"Is sp.SkeletonAnimation.stopAnimation a valid method?","input":"","output":"No. Use skel.clearTrack(trackIndex) to stop a specific track or skel.clearTracks() to stop all."}
+{"instruction":"Is sp.SkeletonAnimation.create a valid factory method?","input":"","output":"No. Use sp.SkeletonAnimation.createWithJsonFile(json, atlas, scale) or createWithBinaryFile(skel, atlas, scale)."}
+{"instruction":"What is the difference between clearTrack and clearTracks on sp.SkeletonAnimation?","input":"","output":"clearTrack(trackIndex) stops a single track. clearTracks() stops all tracks at once."}

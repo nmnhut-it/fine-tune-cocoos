@@ -1,0 +1,160 @@
+{"instruction": "What properties does ccui.Widget have?", "input": "", "output": "ccui.Widget properties: enabled, touchEnabled, bright, focused, name, sizeType, actionTag, xPercent, yPercent, flippedX, flippedY, widgetParent (readonly)."}
+{"instruction": "What is the type of widget.widgetParent?", "input": "", "output": "widget.widgetParent: ccui.Widget (readonly) — null if parent is not a widget."}
+{"instruction": "What is widget.actionTag?", "input": "", "output": "widget.actionTag: number — a tag used to identify the widget's action."}
+{"instruction": "What is widget.sizeType?", "input": "", "output": "widget.sizeType: ccui.Widget.SizeType — SIZE_ABSOLUTE or SIZE_PERCENT."}
+{"instruction": "How to listen for touch events on a ccui.Widget?", "input": "", "output": "widget.addTouchEventListener(callback, target) — callback receives (sender: ccui.Widget, eventType: number)."}
+{"instruction": "What are the ccui.Widget touch event type constants?", "input": "", "output": "ccui.Widget.TOUCH_BEGAN, ccui.Widget.TOUCH_MOVED, ccui.Widget.TOUCH_ENDED, ccui.Widget.TOUCH_CANCELED."}
+{"instruction": "How to add a simple click listener to a ccui.Widget?", "input": "", "output": "widget.addClickEventListener(callback: Function): void"}
+{"instruction": "What is the signature of addTouchEventListener?", "input": "", "output": "widget.addTouchEventListener(selector: (sender: ccui.Widget, eventType: number) => void, target?: object): void"}
+{"instruction": "What does widget.getSize() return?", "input": "", "output": "widget.getSize() returns cc.Size."}
+{"instruction": "What is the signature of widget.setSize?", "input": "", "output": "widget.setSize(size: cc.Size): void"}
+{"instruction": "What does widget.getSizePercent() return?", "input": "", "output": "widget.getSizePercent() returns cc.Point — width/height as 0–1 fraction of parent."}
+{"instruction": "What is the signature of widget.setSizePercent?", "input": "", "output": "widget.setSizePercent(percent: cc.Point): void — sets size as fraction of parent."}
+{"instruction": "What does widget.getSizeType() return?", "input": "", "output": "widget.getSizeType() returns ccui.Widget.SizeType — SIZE_ABSOLUTE or SIZE_PERCENT."}
+{"instruction": "What is the signature of widget.setSizeType?", "input": "", "output": "widget.setSizeType(type: ccui.Widget.SizeType): void"}
+{"instruction": "What does widget.getPositionPercent() return?", "input": "", "output": "widget.getPositionPercent() returns cc.Point."}
+{"instruction": "What is the signature of widget.setPositionPercent?", "input": "", "output": "widget.setPositionPercent(percent: cc.Point): void"}
+{"instruction": "What does widget.getPositionType() return?", "input": "", "output": "widget.getPositionType() returns number — POSITION_ABSOLUTE or POSITION_PERCENT."}
+{"instruction": "What does widget.getWorldPosition() return?", "input": "", "output": "widget.getWorldPosition() returns cc.Point — the widget's position in world coordinates."}
+{"instruction": "What does widget.getLeftBoundary() return?", "input": "", "output": "widget.getLeftBoundary() returns number — the left edge x-coordinate."}
+{"instruction": "What does widget.getRightBoundary() return?", "input": "", "output": "widget.getRightBoundary() returns number — the right edge x-coordinate."}
+{"instruction": "What does widget.getTopBoundary() return?", "input": "", "output": "widget.getTopBoundary() returns number — the top edge y-coordinate."}
+{"instruction": "What does widget.getBottomBoundary() return?", "input": "", "output": "widget.getBottomBoundary() returns number — the bottom edge y-coordinate."}
+{"instruction": "How to check if a widget is enabled?", "input": "", "output": "widget.isEnabled() returns boolean. Also accessible as widget.enabled property."}
+{"instruction": "What is the signature of widget.setEnabled?", "input": "", "output": "widget.setEnabled(enabled: boolean): void"}
+{"instruction": "How to check if touch is enabled on a widget?", "input": "", "output": "widget.isTouchEnabled() returns boolean."}
+{"instruction": "What is the signature of widget.setTouchEnabled?", "input": "", "output": "widget.setTouchEnabled(enable: boolean): void"}
+{"instruction": "What does widget.isBright() return?", "input": "", "output": "widget.isBright() returns boolean."}
+{"instruction": "What is the signature of widget.setBright?", "input": "", "output": "widget.setBright(bright: boolean): void"}
+{"instruction": "What does widget.isHighlighted() return?", "input": "", "output": "widget.isHighlighted() returns boolean."}
+{"instruction": "What is the signature of widget.setHighlighted?", "input": "", "output": "widget.setHighlighted(highlight: boolean): void"}
+{"instruction": "What does widget.isFocused() return?", "input": "", "output": "widget.isFocused() returns boolean."}
+{"instruction": "What is the signature of widget.setFocused?", "input": "", "output": "widget.setFocused(focus: boolean): void"}
+{"instruction": "What does widget.requestFocus() do?", "input": "", "output": "widget.requestFocus(): void — requests input focus for this widget."}
+{"instruction": "What does widget.click() do?", "input": "", "output": "widget.click(): void — triggers a programmatic click (for QC/testing)."}
+{"instruction": "What does widget.clone() return?", "input": "", "output": "widget.clone() returns ccui.Widget — a copy of the widget."}
+{"instruction": "What is the signature of widget.ignoreContentAdaptWithSize?", "input": "", "output": "widget.ignoreContentAdaptWithSize(ignore: boolean): void"}
+{"instruction": "What is the signature of widget.updateSizeAndPosition?", "input": "", "output": "widget.updateSizeAndPosition(parentSize: cc.Size): void"}
+{"instruction": "What are the ccui.Widget texture type constants?", "input": "", "output": "ccui.Widget.LOCAL_TEXTURE (file) and ccui.Widget.PLIST_TEXTURE (sprite frame)."}
+{"instruction": "Is ccui.Widget.PLIST_TEXTURE a valid constant?", "input": "", "output": "Yes. ccui.Widget.PLIST_TEXTURE indicates the texture comes from a sprite frame in a plist."}
+{"instruction": "How to create a ccui.Button?", "input": "", "output": "new ccui.Button(normalImage?, selectedImage?, disableImage?, texType?) or ccui.Button.create(normalImage?, selectedImage?, disableImage?, texType?)"}
+{"instruction": "What class does ccui.Button extend?", "input": "", "output": "ccui.Button extends ccui.Widget."}
+{"instruction": "What is the signature of ccui.Button constructor?", "input": "", "output": "new ccui.Button(normalImage?: string, selectedImage?: string, disableImage?: string, texType?: number)"}
+{"instruction": "What is the signature of btn.loadTextures?", "input": "", "output": "btn.loadTextures(normal: string, selected: string, disabled: string, texType?: number): void"}
+{"instruction": "What is the signature of btn.loadTextureNormal?", "input": "", "output": "btn.loadTextureNormal(normal: string, texType?: number): void"}
+{"instruction": "What is the signature of btn.loadTexturePressed?", "input": "", "output": "btn.loadTexturePressed(selected: string, texType?: number): void"}
+{"instruction": "What is the signature of btn.loadTextureDisabled?", "input": "", "output": "btn.loadTextureDisabled(disabled: string, texType?: number): void"}
+{"instruction": "What does btn.getTitleText() return?", "input": "", "output": "btn.getTitleText() returns string — the button's title text."}
+{"instruction": "What is the signature of btn.setTitleText?", "input": "", "output": "btn.setTitleText(text: string): void"}
+{"instruction": "What does btn.getTitleColor() return?", "input": "", "output": "btn.getTitleColor() returns cc.Color."}
+{"instruction": "What is the signature of btn.setTitleColor?", "input": "", "output": "btn.setTitleColor(color: cc.Color): void"}
+{"instruction": "What does btn.getTitleFontSize() return?", "input": "", "output": "btn.getTitleFontSize() returns number."}
+{"instruction": "What is the signature of btn.setTitleFontSize?", "input": "", "output": "btn.setTitleFontSize(size: number): void"}
+{"instruction": "What does btn.getTitleFontName() return?", "input": "", "output": "btn.getTitleFontName() returns string."}
+{"instruction": "What is the signature of btn.setTitleFontName?", "input": "", "output": "btn.setTitleFontName(fontName: string): void"}
+{"instruction": "What does btn.getTitleRenderer() return?", "input": "", "output": "btn.getTitleRenderer() returns cc.LabelTTF — the internal label renderer."}
+{"instruction": "What properties does ccui.Button expose for title?", "input": "", "output": "btn.titleText, btn.titleFontSize, btn.titleFontName — direct property access."}
+{"instruction": "How to check if Scale9 is enabled on a button?", "input": "", "output": "btn.isScale9Enabled() returns boolean."}
+{"instruction": "What is the signature of btn.setScale9Enabled?", "input": "", "output": "btn.setScale9Enabled(able: boolean): void"}
+{"instruction": "What is the signature of btn.setCapInsets?", "input": "", "output": "btn.setCapInsets(capInsets: cc.Rect): void"}
+{"instruction": "What is the signature of btn.setCapInsetsNormalRenderer?", "input": "", "output": "btn.setCapInsetsNormalRenderer(capInsets: cc.Rect): void"}
+{"instruction": "What is the signature of btn.setCapInsetsPressedRenderer?", "input": "", "output": "btn.setCapInsetsPressedRenderer(capInsets: cc.Rect): void"}
+{"instruction": "What is the signature of btn.setCapInsetsDisabledRenderer?", "input": "", "output": "btn.setCapInsetsDisabledRenderer(capInsets: cc.Rect): void"}
+{"instruction": "What does btn.getNormalTextureSize() return?", "input": "", "output": "btn.getNormalTextureSize() returns cc.Size."}
+{"instruction": "What is the signature of btn.setPressedActionEnabled?", "input": "", "output": "btn.setPressedActionEnabled(enabled: boolean): void"}
+{"instruction": "What is the signature of btn.setZoomScale?", "input": "", "output": "btn.setZoomScale(scale: number): void"}
+{"instruction": "What does btn.getZoomScale() return?", "input": "", "output": "btn.getZoomScale() returns number."}
+{"instruction": "How to create a ccui.Layout?", "input": "", "output": "new ccui.Layout() — creates a container with layout management."}
+{"instruction": "What class does ccui.Layout extend?", "input": "", "output": "ccui.Layout extends ccui.Widget."}
+{"instruction": "What are the ccui.Layout type constants?", "input": "", "output": "ccui.Layout.ABSOLUTE, ccui.Layout.LINEAR_HORIZONTAL, ccui.Layout.LINEAR_VERTICAL, ccui.Layout.RELATIVE."}
+{"instruction": "What are the ccui.Layout background color type constants?", "input": "", "output": "ccui.Layout.BG_COLOR_NONE, ccui.Layout.BG_COLOR_SOLID, ccui.Layout.BG_COLOR_GRADIENT."}
+{"instruction": "What are the ccui.Layout clipping type constants?", "input": "", "output": "ccui.Layout.CLIPPING_STENCIL, ccui.Layout.CLIPPING_SCISSOR."}
+{"instruction": "What does layout.getLayoutType() return?", "input": "", "output": "layout.getLayoutType() returns number — one of ABSOLUTE, LINEAR_HORIZONTAL, LINEAR_VERTICAL, RELATIVE."}
+{"instruction": "What is the signature of layout.setLayoutType?", "input": "", "output": "layout.setLayoutType(type: number): void"}
+{"instruction": "What does layout.forceDoLayout() do?", "input": "", "output": "layout.forceDoLayout(): void — forces an immediate layout recalculation."}
+{"instruction": "What does layout.requestDoLayout() do?", "input": "", "output": "layout.requestDoLayout(): void — marks the layout as needing recalculation."}
+{"instruction": "How to check if clipping is enabled on a layout?", "input": "", "output": "layout.isClippingEnabled() returns boolean. Also accessible as layout.clippingEnabled."}
+{"instruction": "What is the signature of layout.setClippingEnabled?", "input": "", "output": "layout.setClippingEnabled(able: boolean): void"}
+{"instruction": "What does layout.getClippingType() return?", "input": "", "output": "layout.getClippingType() returns number — CLIPPING_STENCIL or CLIPPING_SCISSOR."}
+{"instruction": "What is the signature of layout.setClippingType?", "input": "", "output": "layout.setClippingType(type: number): void"}
+{"instruction": "What is the signature of layout.setBackGroundImage?", "input": "", "output": "layout.setBackGroundImage(fileName: string, texType?: number): void"}
+{"instruction": "What does layout.removeBackGroundImage() do?", "input": "", "output": "layout.removeBackGroundImage(): void — removes the background image."}
+{"instruction": "What is the signature of layout.setBackGroundImageScale9Enabled?", "input": "", "output": "layout.setBackGroundImageScale9Enabled(able: boolean): void"}
+{"instruction": "What is the signature of layout.setBackGroundImageCapInsets?", "input": "", "output": "layout.setBackGroundImageCapInsets(capInsets: cc.Rect): void"}
+{"instruction": "What is the signature of layout.setBackGroundColorType?", "input": "", "output": "layout.setBackGroundColorType(type: number): void — BG_COLOR_NONE, BG_COLOR_SOLID, or BG_COLOR_GRADIENT."}
+{"instruction": "What is the signature of layout.setBackGroundColor?", "input": "", "output": "layout.setBackGroundColor(color: cc.Color, endColor?: cc.Color): void — pass two colors for gradient."}
+{"instruction": "What is the signature of layout.setBackGroundColorOpacity?", "input": "", "output": "layout.setBackGroundColorOpacity(opacity: number): void"}
+{"instruction": "What is the signature of layout.setBackGroundColorVector?", "input": "", "output": "layout.setBackGroundColorVector(vector: cc.Point): void — sets the gradient direction."}
+{"instruction": "What does layout.getBackGroundColor() return?", "input": "", "output": "layout.getBackGroundColor() returns cc.Color."}
+{"instruction": "What does layout.getBackGroundEndColor() return?", "input": "", "output": "layout.getBackGroundEndColor() returns cc.Color — the end color of a gradient background."}
+{"instruction": "What does layout.getBackGroundStartColor() return?", "input": "", "output": "layout.getBackGroundStartColor() returns cc.Color — the start color of a gradient background."}
+{"instruction": "What does layout.getBackGroundColorOpacity() return?", "input": "", "output": "layout.getBackGroundColorOpacity() returns number (0–255)."}
+{"instruction": "What does layout.getBackGroundImageTextureSize() return?", "input": "", "output": "layout.getBackGroundImageTextureSize() returns cc.Size."}
+{"instruction": "How to create a ccui.ScrollView?", "input": "", "output": "new ccui.ScrollView() — creates a scrollable container."}
+{"instruction": "What class does ccui.ScrollView extend?", "input": "", "output": "ccui.ScrollView extends ccui.Layout."}
+{"instruction": "What are the ccui.ScrollView direction constants?", "input": "", "output": "ccui.ScrollView.DIR_NONE, ccui.ScrollView.DIR_VERTICAL, ccui.ScrollView.DIR_HORIZONTAL, ccui.ScrollView.DIR_BOTH."}
+{"instruction": "What are the ccui.ScrollView event constants?", "input": "", "output": "EVENT_SCROLL_TO_TOP, EVENT_SCROLL_TO_BOTTOM, EVENT_SCROLL_TO_LEFT, EVENT_SCROLL_TO_RIGHT, EVENT_SCROLLING, EVENT_BOUNCE_TOP/BOTTOM/LEFT/RIGHT."}
+{"instruction": "What does sv.getDirection() return?", "input": "", "output": "sv.getDirection() returns ccui.ScrollViewDirection."}
+{"instruction": "What is the signature of sv.setDirection?", "input": "", "output": "sv.setDirection(dir: ccui.ScrollViewDirection): void"}
+{"instruction": "What does sv.getInnerContainerSize() return?", "input": "", "output": "sv.getInnerContainerSize() returns cc.Size — the size of the inner scrollable area."}
+{"instruction": "What is the signature of sv.setInnerContainerSize?", "input": "", "output": "sv.setInnerContainerSize(size: cc.Size): void — must be >= scrollview size."}
+{"instruction": "What does sv.getInnerContainer() return?", "input": "", "output": "sv.getInnerContainer() returns ccui.Layout — the inner container to which children are added."}
+{"instruction": "What is the signature of sv.setInnerContainerPosition?", "input": "", "output": "sv.setInnerContainerPosition(pos: cc.Point): void"}
+{"instruction": "How to check if bounce is enabled on a ScrollView?", "input": "", "output": "sv.isBounceEnabled() returns boolean."}
+{"instruction": "What is the signature of sv.setBounceEnabled?", "input": "", "output": "sv.setBounceEnabled(enabled: boolean): void"}
+{"instruction": "How to check if inertia scroll is enabled?", "input": "", "output": "sv.isInertiaScrollEnabled() returns boolean."}
+{"instruction": "What is the signature of sv.setInertiaScrollEnabled?", "input": "", "output": "sv.setInertiaScrollEnabled(enabled: boolean): void"}
+{"instruction": "What is the signature of sv.setScrollBarEnabled?", "input": "", "output": "sv.setScrollBarEnabled(enabled: boolean): void"}
+{"instruction": "What is the signature of sv.setScrollBarColor?", "input": "", "output": "sv.setScrollBarColor(color: cc.Color): void"}
+{"instruction": "What is the signature of sv.setScrollBarOpacity?", "input": "", "output": "sv.setScrollBarOpacity(opacity: number): void"}
+{"instruction": "What is the signature of sv.setScrollBarWidth?", "input": "", "output": "sv.setScrollBarWidth(width: number): void"}
+{"instruction": "What is the signature of sv.setScrollBarAutoHideEnabled?", "input": "", "output": "sv.setScrollBarAutoHideEnabled(enabled: boolean): void"}
+{"instruction": "What is the signature of sv.setScrollBarAutoHideTime?", "input": "", "output": "sv.setScrollBarAutoHideTime(time: number): void"}
+{"instruction": "What does sv.jumpToTop() do?", "input": "", "output": "sv.jumpToTop(): void — instantly scrolls to the top."}
+{"instruction": "What does sv.jumpToBottom() do?", "input": "", "output": "sv.jumpToBottom(): void — instantly scrolls to the bottom."}
+{"instruction": "What does sv.jumpToLeft() do?", "input": "", "output": "sv.jumpToLeft(): void — instantly scrolls to the left."}
+{"instruction": "What does sv.jumpToRight() do?", "input": "", "output": "sv.jumpToRight(): void — instantly scrolls to the right."}
+{"instruction": "What does sv.jumpToTopLeft() do?", "input": "", "output": "sv.jumpToTopLeft(): void — instantly scrolls to the top-left corner."}
+{"instruction": "What does sv.jumpToTopRight() do?", "input": "", "output": "sv.jumpToTopRight(): void — instantly scrolls to the top-right corner."}
+{"instruction": "What does sv.jumpToBottomLeft() do?", "input": "", "output": "sv.jumpToBottomLeft(): void — instantly scrolls to the bottom-left corner."}
+{"instruction": "What does sv.jumpToBottomRight() do?", "input": "", "output": "sv.jumpToBottomRight(): void — instantly scrolls to the bottom-right corner."}
+{"instruction": "What is the signature of sv.jumpToPercentVertical?", "input": "", "output": "sv.jumpToPercentVertical(percent: number): void — percent is 0–100."}
+{"instruction": "What is the signature of sv.jumpToPercentHorizontal?", "input": "", "output": "sv.jumpToPercentHorizontal(percent: number): void — percent is 0–100."}
+{"instruction": "What is the signature of sv.jumpToPercentBothDirection?", "input": "", "output": "sv.jumpToPercentBothDirection(percent: cc.Point): void"}
+{"instruction": "What is the signature of sv.scrollToTop?", "input": "", "output": "sv.scrollToTop(time: number, attenuated: boolean): void"}
+{"instruction": "What is the signature of sv.scrollToBottom?", "input": "", "output": "sv.scrollToBottom(time: number, attenuated: boolean): void"}
+{"instruction": "What is the signature of sv.scrollToLeft?", "input": "", "output": "sv.scrollToLeft(time: number, attenuated: boolean): void"}
+{"instruction": "What is the signature of sv.scrollToRight?", "input": "", "output": "sv.scrollToRight(time: number, attenuated: boolean): void"}
+{"instruction": "What is the signature of sv.scrollToPercentVertical?", "input": "", "output": "sv.scrollToPercentVertical(percent: number, time: number, attenuated: boolean): void"}
+{"instruction": "What is the signature of sv.scrollToPercentHorizontal?", "input": "", "output": "sv.scrollToPercentHorizontal(percent: number, time: number, attenuated: boolean): void"}
+{"instruction": "How to listen for scroll events on a ScrollView?", "input": "", "output": "sv.addEventListener(selector: Function, target?: object): void"}
+{"instruction": "Is ccui.ScrollView.EVENT_SCROLLING a valid constant?", "input": "", "output": "Yes. ccui.ScrollView.EVENT_SCROLLING fires continuously while the user scrolls."}
+{"instruction": "How to create a ccui.ImageView?", "input": "", "output": "new ccui.ImageView(imageFileName?: string, texType?: number) or ccui.ImageView.create(imageFileName?, texType?)"}
+{"instruction": "What class does ccui.ImageView extend?", "input": "", "output": "ccui.ImageView extends ccui.Widget."}
+{"instruction": "What is the signature of view.loadTexture?", "input": "", "output": "view.loadTexture(fileName: string, texType?: number): void"}
+{"instruction": "What is the signature of view.setTextureRect?", "input": "", "output": "view.setTextureRect(rect: cc.Rect): void"}
+{"instruction": "How to enable Scale9 on an ImageView?", "input": "", "output": "view.setScale9Enabled(able: boolean): void"}
+{"instruction": "What is the signature of ImageView.setCapInsets?", "input": "", "output": "view.setCapInsets(capInsets: cc.Rect): void"}
+{"instruction": "How to create a ccui.Text?", "input": "", "output": "new ccui.Text(textContent?: string, fontName?: string, fontSize?: number) or ccui.Text.create(text?, font?, fontSize?)"}
+{"instruction": "What class does ccui.Text extend?", "input": "", "output": "ccui.Text extends ccui.Widget."}
+{"instruction": "What does text.getString() return?", "input": "", "output": "text.getString() returns string."}
+{"instruction": "What is the signature of text.setString?", "input": "", "output": "text.setString(text: string): void"}
+{"instruction": "What does text.getFontSize() return?", "input": "", "output": "text.getFontSize() returns number."}
+{"instruction": "What is the signature of text.setFontSize?", "input": "", "output": "text.setFontSize(size: number): void"}
+{"instruction": "What does text.getFontName() return?", "input": "", "output": "text.getFontName() returns string."}
+{"instruction": "What is the signature of text.setFontName?", "input": "", "output": "text.setFontName(name: string): void"}
+{"instruction": "What does text.getTextHorizontalAlignment() return?", "input": "", "output": "text.getTextHorizontalAlignment() returns number — cc.TEXT_ALIGNMENT_LEFT/CENTER/RIGHT."}
+{"instruction": "What is the signature of text.setTextHorizontalAlignment?", "input": "", "output": "text.setTextHorizontalAlignment(alignment: number): void"}
+{"instruction": "What does text.getTextVerticalAlignment() return?", "input": "", "output": "text.getTextVerticalAlignment() returns number — cc.VERTICAL_TEXT_ALIGNMENT_TOP/CENTER/BOTTOM."}
+{"instruction": "What is the signature of text.setTextVerticalAlignment?", "input": "", "output": "text.setTextVerticalAlignment(alignment: number): void"}
+{"instruction": "What is the signature of text.setTextAreaSize?", "input": "", "output": "text.setTextAreaSize(size: cc.Size): void"}
+{"instruction": "What is the signature of text.setTextColor?", "input": "", "output": "text.setTextColor(color: cc.Color): void"}
+{"instruction": "How to create a ccui.TextField?", "input": "", "output": "new ccui.TextField(placeholder?: string, fontName?: string, fontSize?: number)"}
+{"instruction": "What class does ccui.TextField extend?", "input": "", "output": "ccui.TextField extends ccui.Widget."}
+{"instruction": "What does tf.getString() return?", "input": "", "output": "tf.getString() returns string — the current input text."}
+{"instruction": "What is the signature of tf.setString?", "input": "", "output": "tf.setString(text: string): void"}
+{"instruction": "What does tf.getPlaceHolder() return?", "input": "", "output": "tf.getPlaceHolder() returns string."}
+{"instruction": "What is the signature of tf.setPlaceHolder?", "input": "", "output": "tf.setPlaceHolder(value: string): void"}
+{"instruction": "What is the signature of tf.setPasswordEnabled?", "input": "", "output": "tf.setPasswordEnabled(enable: boolean): void"}
+{"instruction": "What does tf.isPasswordEnabled() return?", "input": "", "output": "tf.isPasswordEnabled() returns boolean."}
+{"instruction": "What is the signature of tf.setMaxLength?", "input": "", "output": "tf.setMaxLength(length: number): void"}

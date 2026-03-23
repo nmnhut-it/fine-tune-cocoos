@@ -1,0 +1,58 @@
+{"instruction": "How do I create a cc.Point in Cocos2d-x JS?", "input": "", "output": "cc.p(x: number, y: number): cc.Point — or cc.p(point: cc.Point) to clone."}
+{"instruction": "What are the properties of cc.Point?", "input": "", "output": "cc.Point has x: number and y: number."}
+{"instruction": "What does cc.p() return?", "input": "", "output": "cc.Point — an object with x and y properties."}
+{"instruction": "How do I create a cc.Size in Cocos2d-x JS?", "input": "", "output": "cc.size(width: number, height: number): cc.Size"}
+{"instruction": "What are the properties of cc.Size?", "input": "", "output": "cc.Size has width: number and height: number."}
+{"instruction": "What does cc.size() return?", "input": "", "output": "cc.Size — an object with width and height properties."}
+{"instruction": "How do I create a cc.Rect in Cocos2d-x JS?", "input": "", "output": "cc.rect(x, y, width, height): cc.Rect — or cc.rect(rect: cc.Rect) to clone."}
+{"instruction": "What are the properties of cc.Rect?", "input": "", "output": "cc.Rect has x: number, y: number, width: number, height: number. Origin is bottom-left."}
+{"instruction": "What does cc.rect() return?", "input": "", "output": "cc.Rect — a rectangle object with x, y, width, height."}
+{"instruction": "How do I check if a point is inside a rectangle?", "input": "", "output": "cc.rectContainsPoint(rect: cc.Rect, point: cc.Point): boolean"}
+{"instruction": "How do I check if one rect fully contains another?", "input": "", "output": "cc.rectContainsRect(rect1: cc.Rect, rect2: cc.Rect): boolean"}
+{"instruction": "How do I check if two rectangles overlap?", "input": "", "output": "cc.rectOverlapsRect(rectA: cc.Rect, rectB: cc.Rect): boolean"}
+{"instruction": "How do I get the union of two rectangles?", "input": "", "output": "cc.rectUnion(rectA: cc.Rect, rectB: cc.Rect): cc.Rect"}
+{"instruction": "How do I get the intersection of two rectangles?", "input": "", "output": "cc.rectIntersection(rectA: cc.Rect, rectB: cc.Rect): cc.Rect"}
+{"instruction": "What does cc.rectContainsPoint return?", "input": "", "output": "boolean — true if the point is inside the rectangle."}
+{"instruction": "How do I create a cc.Color in Cocos2d-x JS?", "input": "", "output": "cc.color(r: number, g: number, b: number, a?: number): cc.Color — components 0-255."}
+{"instruction": "What are the properties of cc.Color?", "input": "", "output": "cc.Color has r: number, g: number, b: number, a: number — all 0-255."}
+{"instruction": "What preset colors are available in cc.color?", "input": "", "output": "cc.color.WHITE, BLACK, RED, GREEN, BLUE, YELLOW, MAGENTA, ORANGE, GRAY"}
+{"instruction": "How do I convert a hex string to cc.Color?", "input": "", "output": "cc.hexToColor(hex: string): cc.Color"}
+{"instruction": "How do I convert a cc.Color to hex string?", "input": "", "output": "cc.colorToHex(color: cc.Color): string"}
+{"instruction": "What does cc.hexToColor return?", "input": "", "output": "cc.Color — the color parsed from the hex string."}
+{"instruction": "What does cc.colorToHex return?", "input": "", "output": "string — hex representation of the color."}
+{"instruction": "Is cc.Color.fromHex() a valid method?", "input": "", "output": "No. Use cc.hexToColor(hex: string): cc.Color instead."}
+{"instruction": "How do I create an affine transform?", "input": "", "output": "cc.affineTransformMake(a, b, c, d, tx, ty): cc.AffineTransform"}
+{"instruction": "How do I translate an affine transform?", "input": "", "output": "cc.affineTransformTranslate(t: cc.AffineTransform, tx: number, ty: number): cc.AffineTransform"}
+{"instruction": "How do I scale an affine transform?", "input": "", "output": "cc.affineTransformScale(t: cc.AffineTransform, sx: number, sy: number): cc.AffineTransform"}
+{"instruction": "How do I rotate an affine transform?", "input": "", "output": "cc.affineTransformRotate(t: cc.AffineTransform, angle: number): cc.AffineTransform"}
+{"instruction": "How do I concatenate two affine transforms?", "input": "", "output": "cc.affineTransformConcat(t1: cc.AffineTransform, t2: cc.AffineTransform): cc.AffineTransform"}
+{"instruction": "How do I invert an affine transform?", "input": "", "output": "cc.affineTransformInvert(t: cc.AffineTransform): cc.AffineTransform"}
+{"instruction": "How do I apply an affine transform to a point?", "input": "", "output": "cc.pointApplyAffineTransform(point: cc.Point, t: cc.AffineTransform): cc.Point"}
+{"instruction": "How do I apply an affine transform to a rect?", "input": "", "output": "cc.rectApplyAffineTransform(rect: cc.Rect, t: cc.AffineTransform): cc.Rect"}
+{"instruction": "How do I create a 3D vector in Cocos2d-x JS?", "input": "", "output": "cc.math.vec3(x, y, z): cc.math.Vec3"}
+{"instruction": "What are the properties of cc.math.Vec3?", "input": "", "output": "cc.math.Vec3 has x: number, y: number, z: number."}
+{"instruction": "How do I compute the cross product of two Vec3?", "input": "", "output": "cc.math.vec3Cross(a: cc.math.Vec3, b: cc.math.Vec3): cc.math.Vec3"}
+{"instruction": "How do I compute the dot product of two Vec3?", "input": "", "output": "cc.math.vec3Dot(a: cc.math.Vec3, b: cc.math.Vec3): number"}
+{"instruction": "How do I normalize a Vec3?", "input": "", "output": "cc.math.vec3Normalize(a: cc.math.Vec3): cc.math.Vec3"}
+{"instruction": "How do I create a 4D vector?", "input": "", "output": "cc.math.vec4(x, y, z, w): cc.math.Vec4"}
+{"instruction": "What are the properties of cc.math.Vec4?", "input": "", "output": "cc.math.Vec4 has x: number, y: number, z: number, w: number."}
+{"instruction": "What is cc.math.Mat4?", "input": "", "output": "cc.math.Mat4 is an array of 16 numbers representing a 4x4 matrix."}
+{"instruction": "How do I add two cc.Point vectors?", "input": "", "output": "cc.pAdd(v1: cc.Point, v2: cc.Point): cc.Point"}
+{"instruction": "How do I subtract two cc.Point vectors?", "input": "", "output": "cc.pSub(v1: cc.Point, v2: cc.Point): cc.Point"}
+{"instruction": "How do I multiply a cc.Point by a scalar?", "input": "", "output": "cc.pMult(point: cc.Point, scalar: number): cc.Point"}
+{"instruction": "How do I negate a cc.Point?", "input": "", "output": "cc.pNeg(point: cc.Point): cc.Point"}
+{"instruction": "How do I normalize a cc.Point vector?", "input": "", "output": "cc.pNormalize(v: cc.Point): cc.Point"}
+{"instruction": "How do I get the length of a cc.Point vector?", "input": "", "output": "cc.pLength(v: cc.Point): number"}
+{"instruction": "How do I get the distance between two points?", "input": "", "output": "cc.pDistance(v1: cc.Point, v2: cc.Point): number"}
+{"instruction": "How do I get the squared distance between two points?", "input": "", "output": "cc.pDistanceSQ(p1: cc.Point, p2: cc.Point): number"}
+{"instruction": "How do I compute the dot product of two cc.Point vectors?", "input": "", "output": "cc.pDot(v1: cc.Point, v2: cc.Point): number"}
+{"instruction": "How do I linearly interpolate between two points?", "input": "", "output": "cc.pLerp(a: cc.Point, b: cc.Point, alpha: number): cc.Point"}
+{"instruction": "How do I get the midpoint of two cc.Point values?", "input": "", "output": "cc.pMidpoint(v1: cc.Point, v2: cc.Point): cc.Point"}
+{"instruction": "How do I get the angle between two cc.Point vectors?", "input": "", "output": "cc.pAngle(a: cc.Point, b: cc.Point): number"}
+{"instruction": "How do I rotate a point around a pivot?", "input": "", "output": "cc.pRotateByAngle(v: cc.Point, pivot: cc.Point, angle: number): cc.Point"}
+{"instruction": "How do I clamp a value between min and max?", "input": "", "output": "cc.clampf(value: number, min: number, max: number): number"}
+{"instruction": "What is the value of cc.RAD?", "input": "", "output": "cc.RAD = Math.PI / 180 — the conversion factor from degrees to radians."}
+{"instruction": "What is the value of cc.DEG?", "input": "", "output": "cc.DEG = 180 / Math.PI — the conversion factor from radians to degrees."}
+{"instruction": "How do I convert degrees to radians in Cocos2d-x?", "input": "", "output": "cc.degreesToRadians(angle: number): number"}
+{"instruction": "How do I convert radians to degrees in Cocos2d-x?", "input": "", "output": "cc.radiansToDegrees(angle: number): number"}
+{"instruction": "How do I linearly interpolate between two numbers?", "input": "", "output": "cc.lerp(a: number, b: number, r: number): number"}

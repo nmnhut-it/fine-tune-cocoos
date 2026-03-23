@@ -1,0 +1,75 @@
+{"instruction":"What method creates an event listener in Cocos2d-x JS?","input":"","output":"cc.EventListener.create(option: EventListenerCreateParam): cc.EventListener"}
+{"instruction":"How do you add an event listener to a node?","input":"","output":"cc.eventManager.addListener(listener, nodeOrPriority) — listener: cc.EventListener, nodeOrPriority: cc.Node | number"}
+{"instruction":"What is the return type of cc.eventManager.addListener?","input":"","output":"It returns the same cc.EventListener that was passed in (generic T extends cc.EventListener)."}
+{"instruction":"Is cc.eventManager.addEventHandler a valid method?","input":"","output":"No. The correct method is cc.eventManager.addListener(listener, nodeOrPriority)."}
+{"instruction":"What event type constant is used for single-touch listeners?","input":"","output":"cc.EventListener.TOUCH_ONE_BY_ONE"}
+{"instruction":"What event type constant is used for multi-touch listeners?","input":"","output":"cc.EventListener.TOUCH_ALL_AT_ONCE"}
+{"instruction":"What event type constant is used for keyboard listeners?","input":"","output":"cc.EventListener.KEYBOARD"}
+{"instruction":"What event type constant is used for mouse listeners?","input":"","output":"cc.EventListener.MOUSE"}
+{"instruction":"What event type constant is used for custom event listeners?","input":"","output":"cc.EventListener.CUSTOM"}
+{"instruction":"What are the callback names for TOUCH_ONE_BY_ONE listener?","input":"","output":"onTouchBegan, onTouchMoved, onTouchEnded, onTouchCancelled"}
+{"instruction":"What is the signature of onTouchBegan?","input":"","output":"onTouchBegan: (touch: cc.Touch, event: cc.Event) => boolean — must return true to receive subsequent move/end events."}
+{"instruction":"What is the signature of onTouchMoved?","input":"","output":"onTouchMoved: (touch: cc.Touch, event: cc.EventTouch) => void"}
+{"instruction":"What are the callback names for TOUCH_ALL_AT_ONCE listener?","input":"","output":"onTouchesBegan, onTouchesMoved, onTouchesEnded, onTouchesCancelled — each takes (touches: cc.Touch[], event: cc.Event)."}
+{"instruction":"What is the difference between onTouchBegan and onTouchesBegan?","input":"","output":"onTouchBegan is for TOUCH_ONE_BY_ONE (single cc.Touch). onTouchesBegan is for TOUCH_ALL_AT_ONCE (cc.Touch[] array)."}
+{"instruction":"What are the keyboard listener callback names?","input":"","output":"onKeyPressed: (keyCode: cc.KEY, event: cc.Event) => void, onKeyReleased: (keyCode: cc.KEY, event: cc.Event) => void"}
+{"instruction":"What are the mouse listener callback names?","input":"","output":"onMouseDown, onMouseUp, onMouseMove, onMouseScroll — each takes (event: cc.EventMouse) => void."}
+{"instruction":"What property enables touch swallowing on a listener?","input":"","output":"swallowTouches: true — set in the TOUCH_ONE_BY_ONE listener options."}
+{"instruction":"How do you remove a specific event listener?","input":"","output":"cc.eventManager.removeListener(listener: cc.EventListener): void"}
+{"instruction":"How do you remove all listeners from a node?","input":"","output":"cc.eventManager.removeListeners(node: cc.Node, recursive?: boolean): void"}
+{"instruction":"How do you remove custom listeners by event name?","input":"","output":"cc.eventManager.removeCustomListeners(customEventName: string | number): void"}
+{"instruction":"How do you remove all event listeners?","input":"","output":"cc.eventManager.removeAllListeners(): void"}
+{"instruction":"How do you set the priority of an existing listener?","input":"","output":"cc.eventManager.setPriority(listener: cc.EventListener, fixedPriority: number): void"}
+{"instruction":"How do you dispatch an event programmatically?","input":"","output":"cc.eventManager.dispatchEvent(event: cc.Event): void"}
+{"instruction":"How do you dispatch a custom event with data?","input":"","output":"cc.eventManager.dispatchCustomEvent(eventName: string | number, optionalUserData?: any): void"}
+{"instruction":"What is the shorthand for adding a custom event listener?","input":"","output":"cc.eventManager.addCustomListener(eventName: string | number, callback: (event: cc.Event) => void): cc.EventListener"}
+{"instruction":"Is cc.eventManager.on a valid method?","input":"","output":"No. Use cc.eventManager.addListener() or cc.eventManager.addCustomListener() instead."}
+{"instruction":"Is cc.eventManager.removeListenersByNode a valid method?","input":"","output":"No. The correct method is cc.eventManager.removeListeners(node, recursive?)."}
+{"instruction":"Which class has the getLocation method for touch input?","input":"","output":"cc.Touch — touch.getLocation(): cc.Point returns the world position."}
+{"instruction":"What are all the methods on cc.Touch?","input":"","output":"getID(), getLocation(), getLocationX(), getLocationY(), getPreviousLocation(), getStartLocation(), getDelta(), getLocationInView(), getPreviousLocationInView(), getStartLocationInView()"}
+{"instruction":"What does touch.getDelta() return?","input":"","output":"cc.Point — the movement delta (x, y) since the last touch event."}
+{"instruction":"What does touch.getID() return?","input":"","output":"number | undefined — the touch index on native (iOS/Android); undefined on H5."}
+{"instruction":"What is the difference between getLocation and getLocationInView on cc.Touch?","input":"","output":"getLocation() returns world coordinates (cc.Point). getLocationInView() returns screen coordinates (cc.Point)."}
+{"instruction":"What does touch.getStartLocation() return?","input":"","output":"cc.Point — the world position where the touch began."}
+{"instruction":"What does touch.getPreviousLocation() return?","input":"","output":"cc.Point — the world position of the previous touch event."}
+{"instruction":"Which class has the getButton method?","input":"","output":"cc.EventMouse — event.getButton(): number returns BUTTON_LEFT (0), BUTTON_RIGHT (1), or BUTTON_MIDDLE (2)."}
+{"instruction":"What are the methods on cc.EventMouse?","input":"","output":"getButton(), getLocation(), getLocationX(), getLocationY(), getDelta(), getDeltaX(), getDeltaY(), getScrollX(), getScrollY()"}
+{"instruction":"What are the button constants on cc.EventMouse?","input":"","output":"cc.EventMouse.BUTTON_LEFT, cc.EventMouse.BUTTON_RIGHT, cc.EventMouse.BUTTON_MIDDLE"}
+{"instruction":"What are the event type constants on cc.EventMouse?","input":"","output":"cc.EventMouse.DOWN, cc.EventMouse.UP, cc.EventMouse.MOVE, cc.EventMouse.SCROLL"}
+{"instruction":"How do you get the scroll delta from a mouse event?","input":"","output":"event.getScrollX(): number and event.getScrollY(): number on cc.EventMouse."}
+{"instruction":"How do you get the mouse movement delta?","input":"","output":"event.getDelta(): cc.Point, event.getDeltaX(): number, event.getDeltaY(): number on cc.EventMouse."}
+{"instruction":"What methods does cc.Event have?","input":"","output":"event.getType(): number, event.getUserData<T>(): T, event.setUserData(data: any): void"}
+{"instruction":"What are the type constants on cc.Event?","input":"","output":"cc.Event.TOUCH, cc.Event.KEYBOARD, cc.Event.ACCELERATION, cc.Event.MOUSE, cc.Event.CUSTOM"}
+{"instruction":"How do you get user data from a custom event?","input":"","output":"event.getUserData<T>(): T — returns the data passed via dispatchCustomEvent."}
+{"instruction":"How do you set user data on an event?","input":"","output":"event.setUserData(data: any): void"}
+{"instruction":"Is cc.Event.INPUT a valid event type constant?","input":"","output":"No. Valid constants are cc.Event.TOUCH, cc.Event.KEYBOARD, cc.Event.ACCELERATION, cc.Event.MOUSE, cc.Event.CUSTOM."}
+{"instruction":"What methods does cc.EventTouch have?","input":"","output":"event.getTouches(): cc.Touch[]"}
+{"instruction":"What are the EventCode constants on cc.EventTouch?","input":"","output":"cc.EventTouch.EventCode.BEGAN, cc.EventTouch.EventCode.MOVED, cc.EventTouch.EventCode.ENDED, cc.EventTouch.EventCode.CANCELLED"}
+{"instruction":"What is cc.EventTouch.MAX_TOUCHES?","input":"","output":"cc.EventTouch.MAX_TOUCHES — a constant representing the maximum number of simultaneous touches supported."}
+{"instruction":"How do you implement a custom pub/sub pattern?","input":"","output":"Dispatch: cc.eventManager.dispatchCustomEvent('myEvent', data)\nListen: cc.eventManager.addCustomListener('myEvent', (event) => { event.getUserData() })"}
+{"instruction":"What is the cc.KEY value for the space bar?","input":"","output":"cc.KEY.space = 32"}
+{"instruction":"What is the cc.KEY value for Enter?","input":"","output":"cc.KEY.enter = 13"}
+{"instruction":"What is the cc.KEY value for Escape?","input":"","output":"cc.KEY.escape = 27"}
+{"instruction":"What is the cc.KEY value for the Android back button?","input":"","output":"cc.KEY.back = 6"}
+{"instruction":"What are the cc.KEY values for arrow keys?","input":"","output":"cc.KEY.left = 37, cc.KEY.up = 38, cc.KEY.right = 39, cc.KEY.down = 40"}
+{"instruction":"What is the cc.KEY value for Tab?","input":"","output":"cc.KEY.tab = 9"}
+{"instruction":"What is the cc.KEY value for Shift?","input":"","output":"cc.KEY.shift = 16"}
+{"instruction":"What is the cc.KEY value for Ctrl?","input":"","output":"cc.KEY.ctrl = 17"}
+{"instruction":"What is the cc.KEY value for Alt?","input":"","output":"cc.KEY.alt = 18"}
+{"instruction":"What is the cc.KEY value for Delete?","input":"","output":"cc.KEY.Delete = 46"}
+{"instruction":"What is the cc.KEY value for Backspace?","input":"","output":"cc.KEY.backspace = 8"}
+{"instruction":"What are the cc.KEY values for letters a-z?","input":"","output":"cc.KEY.a through cc.KEY.z, values 65 through 90."}
+{"instruction":"What are the cc.KEY values for number keys 0-9?","input":"","output":"cc.KEY['0'] through cc.KEY['9'], values 48 through 57."}
+{"instruction":"What are the cc.KEY values for function keys?","input":"","output":"cc.KEY.f1 through cc.KEY.f12, values 112 through 123."}
+{"instruction":"What are the cc.KEY values for d-pad keys?","input":"","output":"cc.KEY.dpadLeft = 1000, cc.KEY.dpadRight = 1001, cc.KEY.dpadUp = 1003, cc.KEY.dpadDown = 1004"}
+{"instruction":"What is the cc.KEY value for the Android menu button?","input":"","output":"cc.KEY.menu = 18"}
+{"instruction":"What is the cc.KEY value for 'none'?","input":"","output":"cc.KEY.none = 0"}
+{"instruction":"Is cc.KEY.SPACE a valid constant?","input":"","output":"No. The correct constant is cc.KEY.space (lowercase) = 32."}
+{"instruction":"Is cc.KEY.ENTER a valid constant?","input":"","output":"No. The correct constant is cc.KEY.enter (lowercase) = 13."}
+{"instruction":"Is cc.eventManager.emit a valid method?","input":"","output":"No. Use cc.eventManager.dispatchEvent() or cc.eventManager.dispatchCustomEvent() to dispatch events."}
+{"instruction":"Which class has the removeListeners method?","input":"","output":"cc.eventManager — cc.eventManager.removeListeners(listenerType: cc.Node | number, recursive?: boolean): void"}
+{"instruction":"Which class has the dispatchCustomEvent method?","input":"","output":"cc.eventManager — cc.eventManager.dispatchCustomEvent(eventName: string | number, optionalUserData?: any): void"}
+{"instruction":"What does onTouchBegan need to return?","input":"","output":"boolean — must return true to claim the touch and receive onTouchMoved/onTouchEnded callbacks."}
+{"instruction":"How do you convert a touch position to node-local coordinates?","input":"","output":"const loc = touch.getLocation(); const local = node.convertToNodeSpace(loc);"}
+{"instruction":"What is the second parameter of cc.eventManager.addListener?","input":"","output":"nodeOrPriority: cc.Node | number — pass a node for scene-graph priority or a number for fixed priority."}
+{"instruction":"What is the return type of cc.eventManager.addCustomListener?","input":"","output":"cc.EventListener"}

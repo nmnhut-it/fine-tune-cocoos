@@ -1,0 +1,44 @@
+{"instruction":"What class does cc.Layer extend?","input":"","output":"cc.Layer extends cc.Node."}
+{"instruction":"How do you create a cc.Layer?","input":"","output":"const layer = new cc.Layer()"}
+{"instruction":"What does cc.Layer.bake() do?","input":"","output":"layer.bake(): void — HTML5 only: caches children to a bake sprite for performance."}
+{"instruction":"What does cc.Layer.unbake() do?","input":"","output":"layer.unbake(): void — removes the bake cache created by bake()."}
+{"instruction":"How do you check if a cc.Layer is baked?","input":"","output":"layer.isBaked(): boolean"}
+{"instruction":"Is bake() available on all platforms?","input":"","output":"No. bake() is HTML5 only. It caches children to a bake sprite."}
+{"instruction":"What class does cc.LayerColor extend?","input":"","output":"cc.LayerColor extends cc.Layer."}
+{"instruction":"How do you create a cc.LayerColor?","input":"","output":"new cc.LayerColor(color?: cc.Color) or new cc.LayerColor(color: cc.Color, width: number, height: number)."}
+{"instruction":"What is the static factory method for cc.LayerColor?","input":"","output":"cc.LayerColor.create(color?: cc.Color): cc.LayerColor or cc.LayerColor.create(color, width, height)."}
+{"instruction":"How do you change only the width of a cc.LayerColor?","input":"","output":"layer.changeWidth(w: number): void"}
+{"instruction":"How do you change only the height of a cc.LayerColor?","input":"","output":"layer.changeHeight(h: number): void"}
+{"instruction":"How do you change both width and height of a cc.LayerColor at once?","input":"","output":"layer.changeWidthAndHeight(w: number, h: number): void"}
+{"instruction":"What is the difference between changeWidth and changeWidthAndHeight on cc.LayerColor?","input":"","output":"changeWidth(w) changes only width. changeWidthAndHeight(w, h) changes both width and height in one call."}
+{"instruction":"How do you get the blend function of a cc.LayerColor?","input":"","output":"layer.getBlendFunc(): cc.BlendFunc"}
+{"instruction":"What are the signatures of setBlendFunc on cc.LayerColor?","input":"","output":"layer.setBlendFunc(src: cc.BlenderConst, dst: cc.BlenderConst): void or layer.setBlendFunc(blendFunc: cc.BlendFunc): void."}
+{"instruction":"What does getBlendFunc return on cc.LayerColor?","input":"","output":"cc.BlendFunc"}
+{"instruction":"What class does cc.LayerGradient extend?","input":"","output":"cc.LayerGradient extends cc.LayerColor."}
+{"instruction":"How do you create a cc.LayerGradient?","input":"","output":"new cc.LayerGradient(start: cc.Color, end: cc.Color, v?: cc.Point) — v is the gradient direction vector."}
+{"instruction":"What is the static factory for cc.LayerGradient?","input":"","output":"cc.LayerGradient.create(start: cc.Color, end: cc.Color, v?: cc.Point): cc.LayerGradient"}
+{"instruction":"How do you get the start color of a cc.LayerGradient?","input":"","output":"layer.getStartColor(): cc.Color"}
+{"instruction":"How do you set the start color of a cc.LayerGradient?","input":"","output":"layer.setStartColor(color: cc.Color): void"}
+{"instruction":"How do you get the end color of a cc.LayerGradient?","input":"","output":"layer.getEndColor(): cc.Color"}
+{"instruction":"How do you set the end color of a cc.LayerGradient?","input":"","output":"layer.setEndColor(color: cc.Color): void"}
+{"instruction":"How do you get the start opacity of a cc.LayerGradient?","input":"","output":"layer.getStartOpacity(): number"}
+{"instruction":"How do you set the start opacity of a cc.LayerGradient?","input":"","output":"layer.setStartOpacity(o: number): void — value range 0–255."}
+{"instruction":"How do you get the end opacity of a cc.LayerGradient?","input":"","output":"layer.getEndOpacity(): number"}
+{"instruction":"How do you set the end opacity of a cc.LayerGradient?","input":"","output":"layer.setEndOpacity(o: number): void — value range 0–255."}
+{"instruction":"How do you get the gradient direction vector?","input":"","output":"layer.getVector(): cc.Point"}
+{"instruction":"How do you set the gradient direction vector?","input":"","output":"layer.setVector(v: cc.Point): void"}
+{"instruction":"What does isCompressedInterpolation do on cc.LayerGradient?","input":"","output":"layer.isCompressedInterpolation(): boolean — returns whether compressed interpolation is enabled."}
+{"instruction":"How do you enable or disable compressed interpolation on cc.LayerGradient?","input":"","output":"layer.setCompressedInterpolation(compress: boolean): void"}
+{"instruction":"What direct properties does cc.LayerGradient expose?","input":"","output":"startColor: cc.Color, endColor: cc.Color, startOpacity: number, endOpacity: number, vector: number."}
+{"instruction":"Is cc.Layer.setOpacity() a valid method?","input":"","output":"No. cc.Layer does not have setOpacity. Use cc.LayerColor which inherits opacity control, or set opacity on individual child nodes."}
+{"instruction":"What class does cc.LayerMultiplex extend?","input":"","output":"cc.LayerMultiplex extends cc.Layer."}
+{"instruction":"How do you create a cc.LayerMultiplex?","input":"","output":"new cc.LayerMultiplex(...layers: cc.Layer[]) or cc.LayerMultiplex.create(...layers: cc.Layer[])."}
+{"instruction":"How do you add a layer to cc.LayerMultiplex after creation?","input":"","output":"multiplex.addLayer(layer: cc.Layer): void"}
+{"instruction":"How do you switch to a different layer in cc.LayerMultiplex?","input":"","output":"multiplex.switchTo(n: number): void — shows layer at index n and removes current."}
+{"instruction":"What is the difference between switchTo and switchToAndReleaseMe on cc.LayerMultiplex?","input":"","output":"switchTo(n) switches to layer n and removes current. switchToAndReleaseMe(n) also releases/deallocates the current layer."}
+{"instruction":"What are the parameters of switchToAndReleaseMe?","input":"","output":"multiplex.switchToAndReleaseMe(n: number): void — n is the index of the layer to switch to."}
+{"instruction":"Which class has the changeWidthAndHeight method?","input":"","output":"cc.LayerColor — layer.changeWidthAndHeight(w: number, h: number): void."}
+{"instruction":"Which class has getStartColor and setStartColor methods?","input":"","output":"cc.LayerGradient — layer.getStartColor(): cc.Color and layer.setStartColor(color: cc.Color): void."}
+{"instruction":"Is cc.LayerGradient.setDirection a valid method?","input":"","output":"No. Use layer.setVector(v: cc.Point): void to set the gradient direction."}
+{"instruction":"Is cc.LayerColor.setColor a valid method for changing the layer color?","input":"","output":"No. Use the constructor new cc.LayerColor(color) or inherited cc.Node color methods. cc.LayerColor-specific sizing uses changeWidth/changeHeight."}
+{"instruction":"What is the inheritance chain for cc.LayerGradient?","input":"","output":"cc.LayerGradient extends cc.LayerColor extends cc.Layer extends cc.Node."}

@@ -1,0 +1,65 @@
+{"instruction": "How to create a label with system font?", "input": "", "output": "cc.Label.createWithSystemFont(text, font, fontSize, dimensions?, hAlignment?, vAlignment?): cc.Label"}
+{"instruction": "What is the signature of cc.Label.createWithSystemFont?", "input": "", "output": "cc.Label.createWithSystemFont(text: string, font: string, fontSize: number, dimensions?: cc.Size, hAlignment?: number, vAlignment?: number): cc.Label"}
+{"instruction": "How to create a label with TTF font?", "input": "", "output": "cc.Label.createWithTTF(ttfConfig, text, hAlignment?, maxLineWidth?): cc.Label"}
+{"instruction": "What is the signature of cc.Label.createWithTTF?", "input": "", "output": "cc.Label.createWithTTF(ttfConfig: any, text: string, hAlignment?: number, maxLineWidth?: number): cc.Label"}
+{"instruction": "How to create a label with bitmap font?", "input": "", "output": "cc.Label.createWithBMFont(bmfontFilePath, text, hAlignment?, maxLineWidth?, imageOffset?): cc.Label"}
+{"instruction": "What is the signature of cc.Label.createWithBMFont?", "input": "", "output": "cc.Label.createWithBMFont(bmfontFilePath: string, text: string, hAlignment?: number, maxLineWidth?: number, imageOffset?: cc.Point): cc.Label"}
+{"instruction": "How to create a label with char map?", "input": "", "output": "cc.Label.createWithCharMap(charMapFile, itemWidth, itemHeight, startCharCode): cc.Label"}
+{"instruction": "What are the overloads of cc.Label.createWithCharMap?", "input": "", "output": "Three overloads: (charMapFile, itemWidth, itemHeight, startCharCode), (texture, itemWidth, itemHeight, startCharCode), (plistFile)."}
+{"instruction": "What does cc.Label.create() return?", "input": "", "output": "cc.Label.create() returns an empty cc.Label instance."}
+{"instruction": "What class does cc.Label extend?", "input": "", "output": "cc.Label extends cc.Node."}
+{"instruction": "What does label.getString() return?", "input": "", "output": "label.getString() returns string — the label's text content."}
+{"instruction": "What is the signature of label.setString?", "input": "", "output": "label.setString(text: string): void"}
+{"instruction": "What does label.getStringLength() return?", "input": "", "output": "label.getStringLength() returns number — character count of the text."}
+{"instruction": "What does label.getStringNumLines() return?", "input": "", "output": "label.getStringNumLines() returns number — number of text lines."}
+{"instruction": "What does label.updateContent() do?", "input": "", "output": "label.updateContent(): void — forces an immediate text update."}
+{"instruction": "What does label.getHorizontalAlignment() return?", "input": "", "output": "label.getHorizontalAlignment() returns number — cc.TEXT_ALIGNMENT_LEFT/CENTER/RIGHT."}
+{"instruction": "What is the signature of label.setHorizontalAlignment?", "input": "", "output": "label.setHorizontalAlignment(alignment: number): void"}
+{"instruction": "What does label.getVerticalAlignment() return?", "input": "", "output": "label.getVerticalAlignment() returns number — cc.VERTICAL_TEXT_ALIGNMENT_TOP/CENTER/BOTTOM."}
+{"instruction": "What is the signature of label.setVerticalAlignment?", "input": "", "output": "label.setVerticalAlignment(alignment: number): void"}
+{"instruction": "What is the signature of label.setAlignment?", "input": "", "output": "label.setAlignment(hAlignment: number, vAlignment?: number): void"}
+{"instruction": "What does label.getTextAlignment() return?", "input": "", "output": "label.getTextAlignment() returns number."}
+{"instruction": "What does label.getDimensions() return?", "input": "", "output": "label.getDimensions() returns cc.Size — the clipping box dimensions."}
+{"instruction": "What is the signature of label.setDimensions?", "input": "", "output": "label.setDimensions(width: number, height: number): void — height=0 means auto."}
+{"instruction": "What does label.getMaxLineWidth() return?", "input": "", "output": "label.getMaxLineWidth() returns number."}
+{"instruction": "What is the signature of label.setMaxLineWidth?", "input": "", "output": "label.setMaxLineWidth(maxLineWidth: number): void"}
+{"instruction": "What is the signature of label.setLineBreakWithoutSpace?", "input": "", "output": "label.setLineBreakWithoutSpace(enabled: boolean): void"}
+{"instruction": "What does label.isClipMarginEnabled() return?", "input": "", "output": "label.isClipMarginEnabled() returns boolean."}
+{"instruction": "What is the signature of label.setClipMarginEnabled?", "input": "", "output": "label.setClipMarginEnabled(enabled: boolean): void"}
+{"instruction": "What does label.getWidth() return?", "input": "", "output": "label.getWidth() returns number."}
+{"instruction": "What is the signature of label.setWidth?", "input": "", "output": "label.setWidth(width: number): void"}
+{"instruction": "What does label.getHeight() return?", "input": "", "output": "label.getHeight() returns number."}
+{"instruction": "What is the signature of label.setHeight?", "input": "", "output": "label.setHeight(height: number): void"}
+{"instruction": "What does label.getTextColor() return?", "input": "", "output": "label.getTextColor() returns cc.Color."}
+{"instruction": "What is the signature of label.setTextColor?", "input": "", "output": "label.setTextColor(color: cc.Color): void — different from node.setColor()."}
+{"instruction": "What is the signature of label.enableOutline?", "input": "", "output": "label.enableOutline(color: cc.Color, outlineSize: number): void — TTF/system font only."}
+{"instruction": "What is the signature of label.enableShadow?", "input": "", "output": "label.enableShadow(color?: cc.Color, offset?: cc.Size, blurRadius?: number): void"}
+{"instruction": "What is the signature of label.enableGlow?", "input": "", "output": "label.enableGlow(color: cc.Color): void — TTF only."}
+{"instruction": "What is the signature of label.enableGradient?", "input": "", "output": "label.enableGradient(first: cc.Color, second: cc.Color, direction: cc.Color): void — also supports 3-color variant."}
+{"instruction": "What does label.disableEffect() do?", "input": "", "output": "label.disableEffect(): void — disables all effects. Or label.disableEffect(effect: number) to disable a specific one."}
+{"instruction": "What is the signature of label.setBlendFunc?", "input": "", "output": "label.setBlendFunc(src: cc.BlendFunc): void — or label.setBlendFunc(src, dst)."}
+{"instruction": "What does label.getSystemFontName() return?", "input": "", "output": "label.getSystemFontName() returns string — the system font family name."}
+{"instruction": "What is the signature of label.setSystemFontName?", "input": "", "output": "label.setSystemFontName(fontName: string): void"}
+{"instruction": "What does label.getSystemFontSize() return?", "input": "", "output": "label.getSystemFontSize() returns number."}
+{"instruction": "What is the signature of label.setSystemFontSize?", "input": "", "output": "label.setSystemFontSize(fontSize: number): void"}
+{"instruction": "What does label.getBMFontFilePath() return?", "input": "", "output": "label.getBMFontFilePath() returns string — the path to the .fnt file."}
+{"instruction": "What is the signature of label.setBMFontFilePath?", "input": "", "output": "label.setBMFontFilePath(path: string, imageOffset: cc.Point): void"}
+{"instruction": "What does label.getTTFConfig() return?", "input": "", "output": "label.getTTFConfig() returns the TTF configuration object."}
+{"instruction": "What does label.getLineHeight() return?", "input": "", "output": "label.getLineHeight() returns number — not supported for system fonts."}
+{"instruction": "What is the signature of label.setLineHeight?", "input": "", "output": "label.setLineHeight(lineHeight: number): void"}
+{"instruction": "What does label.getAdditionalKerning() return?", "input": "", "output": "label.getAdditionalKerning() returns number."}
+{"instruction": "What is the signature of label.setAdditionalKerning?", "input": "", "output": "label.setAdditionalKerning(kerning: number): void"}
+{"instruction": "What does label.getLetter() return?", "input": "", "output": "label.getLetter(letterIndex: number) returns cc.Sprite — not supported for system fonts."}
+{"instruction": "What is the signature of label.enableCubicBezierCurves?", "input": "", "output": "label.enableCubicBezierCurves(origin, control1, control2, destination, align?, segments?): void"}
+{"instruction": "What is the signature of label.enableQuadBezierCurves?", "input": "", "output": "label.enableQuadBezierCurves(origin, control, destination, align?, segments?): void"}
+{"instruction": "What is the signature of label.setBezierAlignment?", "input": "", "output": "label.setBezierAlignment(align: number): void — 0=LEFT, 1=CENTER, 2=RIGHT, 3=STRETCH."}
+{"instruction": "What are the horizontal text alignment constants?", "input": "", "output": "cc.TEXT_ALIGNMENT_LEFT (0), cc.TEXT_ALIGNMENT_CENTER (1), cc.TEXT_ALIGNMENT_RIGHT (2)."}
+{"instruction": "What are the vertical text alignment constants?", "input": "", "output": "cc.VERTICAL_TEXT_ALIGNMENT_TOP (0), cc.VERTICAL_TEXT_ALIGNMENT_CENTER (1), cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM (2)."}
+{"instruction": "Is cc.Label.create(text, font, size) a valid call?", "input": "", "output": "No. cc.Label.create() takes no arguments. Use cc.Label.createWithSystemFont(text, font, size)."}
+{"instruction": "Is label.setText() a valid method?", "input": "", "output": "No. Use label.setString(text: string) to set the text content."}
+{"instruction": "Is label.setFontSize() a valid method?", "input": "", "output": "No. Use label.setSystemFontSize(fontSize) for system fonts, or set fontSize in the TTF config."}
+{"instruction": "Is cc.Label.createWithFont() a valid method?", "input": "", "output": "No. Use cc.Label.createWithSystemFont(), createWithTTF(), or createWithBMFont()."}
+{"instruction": "Is label.setOutline() a valid method?", "input": "", "output": "No. Use label.enableOutline(color: cc.Color, outlineSize: number)."}
+{"instruction": "Which class has the enableOutline method?", "input": "", "output": "cc.Label — label.enableOutline(color, outlineSize)."}
+{"instruction": "Which class has the enableGlow method?", "input": "", "output": "cc.Label — label.enableGlow(color). TTF only."}
+{"instruction": "Which class has the getLetter method?", "input": "", "output": "cc.Label — label.getLetter(letterIndex): cc.Sprite."}

@@ -1,0 +1,26 @@
+{"instruction":"How do you play background music in Cocos2d-x?","input":"","output":"cc.audioEngine.playMusic(url: string, loop: boolean): void"}
+{"instruction":"What are the parameters of cc.audioEngine.playMusic?","input":"","output":"url: string (path to audio file), loop: boolean (true to loop)."}
+{"instruction":"How do you stop background music?","input":"","output":"cc.audioEngine.stopMusic(releaseData?: boolean): void — pass true to also release the audio data."}
+{"instruction":"How do you pause background music?","input":"","output":"cc.audioEngine.pauseMusic(): void"}
+{"instruction":"How do you resume paused background music?","input":"","output":"cc.audioEngine.resumeMusic(): void"}
+{"instruction":"What does cc.audioEngine.rewindMusic do?","input":"","output":"cc.audioEngine.rewindMusic(): void — restarts the current background music from the beginning."}
+{"instruction":"How do you check if music is currently playing?","input":"","output":"cc.audioEngine.isMusicPlaying(): boolean"}
+{"instruction":"What does cc.audioEngine.willPlayMusic return?","input":"","output":"boolean — indicates whether music will play (audio engine is ready)."}
+{"instruction":"How do you get the music volume?","input":"","output":"cc.audioEngine.getMusicVolume(): number — returns value from 0.0 to 1.0."}
+{"instruction":"How do you set the music volume?","input":"","output":"cc.audioEngine.setMusicVolume(volume: number): void — volume range 0.0 to 1.0."}
+{"instruction":"How do you preload background music?","input":"","output":"cc.audioEngine.preloadMusic(path: string): void"}
+{"instruction":"How do you play a sound effect in Cocos2d-x?","input":"","output":"cc.audioEngine.playEffect(url: string, loop?: boolean, pitch?: number, pan?: number, gain?: number): number | null"}
+{"instruction":"What does playEffect return?","input":"","output":"number | null — an audio ID to control the specific effect instance, or null on failure."}
+{"instruction":"What are all the parameters of cc.audioEngine.playEffect?","input":"","output":"url: string, loop?: boolean, pitch?: number, pan?: number, gain?: number. Only url is required."}
+{"instruction":"How do you stop a specific sound effect?","input":"","output":"cc.audioEngine.stopEffect(audioId: number): void"}
+{"instruction":"How do you pause a specific sound effect?","input":"","output":"cc.audioEngine.pauseEffect(audioId: number): void"}
+{"instruction":"How do you resume a paused sound effect?","input":"","output":"cc.audioEngine.resumeEffect(audioId: number): void"}
+{"instruction":"How do you stop all sound effects at once?","input":"","output":"cc.audioEngine.stopAllEffects(): void"}
+{"instruction":"How do you pause all sound effects?","input":"","output":"cc.audioEngine.pauseAllEffects(): void"}
+{"instruction":"How do you resume all paused sound effects?","input":"","output":"cc.audioEngine.resumeAllEffects(): void"}
+{"instruction":"How do you unload a preloaded sound effect?","input":"","output":"cc.audioEngine.unloadEffect(url: string): void"}
+{"instruction":"How do you get the effects volume?","input":"","output":"cc.audioEngine.getEffectsVolume(): number — returns value from 0.0 to 1.0."}
+{"instruction":"How do you set the effects volume?","input":"","output":"cc.audioEngine.setEffectsVolume(volume: number): void — volume range 0.0 to 1.0."}
+{"instruction":"How do you preload a sound effect?","input":"","output":"cc.audioEngine.preloadEffect(path: string): void"}
+{"instruction":"How do you fully clean up the audio engine?","input":"","output":"cc.audioEngine.end(): void — stops music and all effects, releases all resources."}
+{"instruction":"Is cc.audioEngine.play() a valid method and what is the difference between stopMusic and end?","input":"","output":"No. Use playMusic(url, loop) for music or playEffect(url) for effects. stopMusic() stops only music; end() stops everything and releases all resources."}

@@ -1,0 +1,66 @@
+{"instruction":"How do you replace the current scene in Cocos2d-x?","input":"","output":"cc.director.runScene(scene: cc.Scene): void"}
+{"instruction":"How do you push a scene onto the stack?","input":"","output":"cc.director.pushScene(scene: cc.Scene): void"}
+{"instruction":"How do you pop back to the previous scene?","input":"","output":"cc.director.popScene(): void"}
+{"instruction":"How do you pop all scenes back to the root?","input":"","output":"cc.director.popToRootScene(): void"}
+{"instruction":"What does cc.director.popToSceneStackLevel do?","input":"","output":"cc.director.popToSceneStackLevel(level: number): void — pops scenes until the stack has the given number of scenes."}
+{"instruction":"How do you get the currently running scene?","input":"","output":"cc.director.getRunningScene(): cc.Scene"}
+{"instruction":"How do you pause the director?","input":"","output":"cc.director.pause(): void"}
+{"instruction":"How do you resume the director?","input":"","output":"cc.director.resume(): void"}
+{"instruction":"How do you check if the director is paused?","input":"","output":"cc.director.isPaused(): boolean"}
+{"instruction":"How do you end the director lifecycle?","input":"","output":"cc.director.end(): void"}
+{"instruction":"Difference between cc.director.runScene and cc.director.pushScene?","input":"","output":"cc.director.runScene(scene) replaces the running scene. cc.director.pushScene(scene) pushes onto the scene stack, allowing popScene() to return."}
+{"instruction":"Is cc.director.replaceScene a valid method?","input":"","output":"No. The correct method is cc.director.runScene(scene)."}
+{"instruction":"Is cc.director.loadScene a valid method?","input":"","output":"No. Use cc.director.runScene(scene) to switch scenes in Cocos2d-x JS."}
+{"instruction":"How do you get the window size?","input":"","output":"cc.director.getWinSize(): cc.Size — returns size in points."}
+{"instruction":"How do you get the window size in pixels?","input":"","output":"cc.director.getWinSizeInPixels(): cc.Size"}
+{"instruction":"How do you get the visible size?","input":"","output":"cc.director.getVisibleSize(): cc.Size"}
+{"instruction":"How do you get the visible origin?","input":"","output":"cc.director.getVisibleOrigin(): cc.Point"}
+{"instruction":"Difference between getWinSize and getVisibleSize?","input":"","output":"getWinSize() returns the full window size in points. getVisibleSize() returns the visible area, which may differ on devices with notches or safe areas."}
+{"instruction":"How do you get the content scale factor?","input":"","output":"cc.director.getContentScaleFactor(): number"}
+{"instruction":"How do you set the content scale factor?","input":"","output":"cc.director.setContentScaleFactor(scale: number): void"}
+{"instruction":"How do you get the delta time since last frame?","input":"","output":"cc.director.getDeltaTime(): number — returns seconds since last frame."}
+{"instruction":"How do you get seconds per frame?","input":"","output":"cc.director.getSecondsPerFrame(): number"}
+{"instruction":"How do you get total rendered frames?","input":"","output":"cc.director.getTotalFrames(): number"}
+{"instruction":"How do you get the target animation interval?","input":"","output":"cc.director.getAnimationInterval(): number — returns target frame duration (e.g., 1/60)."}
+{"instruction":"How do you set the FPS to 30 in Cocos2d-x?","input":"","output":"cc.director.setAnimationInterval(1 / 30)"}
+{"instruction":"What is the signature of setAnimationInterval?","input":"","output":"cc.director.setAnimationInterval(value: number): void — value is seconds per frame (e.g., 1/60 for 60 FPS)."}
+{"instruction":"How do you show or hide FPS stats?","input":"","output":"cc.director.setDisplayStats(show: boolean): void"}
+{"instruction":"How do you check if FPS stats are displayed?","input":"","output":"cc.director.isDisplayStats(): boolean"}
+{"instruction":"How do you get the safe area on notched devices?","input":"","output":"cc.director.getSafeAreaRect(): cc.Rect"}
+{"instruction":"How do you start the animation loop?","input":"","output":"cc.director.startAnimation(): void"}
+{"instruction":"How do you stop the animation loop?","input":"","output":"cc.director.stopAnimation(): void"}
+{"instruction":"How do you get the scheduler?","input":"","output":"cc.director.getScheduler(): cc.Scheduler"}
+{"instruction":"How do you set a custom scheduler?","input":"","output":"cc.director.setScheduler(scheduler: cc.Scheduler): void"}
+{"instruction":"How do you get the action manager?","input":"","output":"cc.director.getActionManager(): cc.ActionManager"}
+{"instruction":"How do you set a custom action manager?","input":"","output":"cc.director.setActionManager(manager: cc.ActionManager): void"}
+{"instruction":"How do you purge all cached data?","input":"","output":"cc.director.purgeCachedData(): void — purges textureCache, spriteFrameCache, and animationCache."}
+{"instruction":"How do you convert UI coordinates to GL coordinates?","input":"","output":"cc.director.convertToGL(uiPoint: cc.Point): cc.Point"}
+{"instruction":"How do you convert GL coordinates to UI coordinates?","input":"","output":"cc.director.convertToUI(glPoint: cc.Point): cc.Point"}
+{"instruction":"What are the static event constants on cc.Director?","input":"","output":"cc.Director.EVENT_AFTER_DRAW, cc.Director.EVENT_AFTER_UPDATE, cc.Director.EVENT_AFTER_VISIT, cc.Director.EVENT_PROJECTION_CHANGED"}
+{"instruction":"What are the projection constants on cc.Director?","input":"","output":"cc.Director.PROJECTION_2D, cc.Director.PROJECTION_3D (default)"}
+{"instruction":"Is cc.Director.EVENT_BEFORE_UPDATE a valid constant?","input":"","output":"No. Valid constants are cc.Director.EVENT_AFTER_DRAW, EVENT_AFTER_UPDATE, EVENT_AFTER_VISIT, EVENT_PROJECTION_CHANGED."}
+{"instruction":"What class does cc.Scene extend?","input":"","output":"cc.Scene extends cc.Node."}
+{"instruction":"How do you create a transition fade between scenes?","input":"","output":"const transition = new cc.TransitionFade(0.5, nextScene); cc.director.runScene(transition);"}
+{"instruction":"What is the signature of cc.TransitionScene constructor?","input":"","output":"new cc.TransitionScene(duration: number, scene: cc.Scene)"}
+{"instruction":"What class does cc.TransitionFade extend?","input":"","output":"cc.TransitionFade extends cc.TransitionScene, which extends cc.Scene."}
+{"instruction":"How do you set the time scale for slow motion?","input":"","output":"cc.director.getScheduler().setTimeScale(0.5) — 0.5 = half speed, 2.0 = double speed."}
+{"instruction":"How do you get the current time scale?","input":"","output":"cc.director.getScheduler().getTimeScale(): number"}
+{"instruction":"What is the signature of scheduler.scheduleCallbackForTarget?","input":"","output":"scheduler.scheduleCallbackForTarget(target, callback, interval, repeat, delay, paused): void"}
+{"instruction":"How do you unschedule a specific callback?","input":"","output":"scheduler.unscheduleCallbackForTarget(target, callback): void"}
+{"instruction":"How do you schedule an update for a target?","input":"","output":"scheduler.scheduleUpdateForTarget(target: cc.Class, priority: number, paused: boolean): void"}
+{"instruction":"How do you unschedule update for a target?","input":"","output":"scheduler.unscheduleUpdateForTarget(target: cc.Class): void"}
+{"instruction":"How do you unschedule all callbacks for a target?","input":"","output":"scheduler.unscheduleAllCallbacksForTarget(target: cc.Class): void"}
+{"instruction":"How do you pause a scheduler target?","input":"","output":"scheduler.pauseTarget(target: cc.Class): void"}
+{"instruction":"How do you resume a scheduler target?","input":"","output":"scheduler.resumeTarget(target: cc.Class): void"}
+{"instruction":"How do you check if a scheduler target is paused?","input":"","output":"scheduler.isTargetPaused(target: cc.Class): boolean"}
+{"instruction":"How do you pause all scheduler targets?","input":"","output":"scheduler.pauseAllTargets(): void"}
+{"instruction":"What does scheduler.pauseAllTargetsWithMinPriority do?","input":"","output":"scheduler.pauseAllTargetsWithMinPriority(minPriority: number): void — pauses targets with priority >= minPriority."}
+{"instruction":"How do you add an action via ActionManager?","input":"","output":"mgr.addAction(action: cc.Action, target: cc.Node, paused: boolean): void"}
+{"instruction":"How do you get an action by tag?","input":"","output":"mgr.getActionByTag(tag: number, target: cc.Node): cc.Action"}
+{"instruction":"How do you pause all running actions?","input":"","output":"mgr.pauseAllRunningActions(): cc.Node[] — returns array of paused targets for later resuming."}
+{"instruction":"How do you resume paused action targets?","input":"","output":"mgr.resumeTargets(targets: cc.Node[]): void — pass the array returned by pauseAllRunningActions()."}
+{"instruction":"How do you remove an action?","input":"","output":"mgr.removeAction(action: cc.Action): void"}
+{"instruction":"How do you remove an action by tag?","input":"","output":"mgr.removeActionByTag(tag: number, target: cc.Node): void"}
+{"instruction":"How do you remove all actions from a target?","input":"","output":"mgr.removeAllActionsFromTarget(target: cc.Node, forceDelete: boolean): void"}
+{"instruction":"How do you remove all actions globally?","input":"","output":"mgr.removeAllActions(): void"}
+{"instruction":"What does cc.loader.load do?","input":"","output":"cc.loader.load(resources: string[], cb: Function): void — loads an array of resources asynchronously."}

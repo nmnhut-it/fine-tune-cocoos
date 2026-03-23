@@ -1,0 +1,105 @@
+{"instruction": "What properties does cc.Node have?", "input": "", "output": "x, y, width, height, rotation, rotationX, rotationY, scale, scaleX, scaleY, skewX, skewY, opacity, color, visible, tag, zIndex, parent, children, childrenCount, running, anchorX, anchorY, and more."}
+{"instruction": "What is node.running?", "input": "", "output": "node.running: boolean (readonly) — true if the node is currently on the stage (added to the scene graph)."}
+{"instruction": "What is node.cascadeOpacity?", "input": "", "output": "node.cascadeOpacity: boolean — when true, opacity changes propagate to child nodes."}
+{"instruction": "What is node.cascadeColor?", "input": "", "output": "node.cascadeColor: boolean — when true, color changes propagate to child nodes."}
+{"instruction": "What is node.ignoreAnchor?", "input": "", "output": "node.ignoreAnchor: boolean — if true, anchor point is ignored for positioning (treated as 0,0)."}
+{"instruction": "What is node.userData?", "input": "", "output": "node.userData: object — custom user data attached to the node."}
+{"instruction": "What is node.scheduler?", "input": "", "output": "node.scheduler: cc.Scheduler — the scheduler associated with this node."}
+{"instruction": "What is node.actionManager?", "input": "", "output": "node.actionManager: cc.ActionManager — the action manager for this node."}
+{"instruction": "What is node.shaderProgram?", "input": "", "output": "node.shaderProgram: cc.GLProgram — the shader program used by this node."}
+{"instruction": "What is node.vertexZ?", "input": "", "output": "node.vertexZ: number — the real OpenGL Z vertex."}
+{"instruction": "What does node.getPosition() return?", "input": "", "output": "node.getPosition() returns cc.Point."}
+{"instruction": "What is the signature of node.setPosition?", "input": "", "output": "node.setPosition(x: number, y: number): void — or node.setPosition(pos: cc.Point): void."}
+{"instruction": "What does node.getPositionX() return?", "input": "", "output": "node.getPositionX() returns number."}
+{"instruction": "What is the signature of node.setPositionX?", "input": "", "output": "node.setPositionX(x: number): void"}
+{"instruction": "What does node.getPositionY() return?", "input": "", "output": "node.getPositionY() returns number."}
+{"instruction": "What is the signature of node.setPositionY?", "input": "", "output": "node.setPositionY(y: number): void"}
+{"instruction": "What does node.getNormalizedPosition() return?", "input": "", "output": "node.getNormalizedPosition() returns cc.Point — position as 0-1 fraction of parent size."}
+{"instruction": "What is the signature of node.setNormalizedPosition?", "input": "", "output": "node.setNormalizedPosition(pos: cc.Point): void — or node.setNormalizedPosition(x, y)."}
+{"instruction": "What does node.getContentSize() return?", "input": "", "output": "node.getContentSize() returns cc.Size."}
+{"instruction": "What is the signature of node.setContentSize?", "input": "", "output": "node.setContentSize(size: cc.Size): void — or node.setContentSize(width, height)."}
+{"instruction": "What does node.getAnchorPoint() return?", "input": "", "output": "node.getAnchorPoint() returns cc.Point — normalized (0-1) anchor."}
+{"instruction": "What is the signature of node.setAnchorPoint?", "input": "", "output": "node.setAnchorPoint(point: cc.Point): void — or node.setAnchorPoint(x, y)."}
+{"instruction": "What does node.getAnchorPointInPoints() return?", "input": "", "output": "node.getAnchorPointInPoints() returns cc.Point — anchor position in pixels."}
+{"instruction": "What is the signature of node.ignoreAnchorPointForPosition?", "input": "", "output": "node.ignoreAnchorPointForPosition(newValue: boolean): void"}
+{"instruction": "What does node.isIgnoreAnchorPointForPosition() return?", "input": "", "output": "node.isIgnoreAnchorPointForPosition() returns boolean."}
+{"instruction": "What does node.getRotation() return?", "input": "", "output": "node.getRotation() returns number — rotation in degrees (clockwise positive)."}
+{"instruction": "What is the signature of node.setRotation?", "input": "", "output": "node.setRotation(degrees: number): void"}
+{"instruction": "What does node.getScale() return?", "input": "", "output": "node.getScale() returns number."}
+{"instruction": "What is the signature of node.setScale?", "input": "", "output": "node.setScale(scale: number): void — or node.setScale(scaleX, scaleY)."}
+{"instruction": "What does node.getScaleX() return?", "input": "", "output": "node.getScaleX() returns number."}
+{"instruction": "What is the signature of node.setScaleX?", "input": "", "output": "node.setScaleX(scaleX: number): void"}
+{"instruction": "What does node.getScaleY() return?", "input": "", "output": "node.getScaleY() returns number."}
+{"instruction": "What is the signature of node.setScaleY?", "input": "", "output": "node.setScaleY(scaleY: number): void"}
+{"instruction": "What does node.getSkewX() return?", "input": "", "output": "node.getSkewX() returns number."}
+{"instruction": "What is the signature of node.setSkewX?", "input": "", "output": "node.setSkewX(degrees: number): void"}
+{"instruction": "What does node.getSkewY() return?", "input": "", "output": "node.getSkewY() returns number."}
+{"instruction": "What is the signature of node.setSkewY?", "input": "", "output": "node.setSkewY(degrees: number): void"}
+{"instruction": "What does node.getRotation3D() return?", "input": "", "output": "node.getRotation3D() returns cc.math.Vec3 — JSB native only."}
+{"instruction": "What is the signature of node.setRotation3D?", "input": "", "output": "node.setRotation3D(rotation: cc.math.Vec3): void — JSB native only."}
+{"instruction": "What does node.getPosition3D() return?", "input": "", "output": "node.getPosition3D() returns cc.math.Vec3 — JSB native only."}
+{"instruction": "What is the signature of node.setPosition3D?", "input": "", "output": "node.setPosition3D(position: cc.math.Vec3): void — JSB native only."}
+{"instruction": "What does node.isVisible() return?", "input": "", "output": "node.isVisible() returns boolean."}
+{"instruction": "What is the signature of node.setVisible?", "input": "", "output": "node.setVisible(visible: boolean): void"}
+{"instruction": "What does node.getOpacity() return?", "input": "", "output": "node.getOpacity() returns number (0–255)."}
+{"instruction": "What is the signature of node.setOpacity?", "input": "", "output": "node.setOpacity(opacity: number): void — 0–255."}
+{"instruction": "What does node.getDisplayedOpacity() return?", "input": "", "output": "node.getDisplayedOpacity() returns number — the inherited/cascaded opacity."}
+{"instruction": "What does node.getColor() return?", "input": "", "output": "node.getColor() returns cc.Color."}
+{"instruction": "What is the signature of node.setColor?", "input": "", "output": "node.setColor(color: cc.Color): void"}
+{"instruction": "What does node.getDisplayedColor() return?", "input": "", "output": "node.getDisplayedColor() returns cc.Color — the inherited/cascaded color."}
+{"instruction": "What does node.isCascadeOpacityEnabled() return?", "input": "", "output": "node.isCascadeOpacityEnabled() returns boolean."}
+{"instruction": "What is the signature of node.setCascadeOpacityEnabled?", "input": "", "output": "node.setCascadeOpacityEnabled(enabled: boolean): void"}
+{"instruction": "What does node.isCascadeColorEnabled() return?", "input": "", "output": "node.isCascadeColorEnabled() returns boolean."}
+{"instruction": "What is the signature of node.setCascadeColorEnabled?", "input": "", "output": "node.setCascadeColorEnabled(enabled: boolean): void"}
+{"instruction": "What does node.getLocalZOrder() return?", "input": "", "output": "node.getLocalZOrder() returns number."}
+{"instruction": "What is the signature of node.setLocalZOrder?", "input": "", "output": "node.setLocalZOrder(z: number): void"}
+{"instruction": "Is node.setZOrder() a valid method?", "input": "", "output": "Yes. node.setZOrder(z) is an alias for node.setLocalZOrder(z)."}
+{"instruction": "What does node.getGlobalZOrder() return?", "input": "", "output": "node.getGlobalZOrder() returns number."}
+{"instruction": "What is the signature of node.setGlobalZOrder?", "input": "", "output": "node.setGlobalZOrder(z: number): void"}
+{"instruction": "What is the signature of node.reorderChild?", "input": "", "output": "node.reorderChild(child: cc.Node, zOrder: number): void"}
+{"instruction": "What does node.sortAllChildren() do?", "input": "", "output": "node.sortAllChildren(): void — sorts children by z-order."}
+{"instruction": "What is the signature of node.addChild?", "input": "", "output": "node.addChild(child: cc.Node, localZOrder?: number, tag?: number | string): void"}
+{"instruction": "What is the signature of node.removeChild?", "input": "", "output": "node.removeChild(child: cc.Node, cleanup?: boolean): void"}
+{"instruction": "What is the signature of node.removeChildByTag?", "input": "", "output": "node.removeChildByTag(tag: number, cleanup?: boolean): void"}
+{"instruction": "What is the signature of node.removeChildByName?", "input": "", "output": "node.removeChildByName(name: string, cleanup?: boolean): void"}
+{"instruction": "What does node.removeAllChildren() do?", "input": "", "output": "node.removeAllChildren(cleanup?: boolean): void — removes all child nodes."}
+{"instruction": "What does node.removeFromParent() do?", "input": "", "output": "node.removeFromParent(cleanup?: boolean): void — removes this node from its parent."}
+{"instruction": "What does node.getChildByTag() return?", "input": "", "output": "node.getChildByTag(tag: number) returns cc.Node or null."}
+{"instruction": "What does node.getChildByName() return?", "input": "", "output": "node.getChildByName(name: string) returns cc.Node or null."}
+{"instruction": "What does node.getChildren() return?", "input": "", "output": "node.getChildren() returns cc.Node[] — array of child nodes."}
+{"instruction": "What does node.getChildrenCount() return?", "input": "", "output": "node.getChildrenCount() returns number."}
+{"instruction": "What does node.getParent() return?", "input": "", "output": "node.getParent() returns cc.Node."}
+{"instruction": "What is the signature of node.setParent?", "input": "", "output": "node.setParent(parent: cc.Node): void"}
+{"instruction": "What is the signature of node.enumerateChildren?", "input": "", "output": "node.enumerateChildren(name: string, callback: (node: cc.Node) => boolean): void"}
+{"instruction": "What does node.getTag() return?", "input": "", "output": "node.getTag() returns number."}
+{"instruction": "What is the signature of node.setTag?", "input": "", "output": "node.setTag(tag: number): void"}
+{"instruction": "What does node.getName() return?", "input": "", "output": "node.getName() returns string."}
+{"instruction": "What is the signature of node.setName?", "input": "", "output": "node.setName(name: string): void"}
+{"instruction": "What does node.getBoundingBox() return?", "input": "", "output": "node.getBoundingBox() returns cc.Rect — in local/parent space."}
+{"instruction": "What does node.getBoundingBoxToWorld() return?", "input": "", "output": "node.getBoundingBoxToWorld() returns cc.Rect — in world space."}
+{"instruction": "What is the signature of node.convertToNodeSpace?", "input": "", "output": "node.convertToNodeSpace(worldPoint: cc.Point): cc.Point"}
+{"instruction": "What is the signature of node.convertToWorldSpace?", "input": "", "output": "node.convertToWorldSpace(nodePoint: cc.Point): cc.Point"}
+{"instruction": "What is the signature of node.convertToNodeSpaceAR?", "input": "", "output": "node.convertToNodeSpaceAR(worldPoint: cc.Point): cc.Point — anchor-relative."}
+{"instruction": "What is the signature of node.convertToWorldSpaceAR?", "input": "", "output": "node.convertToWorldSpaceAR(nodePoint: cc.Point): cc.Point — anchor-relative."}
+{"instruction": "What is the signature of node.convertTouchToNodeSpace?", "input": "", "output": "node.convertTouchToNodeSpace(touch: cc.Touch): cc.Point"}
+{"instruction": "What is the signature of node.convertTouchToNodeSpaceAR?", "input": "", "output": "node.convertTouchToNodeSpaceAR(touch: cc.Touch): cc.Point"}
+{"instruction": "Difference between convertToNodeSpace and convertToNodeSpaceAR?", "input": "", "output": "convertToNodeSpace uses the node's bottom-left as origin. convertToNodeSpaceAR uses the anchor point as origin."}
+{"instruction": "What does node.getNodeToParentTransform() return?", "input": "", "output": "node.getNodeToParentTransform(parent?: cc.Node) returns cc.AffineTransform."}
+{"instruction": "What does node.getNodeToWorldTransform() return?", "input": "", "output": "node.getNodeToWorldTransform() returns cc.AffineTransform."}
+{"instruction": "What does node.getParentToNodeTransform() return?", "input": "", "output": "node.getParentToNodeTransform() returns cc.AffineTransform."}
+{"instruction": "What does node.getWorldToNodeTransform() return?", "input": "", "output": "node.getWorldToNodeTransform() returns cc.AffineTransform."}
+{"instruction": "What is the signature of node.setAdditionalTransform?", "input": "", "output": "node.setAdditionalTransform(t: cc.AffineTransform): void"}
+{"instruction": "What does node.runAction() return?", "input": "", "output": "node.runAction(action: cc.Action) returns cc.Action — the same action passed in."}
+{"instruction": "What does node.stopAllActions() do?", "input": "", "output": "node.stopAllActions(): void — stops and removes all running actions."}
+{"instruction": "What is the signature of node.stopAction?", "input": "", "output": "node.stopAction(action: cc.Action): void"}
+{"instruction": "What is the signature of node.stopActionByTag?", "input": "", "output": "node.stopActionByTag(tag: number): void"}
+{"instruction": "What does node.getActionByTag() return?", "input": "", "output": "node.getActionByTag(tag: number) returns cc.Action."}
+{"instruction": "What does node.getNumberOfRunningActions() return?", "input": "", "output": "node.getNumberOfRunningActions() returns number."}
+{"instruction": "What does node.scheduleUpdate() do?", "input": "", "output": "node.scheduleUpdate(): void — registers update(dt) to be called every frame."}
+{"instruction": "What is the signature of node.scheduleUpdateWithPriority?", "input": "", "output": "node.scheduleUpdateWithPriority(priority: number): void"}
+{"instruction": "What does node.unscheduleUpdate() do?", "input": "", "output": "node.unscheduleUpdate(): void — stops the per-frame update callback."}
+{"instruction": "What is the signature of node.schedule?", "input": "", "output": "node.schedule(callback, interval?, repeat?, delay?, key?): void"}
+{"instruction": "What is the signature of node.scheduleOnce?", "input": "", "output": "node.scheduleOnce(callback: (dt: number) => void, delay: number, key?: string): void"}
+{"instruction": "What does node.unscheduleAllCallbacks() do?", "input": "", "output": "node.unscheduleAllCallbacks(): void — removes all scheduled callbacks."}
+{"instruction": "What are the cc.Node lifecycle callbacks?", "input": "", "output": "onEnter, onExit, onEnterTransitionDidFinish, onExitTransitionDidStart, cleanup, update."}
+{"instruction": "When is node.onEnter() called?", "input": "", "output": "node.onEnter() is called when the node is added to the stage (scene graph)."}

@@ -1,0 +1,62 @@
+{"instruction": "How do I load armature data in Cocos2d-x JS?", "input": "", "output": "ccs.armatureDataManager.addArmatureFileInfo(configFilePath: string): void"}
+{"instruction": "What are the overloads of addArmatureFileInfo?", "input": "", "output": "addArmatureFileInfo(configFilePath: string) or addArmatureFileInfo(imagePath: string, plistPath: string, configFilePath: string)"}
+{"instruction": "What does addArmatureFileInfo return?", "input": "", "output": "void."}
+{"instruction": "How do I create an armature in Cocos2d-x JS?", "input": "", "output": "new ccs.Armature(name?: string, parentBone?: ccs.Bone) or ccs.Armature.create(name?: string, parentBone?: ccs.Bone): ccs.Armature"}
+{"instruction": "What class does ccs.Armature extend?", "input": "", "output": "ccs.Armature extends cc.Node."}
+{"instruction": "What are the parameters of ccs.Armature.create()?", "input": "", "output": "ccs.Armature.create(name?: string, parentBone?: ccs.Bone): ccs.Armature — name is the armature name from the export file."}
+{"instruction": "What does ccs.Armature.create() return?", "input": "", "output": "ccs.Armature — a new armature instance."}
+{"instruction": "How do I access the animation controller of a ccs.Armature?", "input": "", "output": "armature.animation — returns a ccs.ArmatureAnimation instance."}
+{"instruction": "What properties does ccs.Armature have?", "input": "", "output": "animation: ccs.ArmatureAnimation, name: string, armatureData: ccs.ArmatureData, batchNode: cc.SpriteBatchNode, parentBone: ccs.Bone, version: number"}
+{"instruction": "How do I get a bone by name from a ccs.Armature?", "input": "", "output": "armature.getBone(name: string): ccs.Bone"}
+{"instruction": "What are the parameters of getBone on ccs.Armature?", "input": "", "output": "getBone(name: string) — name is the bone name defined in CocosStudio."}
+{"instruction": "What does getBone return on ccs.Armature?", "input": "", "output": "ccs.Bone — the bone with the given name."}
+{"instruction": "How do I get a bone at a screen position?", "input": "", "output": "armature.getBoneAtPoint(x: number, y: number): ccs.Bone"}
+{"instruction": "What does getBoneAtPoint return?", "input": "", "output": "ccs.Bone — the bone at the given (x, y) coordinates."}
+{"instruction": "How do I get all bones as a dictionary?", "input": "", "output": "armature.getBoneDic(): object"}
+{"instruction": "How do I add a bone to a ccs.Armature?", "input": "", "output": "armature.addBone(bone: ccs.Bone, parentName: string): void"}
+{"instruction": "How do I remove a bone from a ccs.Armature?", "input": "", "output": "armature.removeBone(bone: ccs.Bone, recursion: boolean): void"}
+{"instruction": "How do I create a bone by name on ccs.Armature?", "input": "", "output": "armature.createBone(boneName: string): ccs.Bone"}
+{"instruction": "How do I change a bone's parent in ccs.Armature?", "input": "", "output": "armature.changeBoneParent(bone: ccs.Bone, parentName: string): void"}
+{"instruction": "What does getAnimation return on ccs.Armature?", "input": "", "output": "ccs.ArmatureAnimation — the animation controller for this armature."}
+{"instruction": "What does getArmatureData return on ccs.Armature?", "input": "", "output": "ccs.ArmatureData — the armature's data object."}
+{"instruction": "What does getBoundingBox return on ccs.Armature?", "input": "", "output": "cc.Rect — recalculated from all bones each call."}
+{"instruction": "How do I set a collider filter on ccs.Armature?", "input": "", "output": "armature.setColliderFilter(filter: ccs.ColliderFilter): void"}
+{"instruction": "What does drawContour do on ccs.Armature?", "input": "", "output": "armature.drawContour(): void — draws the armature's debug contour."}
+{"instruction": "How do I set the blend function on ccs.Armature?", "input": "", "output": "armature.setBlendFunc(blendFunc: cc.BlendFunc) or armature.setBlendFunc(src: cc.BlenderConst, dst: cc.BlenderConst)"}
+{"instruction": "How do I play an animation on ccs.Armature?", "input": "", "output": "armature.animation.play(animationName: string, durationTo?: number, loop?: number): void"}
+{"instruction": "What are the parameters of play() on ccs.ArmatureAnimation?", "input": "", "output": "play(animationName: string, durationTo?: number, loop?: number) — durationTo: blend frames (-1=none), loop: -1=forever, 0=no loop, 1+=count."}
+{"instruction": "What does the durationTo parameter mean in armature.animation.play()?", "input": "", "output": "durationTo is the number of frames to blend between animations. -1 means no blending."}
+{"instruction": "What does the loop parameter mean in armature.animation.play()?", "input": "", "output": "loop: -1 = loop forever, 0 = no loop (play once), 1+ = loop that many times."}
+{"instruction": "How do I play an animation by index on ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.playWithIndex(index: number, durationTo?: number, loop?: number): void"}
+{"instruction": "How do I play a sequence of named animations?", "input": "", "output": "armature.animation.playWithNames(names: string[], durationTo?: number, loop?: boolean): void"}
+{"instruction": "How do I play a sequence of animations by index?", "input": "", "output": "armature.animation.playWithIndexes(indexes: number[], durationTo?: number, loop?: boolean): void"}
+{"instruction": "How do I jump to a specific frame and play?", "input": "", "output": "armature.animation.gotoAndPlay(frameIndex: number): void"}
+{"instruction": "How do I jump to a specific frame and pause?", "input": "", "output": "armature.animation.gotoAndPause(frameIndex: number): void"}
+{"instruction": "How do I pause an armature animation?", "input": "", "output": "armature.animation.pause(): void"}
+{"instruction": "How do I resume an armature animation?", "input": "", "output": "armature.animation.resume(): void"}
+{"instruction": "How do I stop an armature animation?", "input": "", "output": "armature.animation.stop(): void"}
+{"instruction": "How do I get the speed scale of a ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.getSpeedScale(): number"}
+{"instruction": "How do I set the speed scale on ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.setSpeedScale(scale: number): void — 1.0 = normal speed."}
+{"instruction": "How do I get the movement count on ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.getMovementCount(): number"}
+{"instruction": "How do I get the current animation name on ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.getCurrentMovementID(): string"}
+{"instruction": "Is ccs.ArmatureAnimation.getCurrentAnimationName() a valid method?", "input": "", "output": "No. Use armature.animation.getCurrentMovementID(): string instead."}
+{"instruction": "How do I listen for animation completion events on ccs.Armature?", "input": "", "output": "armature.animation.setMovementEventCallFunc((armature: ccs.Armature, movementType: number, movementID: string) => void): void"}
+{"instruction": "What are the valid values for ccs.MovementEventType?", "input": "", "output": "ccs.MovementEventType.START, ccs.MovementEventType.COMPLETE, ccs.MovementEventType.LOOP_COMPLETE"}
+{"instruction": "How do I listen for frame events on ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.setFrameEventCallFunc((bone: ccs.Bone, frameEventName: string, originFrameIndex: number, currentFrameIndex: number) => void): void"}
+{"instruction": "What are the parameters of the frame event callback?", "input": "", "output": "Callback receives: bone: ccs.Bone, frameEventName: string, originFrameIndex: number, currentFrameIndex: number."}
+{"instruction": "How do I get animation data from ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.getAnimationData(): ccs.AnimationData"}
+{"instruction": "How do I set animation data on ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.setAnimationData(data: ccs.AnimationData): void"}
+{"instruction": "What methods does ccs.Bone have?", "input": "", "output": "getName(), getArmature(), getDisplayManager(), getColliderDetector(), getTween(), setVisible(bool), getWorldPosition(), getNodeToWorldTransform()"}
+{"instruction": "What does ccs.Bone.getName() return?", "input": "", "output": "string — the bone's name."}
+{"instruction": "What does ccs.Bone.getArmature() return?", "input": "", "output": "ccs.Armature — the armature this bone belongs to."}
+{"instruction": "What does ccs.Bone.getWorldPosition() return?", "input": "", "output": "cc.Point — the bone's world position."}
+{"instruction": "What does ccs.Bone.getNodeToWorldTransform() return?", "input": "", "output": "cc.AffineTransform — the bone's node-to-world transform matrix."}
+{"instruction": "How do I load a CocosStudio timeline animation?", "input": "", "output": "ccs.actionManager.loadAnimationActionWithFile(file: string): ccs.ActionTimeline"}
+{"instruction": "How do I get a cached timeline animation?", "input": "", "output": "ccs.actionManager.getAnimationActionWithName(file: string): ccs.ActionTimeline"}
+{"instruction": "How do I play a timeline animation from frame 0 with looping?", "input": "", "output": "timeline.gotoFrameAndPlay(0, true) — first arg is frame index, second is loop boolean."}
+{"instruction": "How do I pause a timeline animation at a specific frame?", "input": "", "output": "timeline.gotoFrameAndPause(0) — pauses at the given frame index."}
+{"instruction": "How do I set the current frame on ccs.ActionTimeline?", "input": "", "output": "timeline.setCurrentFrame(frame: number): void"}
+{"instruction": "How do I get the current frame of a ccs.ActionTimeline?", "input": "", "output": "timeline.getCurrentFrame(): number"}
+{"instruction": "What does getStartFrame return on ccs.ActionTimeline?", "input": "", "output": "number — the start frame of the timeline."}
+{"instruction": "What does getEndFrame return on ccs.ActionTimeline?", "input": "", "output": "number — the end frame of the timeline."}
+{"instruction": "How do I set the playback speed on ccs.ActionTimeline?", "input": "", "output": "timeline.setTimeSpeed(speed: number): void"}

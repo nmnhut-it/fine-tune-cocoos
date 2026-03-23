@@ -1,0 +1,102 @@
+{"instruction": "What are the action base classes in Cocos2d-x?", "input": "", "output": "cc.Action (base), cc.FiniteTimeAction (has duration), cc.ActionInstant (zero-duration), cc.ActionInterval (time-based)."}
+{"instruction": "What does action.getDuration() return?", "input": "", "output": "action.getDuration() returns number — the duration in seconds."}
+{"instruction": "What is the signature of action.setDuration?", "input": "", "output": "action.setDuration(duration: number): void"}
+{"instruction": "What does action.reverse() return?", "input": "", "output": "action.reverse() returns the reversed action (same type)."}
+{"instruction": "What does action.repeat() do?", "input": "", "output": "action.repeat(times: number) returns the action repeated N times."}
+{"instruction": "What does action.repeatForever() do?", "input": "", "output": "action.repeatForever() returns the action repeating indefinitely."}
+{"instruction": "What is the signature of action.easing?", "input": "", "output": "action.easing(easeObj: cc.ActionEase): this — applies an easing function."}
+{"instruction": "What does action.getSpeed() return?", "input": "", "output": "action.getSpeed() returns number."}
+{"instruction": "What is the signature of action.setSpeed?", "input": "", "output": "action.setSpeed(speed: number): void"}
+{"instruction": "What does action.clone() return?", "input": "", "output": "action.clone() returns a copy of the action."}
+{"instruction": "What is the signature of cc.moveTo?", "input": "", "output": "cc.moveTo(duration: number, x: number, y: number): MoveTo — or cc.moveTo(duration, pos: cc.Point)."}
+{"instruction": "What is the signature of cc.moveBy?", "input": "", "output": "cc.moveBy(duration: number, dx: number, dy: number): MoveBy — or cc.moveBy(duration, dPos: cc.Point)."}
+{"instruction": "What does cc.moveTo() return?", "input": "", "output": "cc.moveTo() returns a MoveTo action instance."}
+{"instruction": "What does cc.moveBy() return?", "input": "", "output": "cc.moveBy() returns a MoveBy action instance."}
+{"instruction": "What is the signature of cc.scaleTo?", "input": "", "output": "cc.scaleTo(duration: number, scale: number): ScaleTo — or cc.scaleTo(duration, scaleX, scaleY)."}
+{"instruction": "What is the signature of cc.scaleBy?", "input": "", "output": "cc.scaleBy(duration: number, scale: number): ScaleBy — or cc.scaleBy(duration, scaleX, scaleY)."}
+{"instruction": "What does cc.scaleTo() return?", "input": "", "output": "cc.scaleTo() returns a ScaleTo action instance."}
+{"instruction": "What does cc.scaleBy() return?", "input": "", "output": "cc.scaleBy() returns a ScaleBy action instance."}
+{"instruction": "What is the signature of cc.rotateTo?", "input": "", "output": "cc.rotateTo(duration: number, angle: number): RotateTo — also supports (duration, angleX, angleY) and (duration, vec3)."}
+{"instruction": "What is the signature of cc.rotateBy?", "input": "", "output": "cc.rotateBy(duration: number, angle: number): RotateBy — also supports (duration, angleX, angleY)."}
+{"instruction": "What does cc.rotateTo() return?", "input": "", "output": "cc.rotateTo() returns a RotateTo action instance."}
+{"instruction": "What does cc.rotateBy() return?", "input": "", "output": "cc.rotateBy() returns a RotateBy action instance."}
+{"instruction": "What is the signature of cc.fadeIn?", "input": "", "output": "cc.fadeIn(duration: number): FadeIn — fades opacity from 0 to 255."}
+{"instruction": "What is the signature of cc.fadeOut?", "input": "", "output": "cc.fadeOut(duration: number): FadeOut — fades opacity from 255 to 0."}
+{"instruction": "What is the signature of cc.fadeTo?", "input": "", "output": "cc.fadeTo(duration: number, opacity: number): FadeTo"}
+{"instruction": "What does cc.fadeIn() return?", "input": "", "output": "cc.fadeIn() returns a FadeIn action instance."}
+{"instruction": "What does cc.fadeOut() return?", "input": "", "output": "cc.fadeOut() returns a FadeOut action instance."}
+{"instruction": "What is the signature of cc.jumpTo?", "input": "", "output": "cc.jumpTo(duration, position: cc.Point, height: number, jumps: number): JumpTo — or cc.jumpTo(duration, x, y, height, jumps)."}
+{"instruction": "What is the signature of cc.jumpBy?", "input": "", "output": "cc.jumpBy(duration, position: cc.Point, height: number, jumps: number): JumpBy"}
+{"instruction": "What is the signature of cc.bezierTo?", "input": "", "output": "cc.bezierTo(duration: number, points: cc.Point[]): BezierTo — requires 3 control points."}
+{"instruction": "What is the signature of cc.bezierBy?", "input": "", "output": "cc.bezierBy(duration: number, points: cc.Point[]): BezierBy — requires 3 control points."}
+{"instruction": "What is the signature of cc.catmullRomTo?", "input": "", "output": "cc.catmullRomTo(duration: number, points: cc.Point[]): CatmullRomTo"}
+{"instruction": "What is the signature of cc.catmullRomBy?", "input": "", "output": "cc.catmullRomBy(duration: number, points: cc.Point[]): CatmullRomBy"}
+{"instruction": "What is the signature of cc.cardinalSplineTo?", "input": "", "output": "cc.cardinalSplineTo(duration: number, points: cc.Point[], tension: number): CardinalSplineTo"}
+{"instruction": "What is the signature of cc.cardinalSplineBy?", "input": "", "output": "cc.cardinalSplineBy(duration: number, points: cc.Point[], tension: number): CardinalSplineBy"}
+{"instruction": "What is the signature of cc.tintTo?", "input": "", "output": "cc.tintTo(duration: number, red: number, green: number, blue: number): TintTo"}
+{"instruction": "What is the signature of cc.tintBy?", "input": "", "output": "cc.tintBy(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number): TintBy"}
+{"instruction": "What is the signature of cc.blink?", "input": "", "output": "cc.blink(duration: number, blinks: number): Blink"}
+{"instruction": "What is the signature of cc.skewTo?", "input": "", "output": "cc.skewTo(duration: number, skewX: number, skewY: number): SkewTo"}
+{"instruction": "What is the signature of cc.skewBy?", "input": "", "output": "cc.skewBy(duration: number, skewX: number, skewY: number): SkewBy"}
+{"instruction": "What is the signature of cc.delayTime?", "input": "", "output": "cc.delayTime(duration: number): DelayTime"}
+{"instruction": "What does cc.show() return?", "input": "", "output": "cc.show() returns a Show action — makes the node visible."}
+{"instruction": "What does cc.hide() return?", "input": "", "output": "cc.hide() returns a Hide action — makes the node invisible."}
+{"instruction": "What does cc.toggleVisibility() return?", "input": "", "output": "cc.toggleVisibility() returns a ToggleVisibility action — toggles node.visible."}
+{"instruction": "What is the signature of cc.place?", "input": "", "output": "cc.place(x: number, y: number): Place — or cc.place(pos: cc.Point)."}
+{"instruction": "What does cc.removeSelf() return?", "input": "", "output": "cc.removeSelf() returns a RemoveSelf action — removes the node from its parent."}
+{"instruction": "What is the signature of cc.flipX?", "input": "", "output": "cc.flipX(flip: boolean): FlipX"}
+{"instruction": "What is the signature of cc.flipY?", "input": "", "output": "cc.flipY(flip: boolean): FlipY"}
+{"instruction": "What is the signature of cc.callFunc?", "input": "", "output": "cc.callFunc(callback: Function): CallFunc — or cc.callFunc(callback, selectorTarget, data)."}
+{"instruction": "What is the signature of cc.sequence?", "input": "", "output": "cc.sequence(...actions: cc.FiniteTimeAction[]): Sequence — runs actions one after another."}
+{"instruction": "What is the signature of cc.spawn?", "input": "", "output": "cc.spawn(...actions: cc.FiniteTimeAction[]): Spawn — runs actions simultaneously."}
+{"instruction": "What is the signature of cc.repeat?", "input": "", "output": "cc.repeat(action: cc.FiniteTimeAction, times: number): Repeat"}
+{"instruction": "What is the signature of cc.repeatForever?", "input": "", "output": "cc.repeatForever(action: cc.FiniteTimeAction): RepeatForever"}
+{"instruction": "What is the signature of cc.reverseTime?", "input": "", "output": "cc.reverseTime(action: cc.FiniteTimeAction): ReverseTime"}
+{"instruction": "What is the signature of cc.targetedAction?", "input": "", "output": "cc.targetedAction(target: cc.Node, action: cc.FiniteTimeAction): TargetedAction"}
+{"instruction": "What is the signature of cc.speed?", "input": "", "output": "cc.speed(action: cc.FiniteTimeAction, speed: number): Speed"}
+{"instruction": "What is the signature of cc.follow?", "input": "", "output": "cc.follow(followedNode: cc.Node, rect: cc.Rect): Follow"}
+{"instruction": "How to apply easing to an action?", "input": "", "output": "action.easing(cc.easeBounceOut()) — chain .easing() on any ActionInterval."}
+{"instruction": "What is the signature of cc.easeIn?", "input": "", "output": "cc.easeIn(rate: number) — accelerating ease."}
+{"instruction": "What is the signature of cc.easeOut?", "input": "", "output": "cc.easeOut(rate: number) — decelerating ease."}
+{"instruction": "What is the signature of cc.easeInOut?", "input": "", "output": "cc.easeInOut(rate: number) — accelerate then decelerate."}
+{"instruction": "What does cc.easeSineIn() return?", "input": "", "output": "cc.easeSineIn() returns an ease object for sine-in easing."}
+{"instruction": "What does cc.easeSineOut() return?", "input": "", "output": "cc.easeSineOut() returns an ease object for sine-out easing."}
+{"instruction": "What does cc.easeSineInOut() return?", "input": "", "output": "cc.easeSineInOut() returns an ease object for sine-in-out easing."}
+{"instruction": "What does cc.easeBackIn() return?", "input": "", "output": "cc.easeBackIn() returns an ease object — overshoots then returns."}
+{"instruction": "What does cc.easeBackOut() return?", "input": "", "output": "cc.easeBackOut() returns an ease object — overshoots at the end."}
+{"instruction": "What does cc.easeBackInOut() return?", "input": "", "output": "cc.easeBackInOut() returns an ease object — overshoots both ends."}
+{"instruction": "What does cc.easeBounceIn() return?", "input": "", "output": "cc.easeBounceIn() returns an ease object — bounce at the start."}
+{"instruction": "What does cc.easeBounceOut() return?", "input": "", "output": "cc.easeBounceOut() returns an ease object — bounce at the end."}
+{"instruction": "What does cc.easeBounceInOut() return?", "input": "", "output": "cc.easeBounceInOut() returns an ease object — bounce at both ends."}
+{"instruction": "What is the signature of cc.easeElasticIn?", "input": "", "output": "cc.easeElasticIn(period?: number) — elastic ease at the start."}
+{"instruction": "What is the signature of cc.easeElasticOut?", "input": "", "output": "cc.easeElasticOut(period?: number) — elastic ease at the end."}
+{"instruction": "What is the signature of cc.easeElasticInOut?", "input": "", "output": "cc.easeElasticInOut(period?: number) — elastic ease at both ends."}
+{"instruction": "What does cc.easeExponentialIn() return?", "input": "", "output": "cc.easeExponentialIn() returns an exponential ease-in object."}
+{"instruction": "What does cc.easeExponentialOut() return?", "input": "", "output": "cc.easeExponentialOut() returns an exponential ease-out object."}
+{"instruction": "What does cc.easeExponentialInOut() return?", "input": "", "output": "cc.easeExponentialInOut() returns an exponential ease-in-out object."}
+{"instruction": "What does cc.easeQuadraticActionIn() return?", "input": "", "output": "cc.easeQuadraticActionIn() returns a quadratic ease-in object."}
+{"instruction": "What does cc.easeQuadraticActionOut() return?", "input": "", "output": "cc.easeQuadraticActionOut() returns a quadratic ease-out object."}
+{"instruction": "What does cc.easeCubicActionIn() return?", "input": "", "output": "cc.easeCubicActionIn() returns a cubic ease-in object."}
+{"instruction": "What does cc.easeCubicActionOut() return?", "input": "", "output": "cc.easeCubicActionOut() returns a cubic ease-out object."}
+{"instruction": "What is the signature of cc.easeBezierAction?", "input": "", "output": "cc.easeBezierAction(p0: number, p1: number, p2: number, p3: number) — custom bezier easing."}
+{"instruction": "What is the signature of cc.animate?", "input": "", "output": "cc.animate(animation: cc.Animation): Animate"}
+{"instruction": "How to create a cc.Animation?", "input": "", "output": "new cc.Animation(frames: cc.SpriteFrame[], delay: number, loops?: number)"}
+{"instruction": "What is the signature of animation.addSpriteFrame?", "input": "", "output": "animation.addSpriteFrame(frame: cc.SpriteFrame): void"}
+{"instruction": "What does animation.getDelayPerUnit() return?", "input": "", "output": "animation.getDelayPerUnit() returns number — seconds per frame."}
+{"instruction": "What is the signature of animation.setDelayPerUnit?", "input": "", "output": "animation.setDelayPerUnit(delay: number): void"}
+{"instruction": "What does animation.getLoops() return?", "input": "", "output": "animation.getLoops() returns number — 0 means loop forever."}
+{"instruction": "What is the signature of animation.setLoops?", "input": "", "output": "animation.setLoops(n: number): void"}
+{"instruction": "What is the signature of animation.setRestoreOriginalFrame?", "input": "", "output": "animation.setRestoreOriginalFrame(restore: boolean): void"}
+{"instruction": "What is the signature of cc.progressTo?", "input": "", "output": "cc.progressTo(duration: number, percent: number): ProgressTo"}
+{"instruction": "What is the signature of cc.progressFromTo?", "input": "", "output": "cc.progressFromTo(duration: number, from: number, to: number): ProgressFromTo"}
+{"instruction": "What is the signature of cc.actionTween?", "input": "", "output": "cc.actionTween(duration: number, key: string, from: number, to: number): ActionTween"}
+{"instruction": "What is the signature of cc.flipX3D?", "input": "", "output": "cc.flipX3D(duration: number): FlipX3D"}
+{"instruction": "What is the signature of cc.flipY3D?", "input": "", "output": "cc.flipY3D(duration: number): FlipY3D"}
+{"instruction": "What is the signature of cc.shaky3D?", "input": "", "output": "cc.shaky3D(duration, gridSize, range, shakeZ): Shaky3D"}
+{"instruction": "What is the signature of cc.liquid?", "input": "", "output": "cc.liquid(duration, gridSize, waves, amplitude): Liquid"}
+{"instruction": "What is the signature of cc.waves?", "input": "", "output": "cc.waves(duration, gridSize, waves, amplitude, horizontal, vertical): Waves"}
+{"instruction": "What is the signature of cc.waves3D?", "input": "", "output": "cc.waves3D(duration, gridSize, waves, amplitude): Waves3D"}
+{"instruction": "What is the signature of cc.ripple3D?", "input": "", "output": "cc.ripple3D(duration, gridSize, position, radius, waves, amplitude): Ripple3d"}
+{"instruction": "What is the signature of cc.twirl?", "input": "", "output": "cc.twirl(duration, gridSize, position, twirls, amplitude): Twirl"}
+{"instruction": "What is the signature of cc.lens3D?", "input": "", "output": "cc.lens3D(duration, gridSize, position, radius): Lens3D"}
+{"instruction": "What is the signature of cc.pageTurn3D?", "input": "", "output": "cc.pageTurn3D(duration, gridSize): PageTurn3D"}

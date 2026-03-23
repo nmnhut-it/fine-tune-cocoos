@@ -1,0 +1,70 @@
+{"instruction":"How do you check if the app is running natively (JSB) in Cocos2d-x?","input":"","output":"cc.sys.isNative: boolean — true in JSB (iOS/Android/Windows), false in browser."}
+{"instruction":"How do you check if the device is mobile?","input":"","output":"cc.sys.isMobile: boolean"}
+{"instruction":"How do you get the current platform in Cocos2d-x?","input":"","output":"cc.sys.platform: number — compare against cc.sys.WIN32, cc.sys.ANDROID, cc.sys.IPHONE, etc."}
+{"instruction":"How do you get the OS name?","input":"","output":"cc.sys.os: string — compare against cc.sys.OS_IOS, cc.sys.OS_ANDROID, cc.sys.OS_WINDOWS, etc."}
+{"instruction":"How do you get the system language?","input":"","output":"cc.sys.language: number — compare against cc.sys.LANGUAGE_ENGLISH, cc.sys.LANGUAGE_CHINESE, etc."}
+{"instruction":"Is cc.sys.isNative a method or a property?","input":"","output":"It is a Boolean property, not a method. Access it as cc.sys.isNative (no parentheses)."}
+{"instruction":"Is cc.sys.isMobile() a valid call?","input":"","output":"No. cc.sys.isMobile is a Boolean property, not a method. Use cc.sys.isMobile without parentheses."}
+{"instruction":"What is the value of cc.sys.WIN32?","input":"","output":"cc.sys.WIN32 = 0"}
+{"instruction":"What is the value of cc.sys.LINUX?","input":"","output":"cc.sys.LINUX = 1"}
+{"instruction":"What is the value of cc.sys.MACOS?","input":"","output":"cc.sys.MACOS = 2"}
+{"instruction":"What is the value of cc.sys.ANDROID?","input":"","output":"cc.sys.ANDROID = 3"}
+{"instruction":"What is the value of cc.sys.IPHONE?","input":"","output":"cc.sys.IPHONE = 4"}
+{"instruction":"What is the value of cc.sys.IPAD?","input":"","output":"cc.sys.IPAD = 5"}
+{"instruction":"What is the value of cc.sys.MOBILE_BROWSER?","input":"","output":"cc.sys.MOBILE_BROWSER = 100"}
+{"instruction":"What is the value of cc.sys.DESKTOP_BROWSER?","input":"","output":"cc.sys.DESKTOP_BROWSER = 101"}
+{"instruction":"What are all platform constants on cc.sys?","input":"","output":"cc.sys.WIN32 (0), cc.sys.LINUX (1), cc.sys.MACOS (2), cc.sys.ANDROID (3), cc.sys.IPHONE (4), cc.sys.IPAD (5), cc.sys.MOBILE_BROWSER (100), cc.sys.DESKTOP_BROWSER (101)"}
+{"instruction":"What are the OS string constants on cc.sys?","input":"","output":"cc.sys.OS_IOS ('iOS'), cc.sys.OS_ANDROID ('Android'), cc.sys.OS_WINDOWS ('Windows'), cc.sys.OS_OSX ('OS X'), cc.sys.OS_LINUX ('Linux')"}
+{"instruction":"What are the language constants on cc.sys?","input":"","output":"LANGUAGE_ENGLISH ('en'), LANGUAGE_CHINESE ('zh'), LANGUAGE_FRENCH ('fr'), LANGUAGE_GERMAN ('de'), LANGUAGE_JAPANESE ('ja'), LANGUAGE_KOREAN ('ko'), LANGUAGE_SPANISH ('es'), LANGUAGE_RUSSIAN ('ru'), LANGUAGE_PORTUGUESE ('pt')"}
+{"instruction":"What capabilities can you check with cc.sys?","input":"","output":"cc.sys.capabilities has: opengl (boolean), accelerometer (boolean), touches (boolean), keyboard (boolean), mouse (boolean)."}
+{"instruction":"How do you check if the device supports touch input?","input":"","output":"cc.sys.capabilities.touches: boolean"}
+{"instruction":"How do you check if keyboard is available?","input":"","output":"cc.sys.capabilities.keyboard: boolean"}
+{"instruction":"How do you get the browser type?","input":"","output":"cc.sys.browserType: string | null — returns 'chrome', 'safari', 'firefox', etc. Null on native."}
+{"instruction":"How do you get the browser version?","input":"","output":"cc.sys.browserVersion: string | null"}
+{"instruction":"How do you get the window pixel resolution?","input":"","output":"cc.sys.windowPixelResolution: cc.Size"}
+{"instruction":"Is cc.sys.OS_MAC a valid constant?","input":"","output":"No. The correct constant is cc.sys.OS_OSX ('OS X')."}
+{"instruction":"Is cc.sys.LANGUAGE_JP a valid constant?","input":"","output":"No. The correct constant is cc.sys.LANGUAGE_JAPANESE ('ja')."}
+{"instruction":"How do you save data to local storage in Cocos2d-x?","input":"","output":"cc.sys.localStorage.setItem(key: string, value: string | number): void"}
+{"instruction":"How do you read data from local storage?","input":"","output":"cc.sys.localStorage.getItem(key: string): string | null | undefined"}
+{"instruction":"How do you remove an item from local storage?","input":"","output":"cc.sys.localStorage.removeItem(key: string): void"}
+{"instruction":"How do you clear all local storage?","input":"","output":"cc.sys.localStorage.clear(): void"}
+{"instruction":"What are all methods on cc.sys.localStorage?","input":"","output":"setItem(key, value), getItem(key), removeItem(key), clear()"}
+{"instruction":"What does cc.sys.localStorage.getItem return if the key doesn't exist?","input":"","output":"string | null | undefined — check for null/undefined before using the value."}
+{"instruction":"How do you open a URL in the system browser?","input":"","output":"cc.sys.openURL(url: string): void"}
+{"instruction":"How do you force garbage collection in JSB?","input":"","output":"cc.sys.garbageCollect(): void — JSB only, no effect in browser."}
+{"instruction":"What does cc.sys.restartVM() do?","input":"","output":"Restarts the JavaScript VM. JSB only."}
+{"instruction":"How do you check if a native object is still valid?","input":"","output":"cc.sys.isObjectValid(obj: object): boolean"}
+{"instruction":"What does cc.sys.dump() do?","input":"","output":"Dumps system info to the console. Useful for debugging."}
+{"instruction":"What does cc.sys.dumpRoot() do?","input":"","output":"Dumps the root object info. JSB only."}
+{"instruction":"Is cc.sys.openURL a JSB-only method?","input":"","output":"No. cc.sys.openURL(url) works on both native (JSB) and browser (H5)."}
+{"instruction":"Which class has the join method for paths?","input":"","output":"cc.path — cc.path.join(...args: string[]): string"}
+{"instruction":"What does cc.path.extname do?","input":"","output":"cc.path.extname(pathStr: string): string — returns the file extension (e.g., '.png', '.json')."}
+{"instruction":"What does cc.path.basename do?","input":"","output":"cc.path.basename(pathStr: string, extname: string): string — returns the filename without directory, optionally stripping the extension."}
+{"instruction":"What does cc.path.dirname do?","input":"","output":"cc.path.dirname(pathStr: string): string — returns the directory portion of the path."}
+{"instruction":"What does cc.path.join('res', 'hero', 'hero.png') return?","input":"","output":"'res/hero/hero.png'"}
+{"instruction":"What does cc.path.extname('sprite.png') return?","input":"","output":"'.png'"}
+{"instruction":"What does cc.path.basename('res/hero.png', '.png') return?","input":"","output":"'hero'"}
+{"instruction":"What are the global logging functions in Cocos2d-x?","input":"","output":"cc.log(...args), cc.warn(...args), cc.error(...args), cc.assert(...args) — all return void."}
+{"instruction":"What does cc.formatStr do?","input":"","output":"cc.formatStr(...args: any[]): string — formats a string, similar to printf."}
+{"instruction":"What are the global type-check functions in Cocos2d-x?","input":"","output":"cc.isFunction(obj), cc.isNumber(obj), cc.isString(obj), cc.isArray(obj), cc.isUndefined(obj), cc.isObject(obj)"}
+{"instruction":"What does cc.isFunction return?","input":"","output":"A type guard: cc.isFunction(obj): obj is Function"}
+{"instruction":"Is cc.isBoolean a valid type-check function?","input":"","output":"No. The valid type-check functions are cc.isFunction, cc.isNumber, cc.isString, cc.isArray, cc.isUndefined, cc.isObject."}
+{"instruction":"How do you create a custom shader program?","input":"","output":"const program = new cc.GLProgram(); program.initWithString(vertShaderStr, fragShaderStr);"}
+{"instruction":"What are the methods on cc.GLProgram?","input":"","output":"initWithString(vert, frag), addAttribute(name, index), link(), use(), updateUniforms(), getUniformLocationForName(name), setUniformLocationWith1f/2f/4f, setUniformLocationWithMatrix4fv, setUniformsForBuiltins(), getProgram()"}
+{"instruction":"How do you get a uniform location in cc.GLProgram?","input":"","output":"program.getUniformLocationForName(name: string): WebGLUniformLocation"}
+{"instruction":"What is the signature of cc.GLProgram.setUniformLocationWith4f?","input":"","output":"program.setUniformLocationWith4f(loc: WebGLUniformLocation, f1: number, f2: number, f3: number, f4: number): void"}
+{"instruction":"How do you get the GLProgramState from a node?","input":"","output":"node.getGLProgramState(): cc.GLProgramState"}
+{"instruction":"What are the methods on cc.GLProgramState?","input":"","output":"setUniformInt(name, value), setUniformFloat(name, value), setUniformVec2(name, value), setUniformVec3(name, value), setUniformVec4(name, value), setUniformMat4(name, value)"}
+{"instruction":"What is the signature of GLProgramState.setUniformVec2?","input":"","output":"state.setUniformVec2(name: string, value: cc.Point): void"}
+{"instruction":"What is the signature of GLProgramState.setUniformMat4?","input":"","output":"state.setUniformMat4(name: string, value: Float32Array): void"}
+{"instruction":"How do you create a BlendFunc?","input":"","output":"new cc.BlendFunc(src: cc.BlenderConst, dst: cc.BlenderConst)"}
+{"instruction":"What are the blend constants in Cocos2d-x?","input":"","output":"cc.ONE, cc.ZERO, cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA, cc.DST_ALPHA, cc.ONE_MINUS_DST_ALPHA, cc.SRC_COLOR, cc.ONE_MINUS_SRC_COLOR, cc.BLEND_SRC, cc.BLEND_DST"}
+{"instruction":"How do you set additive blending on a sprite?","input":"","output":"sprite.setBlendFunc(new cc.BlendFunc(cc.ONE, cc.ONE))"}
+{"instruction":"How do you set normal alpha blending?","input":"","output":"sprite.setBlendFunc(new cc.BlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA))"}
+{"instruction":"What are the GL texture sampling constants?","input":"","output":"gl.NEAREST (pixelated), gl.LINEAR (smooth), gl.NEAREST_MIPMAP_NEAREST, gl.LINEAR_MIPMAP_LINEAR (trilinear)"}
+{"instruction":"What are the GL texture wrap constants?","input":"","output":"gl.CLAMP_TO_EDGE, gl.REPEAT, gl.MIRRORED_REPEAT"}
+{"instruction":"Is cc.sys.getPlatform() a valid method?","input":"","output":"No. cc.sys.platform is a property, not a method. Access it as cc.sys.platform (no parentheses)."}
+{"instruction":"Difference between cc.sys.platform and cc.sys.os?","input":"","output":"cc.sys.platform is a numeric code (e.g., 3 for ANDROID). cc.sys.os is a string (e.g., 'Android')."}
+{"instruction":"How do you set premultiplied alpha blending on a sprite?","input":"","output":"sprite.setBlendFunc(new cc.BlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA))"}
+{"instruction":"What does cc.path.dirname('res/ui/button.png') return?","input":"","output":"'res/ui'"}
+{"instruction":"Is cc.sys.language a string or number property?","input":"","output":"cc.sys.language is typed as number, but its values are string codes like 'en', 'zh'. Compare with cc.sys.LANGUAGE_ENGLISH, etc."}
