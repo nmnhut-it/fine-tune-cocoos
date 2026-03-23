@@ -72,6 +72,7 @@ def load_model_and_tokenizer():
         task_type="CAUSAL_LM",
     )
     model = get_peft_model(model, lora_config)
+    model.gradient_checkpointing_enable()
     model.print_trainable_parameters()
     return model, tokenizer
 
@@ -109,6 +110,7 @@ def run_training(model, tokenizer, train_tok, test_tok):
         warmup_ratio=WARMUP_RATIO,
         lr_scheduler_type="cosine",
         fp16=True,
+        gradient_checkpointing=True,
         logging_steps=10,
         eval_strategy="steps",
         eval_steps=EVAL_STEPS,
