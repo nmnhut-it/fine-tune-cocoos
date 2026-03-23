@@ -79,17 +79,26 @@ def load_model_and_tokenizer():
 
 def tokenize_datasets(train_ds, test_ds, tokenizer):
     def format_and_tokenize(example):
-        text = ALPACA_TEMPLATE.format(
+        # Build the prompt (instruction part) and full text separately
+        prompt = ALPACA_PROMPT.format(instruction=example["instruction"])
+        full_text = ALPACA_TEMPLATE.format(
             instruction=example["instruction"],
             output=example["output"],
         )
         tokens = tokenizer(
-            text,
+            full_text,
             truncation=True,
             max_length=MAX_SEQ_LENGTH,
             padding="max_length",
         )
-        tokens["labels"] = tokens["input_ids"].copy()
+        # Find where the response starts — mask instruction tokens with -100
+        prompt_tokens = tokenizer(prompt, truncation=True, max_length=MAX_SEQ_LENGTH)
+        prompt_len = len(prompt_tokens["input_ids"])
+        labels = [-100] * prompt_len + tokens["input_ids"][prompt_len:]
+        # Pad labels to match input length, mask padding too
+        labels = labels[:len(tokens["input_ids"])]
+        labels = [l if tokens["attention_mask"][i] == 1 else -100 for i, l in enumerate(labels)]
+        tokens["labels"] = labels
         return tokens
 
     train_tok = train_ds.map(format_and_tokenize, remove_columns=train_ds.column_names)
