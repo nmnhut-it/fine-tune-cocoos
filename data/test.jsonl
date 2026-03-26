@@ -1,100 +1,104 @@
-{"instruction":"What method gets the current TrackEntry for a given track?","input":"","output":"skel.getCurrent(trackIndex: number): spine.TrackEntry | null"}
-{"instruction":"What does touch.getDelta() return?","input":"","output":"cc.Point — the movement delta (x, y) since the last touch event."}
-{"instruction":"How do you get the window pixel resolution?","input":"","output":"cc.sys.windowPixelResolution: cc.Size"}
-{"instruction":"Is cc.isBoolean a valid type-check function?","input":"","output":"No. The valid type-check functions are cc.isFunction, cc.isNumber, cc.isString, cc.isArray, cc.isUndefined, cc.isObject."}
-{"instruction": "What is the signature of cc.cardinalSplineTo?", "input": "", "output": "cc.cardinalSplineTo(duration: number, points: cc.Point[], tension: number): CardinalSplineTo"}
-{"instruction":"What event type constant is used for multi-touch listeners?","input":"","output":"cc.EventListener.TOUCH_ALL_AT_ONCE"}
-{"instruction": "What is the signature of animation.setDelayPerUnit?", "input": "", "output": "animation.setDelayPerUnit(delay: number): void"}
-{"instruction": "What does node.getParentToNodeTransform() return?", "input": "", "output": "node.getParentToNodeTransform() returns cc.AffineTransform."}
-{"instruction":"What does cc.director.popToSceneStackLevel do?","input":"","output":"cc.director.popToSceneStackLevel(level: number): void — pops scenes until the stack has the given number of scenes."}
-{"instruction":"What methods does cc.EventTouch have?","input":"","output":"event.getTouches(): cc.Touch[]"}
-{"instruction": "How do I pause a timeline animation at a specific frame?", "input": "", "output": "timeline.gotoFrameAndPause(0) — pauses at the given frame index."}
-{"instruction":"What is spine.TrackEntry.timeScale used for?","input":"","output":"Per-track speed scale (number). Set to 2.0 for double speed on that track only."}
-{"instruction": "What method draws a filled dot on a DrawNode?", "input": "", "output": "draw.drawDot(pos: cc.Point, radius: number, color: cc.Color): void"}
-{"instruction": "Which class has the enableOutline method?", "input": "", "output": "cc.Label — label.enableOutline(color, outlineSize)."}
-{"instruction": "What does node.getAnchorPoint() return?", "input": "", "output": "node.getAnchorPoint() returns cc.Point — normalized (0-1) anchor."}
-{"instruction":"How do you dispatch a custom event with data?","input":"","output":"cc.eventManager.dispatchCustomEvent(eventName: string | number, optionalUserData?: any): void"}
-{"instruction": "What is the signature of node.scheduleUpdateWithPriority?", "input": "", "output": "node.scheduleUpdateWithPriority(priority: number): void"}
-{"instruction": "What is the signature of cc.sequence?", "input": "", "output": "cc.sequence(...actions: cc.FiniteTimeAction[]): Sequence — runs actions one after another."}
-{"instruction": "What does node.getParent() return?", "input": "", "output": "node.getParent() returns cc.Node."}
-{"instruction": "What is the signature of text.setTextHorizontalAlignment?", "input": "", "output": "text.setTextHorizontalAlignment(alignment: number): void"}
-{"instruction": "What does drawCatmullRom return?", "input": "", "output": "void."}
-{"instruction":"How do you find a slot by name in sp.Skeleton?","input":"","output":"skel.findSlot(slotName: string): spine.Slot | null"}
-{"instruction":"How do you replace the current scene in Cocos2d-x?","input":"","output":"cc.director.runScene(scene: cc.Scene): void"}
-{"instruction": "Which class has the drawCubicBezier method?", "input": "", "output": "cc.DrawNode — draw.drawCubicBezier(origin, control1, control2, destination, segments, lineWidth, color): void"}
-{"instruction":"How do you check if a cc.Layer is baked?","input":"","output":"layer.isBaked(): boolean"}
-{"instruction": "What is the difference between drawSegment and drawRect on cc.DrawNode?", "input": "", "output": "drawSegment draws a line between two points. drawRect draws a rectangle between two corner points with optional fill."}
-{"instruction": "Is label.setOutline() a valid method?", "input": "", "output": "No. Use label.enableOutline(color: cc.Color, outlineSize: number)."}
-{"instruction": "What is the signature of cc.Label.createWithSystemFont?", "input": "", "output": "cc.Label.createWithSystemFont(text: string, font: string, fontSize: number, dimensions?: cc.Size, hAlignment?: number, vAlignment?: number): cc.Label"}
-{"instruction":"How do you get the visible size?","input":"","output":"cc.director.getVisibleSize(): cc.Size"}
-{"instruction":"What does sp.SkeletonAnimation.setAnimation return?","input":"","output":"spine.TrackEntry | null"}
-{"instruction":"What is the difference between changeWidth and changeWidthAndHeight on cc.LayerColor?","input":"","output":"changeWidth(w) changes only width. changeWidthAndHeight(w, h) changes both width and height in one call."}
-{"instruction":"What does cc.path.dirname('res/ui/button.png') return?","input":"","output":"'res/ui'"}
-{"instruction":"How do you get the current time scale of a Spine skeleton?","input":"","output":"skel.getTimeScale(): number"}
-{"instruction":"How do you remove all listeners from a node?","input":"","output":"cc.eventManager.removeListeners(node: cc.Node, recursive?: boolean): void"}
-{"instruction":"What are the methods on cc.GLProgram?","input":"","output":"initWithString(vert, frag), addAttribute(name, index), link(), use(), updateUniforms(), getUniformLocationForName(name), setUniformLocationWith1f/2f/4f, setUniformLocationWithMatrix4fv, setUniformsForBuiltins(), getProgram()"}
-{"instruction":"How do you set the content scale factor?","input":"","output":"cc.director.setContentScaleFactor(scale: number): void"}
-{"instruction": "What is the signature of label.setSystemFontSize?", "input": "", "output": "label.setSystemFontSize(fontSize: number): void"}
-{"instruction": "What is the signature of node.reorderChild?", "input": "", "output": "node.reorderChild(child: cc.Node, zOrder: number): void"}
-{"instruction": "What is the signature of cc.reverseTime?", "input": "", "output": "cc.reverseTime(action: cc.FiniteTimeAction): ReverseTime"}
-{"instruction": "How do I draw a rectangle with cc.DrawNode?", "input": "", "output": "draw.drawRect(origin: cc.Point, destination: cc.Point, fillColor?: cc.Color, lineWidth?: number, lineColor?: cc.Color): void"}
-{"instruction": "What is the signature of cc.follow?", "input": "", "output": "cc.follow(followedNode: cc.Node, rect: cc.Rect): Follow"}
-{"instruction": "What does layout.requestDoLayout() do?", "input": "", "output": "layout.requestDoLayout(): void — marks the layout as needing recalculation."}
-{"instruction":"What are the parameters of addAnimation on sp.SkeletonAnimation?","input":"","output":"trackIndex: number, name: string, loop: boolean, delay: number. delay is seconds before the queued animation starts."}
-{"instruction": "How do I set the current frame on ccs.ActionTimeline?", "input": "", "output": "timeline.setCurrentFrame(frame: number): void"}
-{"instruction": "Which class has the drawCircle method?", "input": "", "output": "cc.DrawNode — draw.drawCircle(center, radius, angle, segments, drawLineToCenter, lineWidth, color): void"}
-{"instruction":"What are the parameters of setAttachment on sp.Skeleton?","input":"","output":"slotName: string, attachmentName: string (or null to hide the attachment)."}
-{"instruction": "How do I get animation data from ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.getAnimationData(): ccs.AnimationData"}
-{"instruction": "How do I set a collider filter on ccs.Armature?", "input": "", "output": "armature.setColliderFilter(filter: ccs.ColliderFilter): void"}
-{"instruction": "What is the signature of node.convertToNodeSpace?", "input": "", "output": "node.convertToNodeSpace(worldPoint: cc.Point): cc.Point"}
-{"instruction":"How do you play a sound effect in Cocos2d-x?","input":"","output":"cc.audioEngine.playEffect(url: string, loop?: boolean, pitch?: number, pan?: number, gain?: number): number | null"}
-{"instruction": "How do I draw a hollow rectangle with cc.DrawNode?", "input": "", "output": "draw.drawRect(cc.p(50, 50), cc.p(150, 100), null, 2, cc.color(255, 0, 0, 255)) — pass null for fillColor."}
-{"instruction": "How do I create an affine transform?", "input": "", "output": "cc.affineTransformMake(a, b, c, d, tx, ty): cc.AffineTransform"}
-{"instruction": "What is the signature of cc.rotateTo?", "input": "", "output": "cc.rotateTo(duration: number, angle: number): RotateTo — also supports (duration, angleX, angleY) and (duration, vec3)."}
-{"instruction": "How do I set the playback speed on ccs.ActionTimeline?", "input": "", "output": "timeline.setTimeSpeed(speed: number): void"}
-{"instruction":"How do you remove all actions globally?","input":"","output":"mgr.removeAllActions(): void"}
-{"instruction": "What is the signature of label.enableGlow?", "input": "", "output": "label.enableGlow(color: cc.Color): void — TTF only."}
-{"instruction": "What is node.ignoreAnchor?", "input": "", "output": "node.ignoreAnchor: boolean — if true, anchor point is ignored for positioning (treated as 0,0)."}
-{"instruction": "What is the signature of node.scheduleOnce?", "input": "", "output": "node.scheduleOnce(callback: (dt: number) => void, delay: number, key?: string): void"}
-{"instruction": "What is the signature of widget.setFocused?", "input": "", "output": "widget.setFocused(focus: boolean): void"}
-{"instruction": "What is the signature of label.setTextColor?", "input": "", "output": "label.setTextColor(color: cc.Color): void — different from node.setColor()."}
-{"instruction": "What does label.getWidth() return?", "input": "", "output": "label.getWidth() returns number."}
-{"instruction": "What is the signature of sv.setScrollBarWidth?", "input": "", "output": "sv.setScrollBarWidth(width: number): void"}
-{"instruction":"How do you set the start color of a cc.LayerGradient?","input":"","output":"layer.setStartColor(color: cc.Color): void"}
-{"instruction":"How do you convert UI coordinates to GL coordinates?","input":"","output":"cc.director.convertToGL(uiPoint: cc.Point): cc.Point"}
-{"instruction":"How do you get the window size in pixels?","input":"","output":"cc.director.getWinSizeInPixels(): cc.Size"}
-{"instruction":"What is the value of cc.sys.WIN32?","input":"","output":"cc.sys.WIN32 = 0"}
-{"instruction": "What is the signature of text.setFontName?", "input": "", "output": "text.setFontName(name: string): void"}
-{"instruction": "What does cc.scaleTo() return?", "input": "", "output": "cc.scaleTo() returns a ScaleTo action instance."}
-{"instruction": "What does widget.getSizeType() return?", "input": "", "output": "widget.getSizeType() returns ccui.Widget.SizeType — SIZE_ABSOLUTE or SIZE_PERCENT."}
-{"instruction": "What does action.getDuration() return?", "input": "", "output": "action.getDuration() returns number — the duration in seconds."}
-{"instruction": "What is the signature of cc.skewTo?", "input": "", "output": "cc.skewTo(duration: number, skewX: number, skewY: number): SkewTo"}
-{"instruction": "What does sv.getInnerContainer() return?", "input": "", "output": "sv.getInnerContainer() returns ccui.Layout — the inner container to which children are added."}
-{"instruction":"What are the mouse listener callback names?","input":"","output":"onMouseDown, onMouseUp, onMouseMove, onMouseScroll — each takes (event: cc.EventMouse) => void."}
-{"instruction": "What is the signature of btn.setScale9Enabled?", "input": "", "output": "btn.setScale9Enabled(able: boolean): void"}
-{"instruction":"What are all the methods on cc.Touch?","input":"","output":"getID(), getLocation(), getLocationX(), getLocationY(), getPreviousLocation(), getStartLocation(), getDelta(), getLocationInView(), getPreviousLocationInView(), getStartLocationInView()"}
-{"instruction":"Is cc.sys.OS_MAC a valid constant?","input":"","output":"No. The correct constant is cc.sys.OS_OSX ('OS X')."}
-{"instruction": "What does node.isCascadeColorEnabled() return?", "input": "", "output": "node.isCascadeColorEnabled() returns boolean."}
-{"instruction":"How do you check if the device supports touch input?","input":"","output":"cc.sys.capabilities.touches: boolean"}
-{"instruction": "What does cc.easeQuadraticActionIn() return?", "input": "", "output": "cc.easeQuadraticActionIn() returns a quadratic ease-in object."}
-{"instruction":"Which class has the join method for paths?","input":"","output":"cc.path — cc.path.join(...args: string[]): string"}
-{"instruction":"What does findBone return on sp.Skeleton?","input":"","output":"spine.Bone | null"}
-{"instruction":"What does touch.getID() return?","input":"","output":"number | undefined — the touch index on native (iOS/Android); undefined on H5."}
-{"instruction": "What does ccs.Bone.getName() return?", "input": "", "output": "string — the bone's name."}
-{"instruction": "How do I get the blend function of a cc.Sprite?", "input": "", "output": "sprite.getBlendFunc(): cc.BlendFunc"}
-{"instruction": "What does widget.getSizePercent() return?", "input": "", "output": "widget.getSizePercent() returns cc.Point — width/height as 0–1 fraction of parent."}
-{"instruction": "What are the cc.Node lifecycle callbacks?", "input": "", "output": "onEnter, onExit, onEnterTransitionDidFinish, onExitTransitionDidStart, cleanup, update."}
-{"instruction":"What does cc.sys.dumpRoot() do?","input":"","output":"Dumps the root object info. JSB only."}
-{"instruction": "What is the signature of sv.setBounceEnabled?", "input": "", "output": "sv.setBounceEnabled(enabled: boolean): void"}
-{"instruction":"What are the cc.KEY values for letters a-z?","input":"","output":"cc.KEY.a through cc.KEY.z, values 65 through 90."}
+{"instruction": "What is the signature of layout.setBackGroundColorType?", "input": "", "output": "layout.setBackGroundColorType(type: number): void — BG_COLOR_NONE, BG_COLOR_SOLID, or BG_COLOR_GRADIENT."}
+{"instruction": "What are the cc.KEY values for arrow keys?", "input": "", "output": "cc.KEY.left = 37, cc.KEY.up = 38, cc.KEY.right = 39, cc.KEY.down = 40"}
+{"instruction": "What does sv.jumpToLeft() do?", "input": "", "output": "sv.jumpToLeft(): void — instantly scrolls to the left."}
+{"instruction": "How do you set the content scale factor?", "input": "", "output": "cc.director.setContentScaleFactor(scale: number): void"}
+{"instruction": "How do I get a bone at a screen position?", "input": "", "output": "armature.getBoneAtPoint(x: number, y: number): ccs.Bone"}
+{"instruction": "How do I flip a sprite vertically?", "input": "", "output": "sprite.setFlippedY(true): void"}
+{"instruction": "What does cc.moveBy() return?", "input": "", "output": "cc.moveBy() returns a MoveBy action instance."}
+{"instruction": "What properties does cc.Node have?", "input": "", "output": "x, y, width, height, rotation, rotationX, rotationY, scale, scaleX, scaleY, skewX, skewY, opacity, color, visible, tag, zIndex, parent, children, childrenCount, running, anchorX, anchorY, and more."}
+{"instruction": "What is the signature of cc.catmullRomBy?", "input": "", "output": "cc.catmullRomBy(duration: number, points: cc.Point[]): CatmullRomBy"}
+{"instruction": "What does touch.getPreviousLocation() return?", "input": "", "output": "cc.Point — the world position of the previous touch event."}
+{"instruction": "How do I draw a filled triangle with cc.DrawNode?", "input": "", "output": "draw.drawPoly([cc.p(100,0), cc.p(200,150), cc.p(0,150)], cc.color(0,255,0,100), 1, cc.color(0,200,0,255))"}
+{"instruction": "Is cc.DrawNode.drawEllipse() a valid method?", "input": "", "output": "No. cc.DrawNode.drawEllipse() does not exist. Use drawCircle with setScaleX/setScaleY on the node to create ellipses."}
+{"instruction": "How do I remove unused textures from cc.textureCache?", "input": "", "output": "cc.textureCache.removeUnusedTextures(): void"}
+{"instruction": "Is ccui.Widget.PLIST_TEXTURE a valid constant?", "input": "", "output": "Yes. ccui.Widget.PLIST_TEXTURE indicates the texture comes from a sprite frame in a plist."}
+{"instruction": "What does ccs.Bone.getWorldPosition() return?", "input": "", "output": "cc.Point — the bone's world position."}
+{"instruction": "What is the signature of cc.TransitionScene constructor?", "input": "", "output": "new cc.TransitionScene(duration: number, scene: cc.Scene)"}
+{"instruction": "How do you resume the director?", "input": "", "output": "cc.director.resume(): void"}
+{"instruction": "What does layout.getBackGroundEndColor() return?", "input": "", "output": "layout.getBackGroundEndColor() returns cc.Color — the end color of a gradient background."}
+{"instruction": "How do I compute the cross product of two Vec3?", "input": "", "output": "cc.math.vec3Cross(a: cc.math.Vec3, b: cc.math.Vec3): cc.math.Vec3"}
+{"instruction": "What does isCompressedInterpolation do on cc.LayerGradient?", "input": "", "output": "layer.isCompressedInterpolation(): boolean — returns whether compressed interpolation is enabled."}
+{"instruction": "How do you get the gradient direction vector?", "input": "", "output": "layer.getVector(): cc.Point"}
+{"instruction": "What class does cc.LayerMultiplex extend?", "input": "", "output": "cc.LayerMultiplex extends cc.Layer."}
+{"instruction": "What does label.getHorizontalAlignment() return?", "input": "", "output": "label.getHorizontalAlignment() returns number — cc.TEXT_ALIGNMENT_LEFT/CENTER/RIGHT."}
+{"instruction": "How do you preload background music?", "input": "", "output": "cc.audioEngine.preloadMusic(path: string): void"}
+{"instruction": "Which class has the drawSegment method?", "input": "", "output": "cc.DrawNode — draw.drawSegment(from: cc.Point, to: cc.Point, lineWidth: number, color?: cc.Color): void"}
+{"instruction": "How do I get the midpoint of two cc.Point values?", "input": "", "output": "cc.pMidpoint(v1: cc.Point, v2: cc.Point): cc.Point"}
+{"instruction": "What class does cc.Label extend?", "input": "", "output": "cc.Label extends cc.Node."}
+{"instruction": "How do you get seconds per frame?", "input": "", "output": "cc.director.getSecondsPerFrame(): number"}
+{"instruction": "What is node.vertexZ?", "input": "", "output": "node.vertexZ: number — the real OpenGL Z vertex."}
+{"instruction": "What does btn.getTitleRenderer() return?", "input": "", "output": "btn.getTitleRenderer() returns cc.LabelTTF — the internal label renderer."}
+{"instruction": "How do you set premultiplied alpha blending on a sprite?", "input": "", "output": "sprite.setBlendFunc(new cc.BlendFunc(cc.ONE, cc.ONE_MINUS_SRC_ALPHA))"}
+{"instruction": "What does node.getChildByTag() return?", "input": "", "output": "node.getChildByTag(tag: number) returns cc.Node or null."}
+{"instruction": "How do I rotate a point around a pivot?", "input": "", "output": "cc.pRotateByAngle(v: cc.Point, pivot: cc.Point, angle: number): cc.Point"}
+{"instruction": "How do you set the start color of a cc.LayerGradient?", "input": "", "output": "layer.setStartColor(color: cc.Color): void"}
+{"instruction": "How to create a ccui.ImageView?", "input": "", "output": "new ccui.ImageView(imageFileName?: string, texType?: number) or ccui.ImageView.create(imageFileName?, texType?)"}
+{"instruction": "What does cc.easeBackInOut() return?", "input": "", "output": "cc.easeBackInOut() returns an ease object — overshoots both ends."}
+{"instruction": "What does cc.audioEngine.willPlayMusic return?", "input": "", "output": "boolean — indicates whether music will play (audio engine is ready)."}
+{"instruction": "How do I play a timeline animation from frame 0 with looping?", "input": "", "output": "timeline.gotoFrameAndPlay(0, true) — first arg is frame index, second is loop boolean."}
+{"instruction": "What does node.getRotation() return?", "input": "", "output": "node.getRotation() returns number — rotation in degrees (clockwise positive)."}
+{"instruction": "How do I resume an armature animation?", "input": "", "output": "armature.animation.resume(): void"}
+{"instruction": "How do you create a cc.LayerColor?", "input": "", "output": "new cc.LayerColor(color?: cc.Color) or new cc.LayerColor(color: cc.Color, width: number, height: number)."}
+{"instruction": "What does cc.path.basename do?", "input": "", "output": "cc.path.basename(pathStr: string, extname: string): string — returns the filename without directory, optionally stripping the extension."}
+{"instruction": "What does label.getSystemFontSize() return?", "input": "", "output": "label.getSystemFontSize() returns number."}
+{"instruction": "What is the signature of node.convertToNodeSpaceAR?", "input": "", "output": "node.convertToNodeSpaceAR(worldPoint: cc.Point): cc.Point — anchor-relative."}
+{"instruction": "How do I translate an affine transform?", "input": "", "output": "cc.affineTransformTranslate(t: cc.AffineTransform, tx: number, ty: number): cc.AffineTransform"}
+{"instruction": "How do you set the effects volume?", "input": "", "output": "cc.audioEngine.setEffectsVolume(volume: number): void — volume range 0.0 to 1.0."}
+{"instruction": "How do I create a DrawNode in Cocos2d-x JS?", "input": "", "output": "new cc.DrawNode() or cc.DrawNode.create() — both return a cc.DrawNode instance."}
+{"instruction": "How do you save data to local storage in Cocos2d-x?", "input": "", "output": "cc.sys.localStorage.setItem(key: string, value: string | number): void"}
+{"instruction": "What does label.getTTFConfig() return?", "input": "", "output": "label.getTTFConfig() returns the TTF configuration object."}
+{"instruction": "How do you convert UI coordinates to GL coordinates?", "input": "", "output": "cc.director.convertToGL(uiPoint: cc.Point): cc.Point"}
+{"instruction": "What does label.getVerticalAlignment() return?", "input": "", "output": "label.getVerticalAlignment() returns number — cc.VERTICAL_TEXT_ALIGNMENT_TOP/CENTER/BOTTOM."}
+{"instruction": "What is the signature of cc.bezierTo?", "input": "", "output": "cc.bezierTo(duration: number, points: cc.Point[]): BezierTo — requires 3 control points."}
+{"instruction": "What class does ccui.ImageView extend?", "input": "", "output": "ccui.ImageView extends ccui.Widget."}
+{"instruction": "What are the properties of cc.Point?", "input": "", "output": "cc.Point has x: number and y: number."}
+{"instruction": "What does drawContour do on ccs.Armature?", "input": "", "output": "armature.drawContour(): void — draws the armature's debug contour."}
+{"instruction": "What are the parameters of setAttachment on sp.Skeleton?", "input": "", "output": "slotName: string, attachmentName: string (or null to hide the attachment)."}
 {"instruction": "What is the signature of cc.fadeTo?", "input": "", "output": "cc.fadeTo(duration: number, opacity: number): FadeTo"}
+{"instruction": "How do you pop back to the previous scene?", "input": "", "output": "cc.director.popScene(): void"}
+{"instruction": "How do I get the current frame of a ccs.ActionTimeline?", "input": "", "output": "timeline.getCurrentFrame(): number"}
+{"instruction": "What is the signature of node.convertTouchToNodeSpace?", "input": "", "output": "node.convertTouchToNodeSpace(touch: cc.Touch): cc.Point"}
+{"instruction": "What does label.updateContent() do?", "input": "", "output": "label.updateContent(): void — forces an immediate text update."}
+{"instruction": "What are the vertical text alignment constants?", "input": "", "output": "cc.VERTICAL_TEXT_ALIGNMENT_TOP (0), cc.VERTICAL_TEXT_ALIGNMENT_CENTER (1), cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM (2)."}
+{"instruction": "How do I get the batch node of a cc.Sprite?", "input": "", "output": "sprite.getBatchNode(): cc.SpriteBatchNode | null"}
+{"instruction": "What is the type of spine.TrackEntry.alpha?", "input": "", "output": "number — blend weight from 0 to 1."}
+{"instruction": "What is the signature of node.schedule?", "input": "", "output": "node.schedule(callback, interval?, repeat?, delay?, key?): void"}
+{"instruction": "Is cc.DrawNode.drawLine() a valid method?", "input": "", "output": "No. cc.DrawNode.drawLine() does not exist. Use draw.drawSegment(from, to, lineWidth, color) instead."}
+{"instruction": "How do you add an event listener to a node?", "input": "", "output": "cc.eventManager.addListener(listener, nodeOrPriority) — listener: cc.EventListener, nodeOrPriority: cc.Node | number"}
+{"instruction": "How do I create a sprite from a sub-rect of an image?", "input": "", "output": "new cc.Sprite('res/atlas.png', cc.rect(0, 0, 64, 64))"}
+{"instruction": "What does node.getPosition() return?", "input": "", "output": "node.getPosition() returns cc.Point."}
+{"instruction": "What is the difference between drawDot and drawDots on cc.DrawNode?", "input": "", "output": "drawDot draws a single dot at one position. drawDots draws multiple dots at an array of positions with the same radius and color."}
+{"instruction": "How do I initialize a sprite with a sprite frame?", "input": "", "output": "sprite.initWithSpriteFrame(frame: cc.SpriteFrame): boolean"}
+{"instruction": "How do you set normal alpha blending?", "input": "", "output": "sprite.setBlendFunc(new cc.BlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA))"}
+{"instruction": "What does cc.path.dirname do?", "input": "", "output": "cc.path.dirname(pathStr: string): string — returns the directory portion of the path."}
+{"instruction": "What are the methods on cc.GLProgramState?", "input": "", "output": "setUniformInt(name, value), setUniformFloat(name, value), setUniformVec2(name, value), setUniformVec3(name, value), setUniformVec4(name, value), setUniformMat4(name, value)"}
+{"instruction": "How do I get the blend function of a cc.Sprite?", "input": "", "output": "sprite.getBlendFunc(): cc.BlendFunc"}
+{"instruction": "How do I listen for animation completion events on ccs.Armature?", "input": "", "output": "armature.animation.setMovementEventCallFunc((armature: ccs.Armature, movementType: number, movementID: string) => void): void"}
+{"instruction": "How do I play a sequence of named animations?", "input": "", "output": "armature.animation.playWithNames(names: string[], durationTo?: number, loop?: boolean): void"}
+{"instruction": "How to check if inertia scroll is enabled?", "input": "", "output": "sv.isInertiaScrollEnabled() returns boolean."}
+{"instruction": "What does cc.easeBounceInOut() return?", "input": "", "output": "cc.easeBounceInOut() returns an ease object — bounce at both ends."}
+{"instruction": "Is cc.sys.isNative a method or a property?", "input": "", "output": "It is a Boolean property, not a method. Access it as cc.sys.isNative (no parentheses)."}
+{"instruction": "What does layout.removeBackGroundImage() do?", "input": "", "output": "layout.removeBackGroundImage(): void — removes the background image."}
+{"instruction": "What is the signature of sv.scrollToRight?", "input": "", "output": "sv.scrollToRight(time: number, attenuated: boolean): void"}
+{"instruction": "What does sv.jumpToBottomLeft() do?", "input": "", "output": "sv.jumpToBottomLeft(): void — instantly scrolls to the bottom-left corner."}
+{"instruction": "What does node.getScaleX() return?", "input": "", "output": "node.getScaleX() returns number."}
+{"instruction": "What event type constant is used for mouse listeners?", "input": "", "output": "cc.EventListener.MOUSE"}
+{"instruction": "What does node.getActionByTag() return?", "input": "", "output": "node.getActionByTag(tag: number) returns cc.Action."}
+{"instruction": "Is cc.eventManager.addEventHandler a valid method?", "input": "", "output": "No. The correct method is cc.eventManager.addListener(listener, nodeOrPriority)."}
+{"instruction": "Is cc.eventManager.emit a valid method?", "input": "", "output": "No. Use cc.eventManager.dispatchEvent() or cc.eventManager.dispatchCustomEvent() to dispatch events."}
 {"instruction": "What is the signature of node.setScaleY?", "input": "", "output": "node.setScaleY(scaleY: number): void"}
-{"instruction": "What does widget.getTopBoundary() return?", "input": "", "output": "widget.getTopBoundary() returns number — the top edge y-coordinate."}
-{"instruction": "What are the parameters of drawSegment on cc.DrawNode?", "input": "", "output": "drawSegment(from: cc.Point, to: cc.Point, lineWidth: number, color?: cc.Color) — from/to are endpoints, lineWidth is thickness."}
-{"instruction":"What is the cc.KEY value for Enter?","input":"","output":"cc.KEY.enter = 13"}
-{"instruction": "What is the signature of cc.cardinalSplineBy?", "input": "", "output": "cc.cardinalSplineBy(duration: number, points: cc.Point[], tension: number): CardinalSplineBy"}
-{"instruction":"What are the methods on cc.GLProgramState?","input":"","output":"setUniformInt(name, value), setUniformFloat(name, value), setUniformVec2(name, value), setUniformVec3(name, value), setUniformVec4(name, value), setUniformMat4(name, value)"}
-{"instruction":"How do you unschedule a specific callback?","input":"","output":"scheduler.unscheduleCallbackForTarget(target, callback): void"}
-{"instruction": "What is the signature of label.setBezierAlignment?", "input": "", "output": "label.setBezierAlignment(align: number): void — 0=LEFT, 1=CENTER, 2=RIGHT, 3=STRETCH."}
-{"instruction": "What is the signature of sv.setScrollBarOpacity?", "input": "", "output": "sv.setScrollBarOpacity(opacity: number): void"}
-{"instruction": "How do I get the texture atlas of a cc.Sprite?", "input": "", "output": "sprite.getTextureAtlas(): cc.TextureAtlas"}
+{"instruction": "What is the signature of widget.setEnabled?", "input": "", "output": "widget.setEnabled(enabled: boolean): void"}
+{"instruction": "What does cc.director.popToSceneStackLevel do?", "input": "", "output": "cc.director.popToSceneStackLevel(level: number): void — pops scenes until the stack has the given number of scenes."}
+{"instruction": "How do you remove all event listeners?", "input": "", "output": "cc.eventManager.removeAllListeners(): void"}
+{"instruction": "What does findSlot return on sp.Skeleton?", "input": "", "output": "spine.Slot | null"}
+{"instruction": "How do I create a cc.Sprite in Cocos2d-x JS?", "input": "", "output": "new cc.Sprite(filename: string) or cc.Sprite.create(filename: string): cc.Sprite"}
+{"instruction": "What does node.getNormalizedPosition() return?", "input": "", "output": "node.getNormalizedPosition() returns cc.Point — position as 0-1 fraction of parent size."}
+{"instruction": "How to create a cc.Animation?", "input": "", "output": "new cc.Animation(frames: cc.SpriteFrame[], delay: number, loops?: number)"}
+{"instruction": "What is the cc.KEY value for Alt?", "input": "", "output": "cc.KEY.alt = 18"}
+{"instruction": "How do I listen for frame events on ccs.ArmatureAnimation?", "input": "", "output": "armature.animation.setFrameEventCallFunc((bone: ccs.Bone, frameEventName: string, originFrameIndex: number, currentFrameIndex: number) => void): void"}
+{"instruction": "How do you create a BlendFunc?", "input": "", "output": "new cc.BlendFunc(src: cc.BlenderConst, dst: cc.BlenderConst)"}
+{"instruction": "What does getBoneAtPoint return?", "input": "", "output": "ccs.Bone — the bone at the given (x, y) coordinates."}
+{"instruction": "What are the GL texture sampling constants?", "input": "", "output": "gl.NEAREST (pixelated), gl.LINEAR (smooth), gl.NEAREST_MIPMAP_NEAREST, gl.LINEAR_MIPMAP_LINEAR (trilinear)"}
+{"instruction": "What does cc.easeSineOut() return?", "input": "", "output": "cc.easeSineOut() returns an ease object for sine-out easing."}
+{"instruction": "What is the signature of node.setSkewX?", "input": "", "output": "node.setSkewX(degrees: number): void"}
+{"instruction": "How do you remove an action by tag?", "input": "", "output": "mgr.removeActionByTag(tag: number, target: cc.Node): void"}
