@@ -158,13 +158,21 @@ def load_model_and_tokenizer():
         tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
     tokenizer.padding_side = "right"
 
+    # Use Flash Attention 2 if available, otherwise fall back to default
+    attn_impl = "flash_attention_2"
+    try:
+        import flash_attn  # noqa: F401
+    except ImportError:
+        attn_impl = "eager"
+        print("flash-attn not installed, using eager attention")
+
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
         torch_dtype=compute_dtype,
-        attn_implementation="flash_attention_2",  # A100 supports FA2
+        attn_implementation=attn_impl,
     )
     model.resize_token_embeddings(len(tokenizer))
     model = prepare_model_for_kbit_training(model)
