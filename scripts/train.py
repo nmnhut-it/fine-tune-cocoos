@@ -1,12 +1,15 @@
-"""Two-phase training to embed Cocos2d-x API knowledge into the model.
+"""Two-phase full fine-tuning to embed Cocos2d-x API knowledge into the model.
 
 Phase 1 — Continued pre-training (CPT): full-text loss on docs + QA pairs.
   The model learns API vocabulary, patterns, and associations from both
-  instructions and responses. This embeds knowledge.
+  instructions and responses. This embeds knowledge into all weights.
 
 Phase 2 — Supervised fine-tuning (SFT): response-only loss on QA pairs.
-  The model learns to follow the instruction→response format.
+  The model learns to follow the instruction->response format.
   Instruction tokens are masked with -100.
+
+Supports both full fine-tuning (recommended for knowledge injection) and
+QLoRA/DoRA (fallback if VRAM is limited).
 """
 import glob
 import os
@@ -21,7 +24,6 @@ from transformers import (
     Trainer,
     TrainingArguments,
 )
-from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 
 from scripts.config import (
     BATCH_SIZE,
@@ -30,6 +32,7 @@ from scripts.config import (
     DOCS_GLOB,
     DRIVE_ADAPTER,
     DRIVE_CHECKPOINTS,
+    DRIVE_MODEL,
     EVAL_STEPS,
     GRAD_ACCUM_STEPS,
     LORA_ALPHA,
@@ -49,6 +52,7 @@ from scripts.config import (
     TEST_JSONL,
     TRAIN_JSONL,
     USE_DORA,
+    USE_FULL_FINETUNE,
     WARMUP_RATIO,
     WEIGHT_DECAY,
     ALPACA_PROMPT,
@@ -143,22 +147,9 @@ def load_docs_as_chunks():
 
 
 def load_model_and_tokenizer():
-    # Qwen3 prefers bf16 compute dtype (better stability than fp16)
     compute_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=compute_dtype,
-        bnb_4bit_use_double_quant=True,
-    )
 
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
-    # Dedicated pad token — never reuse eos_token
-    if tokenizer.pad_token is None or tokenizer.pad_token == tokenizer.eos_token:
-        tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
-    tokenizer.padding_side = "right"
-
-    # Use Flash Attention 2 if available, otherwise fall back to default
+    # Flash Attention 2 — optional
     attn_impl = "flash_attention_2"
     try:
         import flash_attn  # noqa: F401
@@ -166,29 +157,56 @@ def load_model_and_tokenizer():
         attn_impl = "eager"
         print("flash-attn not installed, using eager attention")
 
-    model = AutoModelForCausalLM.from_pretrained(
-        MODEL_ID,
-        quantization_config=bnb_config,
-        device_map="auto",
-        trust_remote_code=True,
-        torch_dtype=compute_dtype,
-        attn_implementation=attn_impl,
-    )
-    model.resize_token_embeddings(len(tokenizer))
-    model = prepare_model_for_kbit_training(model)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
+    if tokenizer.pad_token is None or tokenizer.pad_token == tokenizer.eos_token:
+        tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
+    tokenizer.padding_side = "right"
 
-    lora_config = LoraConfig(
-        r=LORA_R,
-        lora_alpha=LORA_ALPHA,
-        target_modules=LORA_TARGET_MODULES,
-        lora_dropout=LORA_DROPOUT,
-        bias="none",
-        task_type="CAUSAL_LM",
-        use_dora=USE_DORA,
-    )
-    model = get_peft_model(model, lora_config)
-    model.gradient_checkpointing_enable()
-    model.print_trainable_parameters()
+    if USE_FULL_FINETUNE:
+        # Full fine-tuning in bf16 — no quantization
+        # Use 8-bit Adam + gradient checkpointing to fit on A100 40GB
+        model = AutoModelForCausalLM.from_pretrained(
+            MODEL_ID,
+            device_map="auto",
+            trust_remote_code=True,
+            torch_dtype=compute_dtype,
+            attn_implementation=attn_impl,
+        )
+        model.resize_token_embeddings(len(tokenizer))
+        model.gradient_checkpointing_enable()
+        trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+        total = sum(p.numel() for p in model.parameters())
+        print(f"Full fine-tuning: {trainable/1e6:.0f}M / {total/1e6:.0f}M params trainable")
+    else:
+        # QLoRA fallback
+        from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=compute_dtype,
+            bnb_4bit_use_double_quant=True,
+        )
+        model = AutoModelForCausalLM.from_pretrained(
+            MODEL_ID,
+            quantization_config=bnb_config,
+            device_map="auto",
+            trust_remote_code=True,
+            torch_dtype=compute_dtype,
+            attn_implementation=attn_impl,
+        )
+        model.resize_token_embeddings(len(tokenizer))
+        model = prepare_model_for_kbit_training(model)
+        lora_config = LoraConfig(
+            r=LORA_R, lora_alpha=LORA_ALPHA,
+            target_modules=LORA_TARGET_MODULES,
+            lora_dropout=LORA_DROPOUT,
+            bias="none", task_type="CAUSAL_LM",
+            use_dora=USE_DORA,
+        )
+        model = get_peft_model(model, lora_config)
+        model.gradient_checkpointing_enable()
+        model.print_trainable_parameters()
+
     return model, tokenizer
 
 
@@ -368,6 +386,10 @@ def tokenize_datasets(train_ds, test_ds, tokenizer):
 def _make_trainer(model, tokenizer, train_tok, test_tok, output_dir,
                   num_epochs, learning_rate):
     """Create a Trainer with the given hyperparameters."""
+    use_bf16 = torch.cuda.is_bf16_supported()
+    # 8-bit Adam saves ~50% optimizer VRAM — critical for full FT on A100
+    optim = "adamw_8bit" if USE_FULL_FINETUNE else "adamw_torch"
+
     training_args = TrainingArguments(
         output_dir=output_dir,
         num_train_epochs=num_epochs,
@@ -376,9 +398,10 @@ def _make_trainer(model, tokenizer, train_tok, test_tok, output_dir,
         learning_rate=learning_rate,
         weight_decay=WEIGHT_DECAY,
         warmup_ratio=WARMUP_RATIO,
+        optim=optim,
         lr_scheduler_type="cosine",
-        bf16=torch.cuda.is_bf16_supported(),
-        fp16=not torch.cuda.is_bf16_supported(),
+        bf16=use_bf16,
+        fp16=not use_bf16,
         gradient_checkpointing=True,
         logging_steps=10,
         eval_strategy="steps",
@@ -478,11 +501,17 @@ def run_training(model, tokenizer, train_tok, test_tok):
 # ── Save / Evaluate ──────────────────────────────────────────────────
 
 
-def save_adapter(model, tokenizer):
+def save_model(model, tokenizer):
+    """Save the fine-tuned model (full model or adapter) to Drive."""
     ensure_drive_dirs()
-    model.save_pretrained(DRIVE_ADAPTER)
-    tokenizer.save_pretrained(DRIVE_ADAPTER)
-    print(f"Adapter saved to {DRIVE_ADAPTER}")
+    model.save_pretrained(DRIVE_MODEL)
+    tokenizer.save_pretrained(DRIVE_MODEL)
+    mode = "Full model" if USE_FULL_FINETUNE else "Adapter"
+    print(f"{mode} saved to {DRIVE_MODEL}")
+
+
+# Legacy alias
+save_adapter = save_model
 
 
 def evaluate_loss(trainer):

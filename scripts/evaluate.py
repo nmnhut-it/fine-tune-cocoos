@@ -20,6 +20,7 @@ from scripts.config import (
     CHUNK_SIZE,
     DOCS_GLOB,
     DRIVE_ADAPTER,
+    DRIVE_MODEL,
     EMBED_MODEL,
     EVAL_CHART_PATH,
     EVAL_REPORT_PATH,
@@ -31,6 +32,7 @@ from scripts.config import (
     TEMPERATURE,
     TEST_JSONL,
     TOP_P,
+    USE_FULL_FINETUNE,
 )
 
 # ── Chunking & RAG index ────────────────────────────────────────────────
@@ -84,21 +86,47 @@ def load_models():
         bnb_4bit_compute_dtype=compute_dtype,
         bnb_4bit_use_double_quant=True,
     )
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
-    if tokenizer.pad_token is None or tokenizer.pad_token == tokenizer.eos_token:
-        tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
 
-    base_model = AutoModelForCausalLM.from_pretrained(
-        MODEL_ID,
-        quantization_config=bnb_config,
-        device_map="auto",
-        trust_remote_code=True,
-        torch_dtype=compute_dtype,
-    )
-    base_model.resize_token_embeddings(len(tokenizer))
-    ft_model = PeftModel.from_pretrained(base_model, DRIVE_ADAPTER)
-    ft_model.eval()
-    print("Base + fine-tuned models loaded.")
+    if USE_FULL_FINETUNE:
+        # Full fine-tuned model — load directly from Drive (quantized for eval)
+        tokenizer = AutoTokenizer.from_pretrained(DRIVE_MODEL, trust_remote_code=True)
+        if tokenizer.pad_token is None or tokenizer.pad_token == tokenizer.eos_token:
+            tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
+
+        ft_model = AutoModelForCausalLM.from_pretrained(
+            DRIVE_MODEL,
+            quantization_config=bnb_config,
+            device_map="auto",
+            trust_remote_code=True,
+            torch_dtype=compute_dtype,
+        )
+        ft_model.eval()
+        # Base model for RAG comparison (vanilla, no fine-tuning)
+        base_model = AutoModelForCausalLM.from_pretrained(
+            MODEL_ID,
+            quantization_config=bnb_config,
+            device_map="cpu",  # keep on CPU, swap to GPU when needed
+            trust_remote_code=True,
+            torch_dtype=compute_dtype,
+        )
+        base_model.resize_token_embeddings(len(tokenizer))
+    else:
+        # QLoRA — load base + adapter
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
+        if tokenizer.pad_token is None or tokenizer.pad_token == tokenizer.eos_token:
+            tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
+        base_model = AutoModelForCausalLM.from_pretrained(
+            MODEL_ID,
+            quantization_config=bnb_config,
+            device_map="auto",
+            trust_remote_code=True,
+            torch_dtype=compute_dtype,
+        )
+        base_model.resize_token_embeddings(len(tokenizer))
+        ft_model = PeftModel.from_pretrained(base_model, DRIVE_ADAPTER)
+        ft_model.eval()
+
+    print("Models loaded for evaluation.")
     return base_model, ft_model, tokenizer
 
 

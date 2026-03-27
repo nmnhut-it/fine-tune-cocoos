@@ -12,10 +12,13 @@ VARIANT = os.environ.get("COCOS_VARIANT", "api")
 # === Google Drive paths (variant-aware) ===
 DRIVE_ROOT = f"/content/drive/MyDrive/cocos2dx-finetune-{VARIANT}"
 DRIVE_CHECKPOINTS = f"{DRIVE_ROOT}/checkpoints"
-DRIVE_ADAPTER = f"{DRIVE_ROOT}/cocos2dx-lora-adapter"
+DRIVE_MODEL = f"{DRIVE_ROOT}/cocos2dx-model"
 EVAL_RESULTS_PATH = f"{DRIVE_ROOT}/eval_results.json"
 EVAL_REPORT_PATH = f"{DRIVE_ROOT}/eval_report.json"
 EVAL_CHART_PATH = f"{DRIVE_ROOT}/eval_chart.png"
+
+# Legacy alias
+DRIVE_ADAPTER = DRIVE_MODEL
 
 # === Repo-relative data paths (variant-aware) ===
 if VARIANT == "longform":
@@ -32,11 +35,16 @@ REPLAY_JSONL = "data/replay-general.jsonl"
 REPLAY_RATIO = 0.15  # 15% general data to prevent catastrophic forgetting
 
 # === Model ===
-# Qwen3-8B-Base for maximum knowledge absorption on A100 40GB
-# Use base (not instruct) because CPT works better without RLHF alignment
-MODEL_ID = "Qwen/Qwen3-8B-Base"
+# Qwen3-4B-Base: full fine-tuning fits on A100 40GB (~32GB VRAM)
+# Base (not instruct) for maximum knowledge absorption during CPT
+MODEL_ID = "Qwen/Qwen3-4B-Base"
 
-# === LoRA (DoRA for better knowledge injection) ===
+# === Training mode ===
+# Full fine-tuning stores knowledge far more efficiently than LoRA/QLoRA
+# for niche domains where the model has no prior exposure
+USE_FULL_FINETUNE = True
+
+# === LoRA config (only used if USE_FULL_FINETUNE=False) ===
 LORA_R = 64
 LORA_ALPHA = 128
 LORA_DROPOUT = 0.05
@@ -44,31 +52,31 @@ LORA_TARGET_MODULES = [
     "q_proj", "k_proj", "v_proj", "o_proj",
     "gate_proj", "up_proj", "down_proj",
 ]
-USE_DORA = True  # weight-decomposed LoRA — better for new knowledge
+USE_DORA = True
 
 # === Phase 1: Continued pre-training (full-text loss on docs + QA) ===
 # Heavy CPT to embed all Cocos2d-x API knowledge into the model weights.
 # Goal: replace Context7 RAG — the model must know the APIs internally.
 CPT_EPOCHS = 5
-CPT_LEARNING_RATE = 2e-4
+CPT_LEARNING_RATE = 2e-5  # lower LR for full FT (vs 2e-4 for LoRA)
 
 # === Phase 2: Instruction tuning (response-only loss) ===
 # Teaches the model to answer questions using its embedded knowledge.
 SFT_EPOCHS = 3
-SFT_LEARNING_RATE = 5e-5
+SFT_LEARNING_RATE = 1e-5  # very conservative for SFT after CPT
 
 # === Shared training params ===
-BATCH_SIZE = 2          # A100 can handle batch=2 with 8B QLoRA
-GRAD_ACCUM_STEPS = 8    # effective batch = 2*8 = 16
+BATCH_SIZE = 1             # full FT uses more VRAM per sample
+GRAD_ACCUM_STEPS = 16     # effective batch = 16
 WARMUP_RATIO = 0.06
 WEIGHT_DECAY = 0.01
-MAX_SEQ_LENGTH = 2048   # Qwen3 supports 32K, use 2K for training efficiency
+MAX_SEQ_LENGTH = 2048
 SAVE_STEPS = 100
 EVAL_STEPS = 100
-SAVE_TOTAL_LIMIT = 3
+SAVE_TOTAL_LIMIT = 2       # save VRAM on Drive (full model checkpoints are large)
 NEFTUNE_NOISE_ALPHA = 5.0  # embedding noise for better generalization
 
-# Legacy alias for notebooks that use NUM_EPOCHS
+# Legacy aliases
 NUM_EPOCHS = SFT_EPOCHS
 LEARNING_RATE = SFT_LEARNING_RATE
 
@@ -112,10 +120,10 @@ RAG_PROMPT = """Below is an instruction that describes a task. Use the provided 
 """
 
 # RAFT: fraction of examples that include the oracle doc (rest get distractors only)
-RAFT_ORACLE_RATIO = 0.7  # 70% get the relevant doc, 30% get only distractors
-RAFT_NUM_DISTRACTORS = 3  # number of irrelevant doc chunks mixed in
+RAFT_ORACLE_RATIO = 0.7
+RAFT_NUM_DISTRACTORS = 3
 
 
 def ensure_drive_dirs():
-    for d in [DRIVE_ROOT, DRIVE_CHECKPOINTS, DRIVE_ADAPTER]:
+    for d in [DRIVE_ROOT, DRIVE_CHECKPOINTS, DRIVE_MODEL]:
         os.makedirs(d, exist_ok=True)
