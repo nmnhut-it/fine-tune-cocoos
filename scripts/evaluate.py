@@ -84,11 +84,13 @@ def load_models():
         bnb_4bit_use_double_quant=True,
     )
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
-    tokenizer.pad_token = tokenizer.eos_token
+    if tokenizer.pad_token is None or tokenizer.pad_token == tokenizer.eos_token:
+        tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
 
     base_model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID, quantization_config=bnb_config, device_map="auto", trust_remote_code=True,
     )
+    base_model.resize_token_embeddings(len(tokenizer))
     ft_model = PeftModel.from_pretrained(base_model, DRIVE_ADAPTER)
     ft_model.eval()
     print("Base + fine-tuned models loaded.")
@@ -107,7 +109,7 @@ def _generate(model, tokenizer, prompt):
             temperature=TEMPERATURE,
             top_p=TOP_P,
             do_sample=True,
-            pad_token_id=tokenizer.eos_token_id,
+            pad_token_id=tokenizer.pad_token_id,
         )
     return tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
 
