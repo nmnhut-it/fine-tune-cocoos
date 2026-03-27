@@ -143,10 +143,12 @@ def load_docs_as_chunks():
 
 
 def load_model_and_tokenizer():
+    # Qwen3 prefers bf16 compute dtype (better stability than fp16)
+    compute_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_compute_dtype=compute_dtype,
         bnb_4bit_use_double_quant=True,
     )
 
@@ -161,6 +163,8 @@ def load_model_and_tokenizer():
         quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
+        torch_dtype=compute_dtype,
+        attn_implementation="flash_attention_2",  # A100 supports FA2
     )
     model.resize_token_embeddings(len(tokenizer))
     model = prepare_model_for_kbit_training(model)
@@ -365,7 +369,8 @@ def _make_trainer(model, tokenizer, train_tok, test_tok, output_dir,
         weight_decay=WEIGHT_DECAY,
         warmup_ratio=WARMUP_RATIO,
         lr_scheduler_type="cosine",
-        fp16=True,
+        bf16=torch.cuda.is_bf16_supported(),
+        fp16=not torch.cuda.is_bf16_supported(),
         gradient_checkpointing=True,
         logging_steps=10,
         eval_strategy="steps",

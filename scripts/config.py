@@ -32,7 +32,9 @@ REPLAY_JSONL = "data/replay-general.jsonl"
 REPLAY_RATIO = 0.15  # 15% general data to prevent catastrophic forgetting
 
 # === Model ===
-MODEL_ID = "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+# Qwen3-8B-Base for maximum knowledge absorption on A100 40GB
+# Use base (not instruct) because CPT works better without RLHF alignment
+MODEL_ID = "Qwen/Qwen3-8B-Base"
 
 # === LoRA (DoRA for better knowledge injection) ===
 LORA_R = 64
@@ -45,23 +47,24 @@ LORA_TARGET_MODULES = [
 USE_DORA = True  # weight-decomposed LoRA — better for new knowledge
 
 # === Phase 1: Continued pre-training (full-text loss on docs + QA) ===
-# Computes loss on entire text to embed API knowledge into the model
-CPT_EPOCHS = 3
+# Heavy CPT to embed all Cocos2d-x API knowledge into the model weights.
+# Goal: replace Context7 RAG — the model must know the APIs internally.
+CPT_EPOCHS = 5
 CPT_LEARNING_RATE = 2e-4
 
 # === Phase 2: Instruction tuning (response-only loss) ===
-# Masks instruction tokens, only computes loss on response
+# Teaches the model to answer questions using its embedded knowledge.
 SFT_EPOCHS = 3
 SFT_LEARNING_RATE = 5e-5
 
 # === Shared training params ===
-BATCH_SIZE = 1
-GRAD_ACCUM_STEPS = 16
+BATCH_SIZE = 2          # A100 can handle batch=2 with 8B QLoRA
+GRAD_ACCUM_STEPS = 8    # effective batch = 2*8 = 16
 WARMUP_RATIO = 0.06
 WEIGHT_DECAY = 0.01
-MAX_SEQ_LENGTH = 1024
-SAVE_STEPS = 50
-EVAL_STEPS = 50
+MAX_SEQ_LENGTH = 2048   # Qwen3 supports 32K, use 2K for training efficiency
+SAVE_STEPS = 100
+EVAL_STEPS = 100
 SAVE_TOTAL_LIMIT = 3
 NEFTUNE_NOISE_ALPHA = 5.0  # embedding noise for better generalization
 
@@ -69,14 +72,14 @@ NEFTUNE_NOISE_ALPHA = 5.0  # embedding noise for better generalization
 NUM_EPOCHS = SFT_EPOCHS
 LEARNING_RATE = SFT_LEARNING_RATE
 
-# === RAG ===
+# === RAG (for eval comparison only) ===
 CHUNK_SIZE = 800
 CHUNK_OVERLAP = 200
 RAG_TOP_K = 5
 EMBED_MODEL = "all-MiniLM-L6-v2"
 
 # === Generation ===
-MAX_NEW_TOKENS = 128 if VARIANT == "api" else 512
+MAX_NEW_TOKENS = 256 if VARIANT == "api" else 512
 TEMPERATURE = 0.3 if VARIANT == "api" else 0.7
 TOP_P = 0.9
 

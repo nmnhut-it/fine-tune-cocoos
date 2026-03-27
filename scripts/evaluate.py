@@ -77,10 +77,11 @@ def retrieve_context(query, embedder, chunk_embs, doc_chunks, doc_sources, top_k
 
 
 def load_models():
+    compute_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_compute_dtype=compute_dtype,
         bnb_4bit_use_double_quant=True,
     )
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
@@ -88,7 +89,11 @@ def load_models():
         tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
 
     base_model = AutoModelForCausalLM.from_pretrained(
-        MODEL_ID, quantization_config=bnb_config, device_map="auto", trust_remote_code=True,
+        MODEL_ID,
+        quantization_config=bnb_config,
+        device_map="auto",
+        trust_remote_code=True,
+        torch_dtype=compute_dtype,
     )
     base_model.resize_token_embeddings(len(tokenizer))
     ft_model = PeftModel.from_pretrained(base_model, DRIVE_ADAPTER)
