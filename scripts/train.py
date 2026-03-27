@@ -21,6 +21,7 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
+    EarlyStoppingCallback,
     Trainer,
     TrainingArguments,
 )
@@ -415,12 +416,16 @@ def _make_trainer(model, tokenizer, train_tok, test_tok, output_dir,
         dataloader_pin_memory=False,
         neftune_noise_alpha=NEFTUNE_NOISE_ALPHA,
     )
+    # Stop early if eval loss doesn't improve for 3 consecutive evaluations
+    early_stop = EarlyStoppingCallback(early_stopping_patience=3)
+
     return Trainer(
         model=model,
         args=training_args,
         train_dataset=train_tok,
         eval_dataset=test_tok,
         data_collator=LabelPreservingCollator(tokenizer),
+        callbacks=[early_stop],
     )
 
 
