@@ -93,6 +93,7 @@ def load_models():
         if tokenizer.pad_token is None or tokenizer.pad_token == tokenizer.eos_token:
             tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
 
+        # Only load FT model now; base model loaded on-demand via swap
         ft_model = AutoModelForCausalLM.from_pretrained(
             DRIVE_MODEL,
             quantization_config=bnb_config,
@@ -101,15 +102,7 @@ def load_models():
             torch_dtype=compute_dtype,
         )
         ft_model.eval()
-        # Base model for RAG comparison (vanilla, no fine-tuning)
-        base_model = AutoModelForCausalLM.from_pretrained(
-            MODEL_ID,
-            quantization_config=bnb_config,
-            device_map="cpu",  # keep on CPU, swap to GPU when needed
-            trust_remote_code=True,
-            torch_dtype=compute_dtype,
-        )
-        base_model.resize_token_embeddings(len(tokenizer))
+        base_model = None  # loaded on-demand in run_evaluation
     else:
         # QLoRA — load base + adapter
         tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
@@ -160,6 +153,24 @@ def generate_rag(base_model, tokenizer, instruction, embedder, chunk_embs, doc_c
 # ── Run full evaluation (with resume) ───────────────────────────────────
 
 
+def _swap_to_gpu(model, tokenizer, bnb_config, model_id, compute_dtype):
+    """Unload current model, load a different one onto GPU."""
+    import gc
+    del model
+    gc.collect()
+    torch.cuda.empty_cache()
+    new_model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        quantization_config=bnb_config,
+        device_map="auto",
+        trust_remote_code=True,
+        torch_dtype=compute_dtype,
+    )
+    new_model.resize_token_embeddings(len(tokenizer))
+    new_model.eval()
+    return new_model
+
+
 def run_evaluation(base_model, ft_model, tokenizer, embedder, chunk_embs, doc_chunks, doc_sources):
     from tqdm import tqdm
 
@@ -173,23 +184,62 @@ def run_evaluation(base_model, ft_model, tokenizer, embedder, chunk_embs, doc_ch
         results = []
 
     done = {r["index"] for r in results}
+    pending = [i for i in range(len(test_ds)) if i not in done]
 
-    for i in tqdm(range(len(test_ds)), desc="Evaluating"):
-        if i in done:
-            continue
-        ex = test_ds[i]
-        ft_out = generate_finetuned(ft_model, tokenizer, ex["instruction"])
-        rag_out = generate_rag(base_model, tokenizer, ex["instruction"], embedder, chunk_embs, doc_chunks, doc_sources)
-        results.append({
-            "index": i,
-            "instruction": ex["instruction"],
-            "reference": ex["output"],
-            "finetuned": ft_out,
-            "rag": rag_out,
-        })
-        if len(results) % 10 == 0:
-            with open(EVAL_RESULTS_PATH, "w") as f:
-                json.dump(results, f)
+    if not pending:
+        print(f"Evaluation complete: {len(results)} examples")
+        return results
+
+    compute_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True, bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=compute_dtype, bnb_4bit_use_double_quant=True,
+    )
+
+    if USE_FULL_FINETUNE:
+        # Phase A: run all FT generations first
+        print("Phase A: Generating fine-tuned responses...")
+        ft_outputs = {}
+        for i in tqdm(pending, desc="FT model"):
+            ex = test_ds[i]
+            ft_outputs[i] = generate_finetuned(ft_model, tokenizer, ex["instruction"])
+
+        # Swap: unload FT model, load base model
+        print("Swapping models: unloading FT, loading base for RAG...")
+        base_model = _swap_to_gpu(ft_model, tokenizer, bnb_config, MODEL_ID, compute_dtype)
+        ft_model = None
+
+        # Phase B: run all RAG generations
+        print("Phase B: Generating RAG responses...")
+        for i in tqdm(pending, desc="RAG model"):
+            ex = test_ds[i]
+            rag_out = generate_rag(base_model, tokenizer, ex["instruction"], embedder, chunk_embs, doc_chunks, doc_sources)
+            results.append({
+                "index": i,
+                "instruction": ex["instruction"],
+                "reference": ex["output"],
+                "finetuned": ft_outputs[i],
+                "rag": rag_out,
+            })
+            if len(results) % 10 == 0:
+                with open(EVAL_RESULTS_PATH, "w") as f:
+                    json.dump(results, f)
+    else:
+        # QLoRA: both models share weights, run together
+        for i in tqdm(pending, desc="Evaluating"):
+            ex = test_ds[i]
+            ft_out = generate_finetuned(ft_model, tokenizer, ex["instruction"])
+            rag_out = generate_rag(base_model, tokenizer, ex["instruction"], embedder, chunk_embs, doc_chunks, doc_sources)
+            results.append({
+                "index": i,
+                "instruction": ex["instruction"],
+                "reference": ex["output"],
+                "finetuned": ft_out,
+                "rag": rag_out,
+            })
+            if len(results) % 10 == 0:
+                with open(EVAL_RESULTS_PATH, "w") as f:
+                    json.dump(results, f)
 
     with open(EVAL_RESULTS_PATH, "w") as f:
         json.dump(results, f)
