@@ -550,7 +550,14 @@ save_adapter = save_model
 
 
 def evaluate_loss(trainer):
-    eval_results = trainer.evaluate()
+    try:
+        eval_results = trainer.evaluate()
+    except RuntimeError:
+        # Workaround: early stopping can leave trainer in bad state
+        # Re-trigger train callbacks then evaluate
+        trainer.control.should_training_stop = False
+        trainer.callback_handler.on_train_begin(trainer.args, trainer.state, trainer.control)
+        eval_results = trainer.evaluate()
     loss = eval_results["eval_loss"]
     ppl = 2 ** loss
     print(f"Test Loss: {loss:.4f}")
