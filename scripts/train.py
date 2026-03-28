@@ -429,6 +429,34 @@ def _make_trainer(model, tokenizer, train_tok, test_tok, output_dir,
     )
 
 
+def empty_drive_trash():
+    """Permanently delete files in Google Drive Trash to reclaim space.
+    Drive moves deleted checkpoints to Trash, which still counts against quota.
+    """
+    try:
+        from google.colab import drive  # noqa: F811
+        import subprocess
+        # Find and permanently delete trashed files
+        trash_path = "/content/drive/.Trash-0"
+        if os.path.exists(trash_path):
+            import shutil
+            size_before = subprocess.check_output(
+                ["du", "-sh", trash_path], stderr=subprocess.DEVNULL
+            ).decode().split()[0]
+            shutil.rmtree(trash_path, ignore_errors=True)
+            print(f"  Emptied Drive trash ({size_before} freed)")
+        else:
+            # Alternative: use trash-cli or direct removal
+            trash_paths = glob.glob("/content/drive/.Trash*")
+            for tp in trash_paths:
+                import shutil
+                shutil.rmtree(tp, ignore_errors=True)
+            if trash_paths:
+                print(f"  Emptied {len(trash_paths)} Drive trash folder(s)")
+    except Exception as e:
+        print(f"  Could not empty Drive trash: {e}")
+
+
 def _resume_or_start(trainer, checkpoint_dir):
     """Resume from latest checkpoint if available."""
     checkpoints = sorted(glob.glob(f"{checkpoint_dir}/checkpoint-*"))
@@ -438,6 +466,8 @@ def _resume_or_start(trainer, checkpoint_dir):
     else:
         print("  Starting fresh")
     trainer.train(resume_from_checkpoint=resume_path)
+    # Clean up Drive trash after training (old checkpoints)
+    empty_drive_trash()
     return trainer
 
 
