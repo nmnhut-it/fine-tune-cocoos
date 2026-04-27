@@ -1,15 +1,19 @@
-"""Evaluation: fine-tuned vs RAG baseline — called from the notebook."""
+"""Evaluation pipeline: fine-tuned vs RAG baseline.
+
+Metrics:
+  1. API Symbol Checker  — hallucinated vs valid vs missing symbols
+  2. CodeBLEU            — syntax-aware similarity (replaces BLEU/ROUGE)
+  3. Claude Judge        — semantic correctness scored 1-5 with reasoning,
+                           uses prompt caching on doc sections (~$0.001/example)
+"""
 import glob
 import json
 import os
 import re
 
-import nltk
 import numpy as np
 import torch
 from datasets import load_dataset
-from nltk.translate.bleu_score import SmoothingFunction, sentence_bleu
-from rouge_score import rouge_scorer
 from sentence_transformers import SentenceTransformer
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import PeftModel
@@ -34,6 +38,140 @@ from scripts.config import (
     TOP_P,
     USE_FULL_FINETUNE,
 )
+
+# ── Symbol whitelist ────────────────────────────────────────────────────
+
+_SYMBOL_WHITELIST = None
+_SYMBOL_PATTERN = re.compile(r"\b((?:cc|ccui|ccs|sp)\.[A-Za-z][A-Za-z0-9_.]*)")
+
+
+def _load_whitelist():
+    global _SYMBOL_WHITELIST
+    if _SYMBOL_WHITELIST is None:
+        path = "data/api_symbols.json"
+        if os.path.exists(path):
+            _SYMBOL_WHITELIST = set(json.load(open(path))["symbols"])
+        else:
+            _SYMBOL_WHITELIST = set()
+            print("WARNING: data/api_symbols.json not found — run scripts/build_symbol_whitelist.py")
+    return _SYMBOL_WHITELIST
+
+
+def check_symbols(prediction, reference):
+    """Check API symbols against whitelist; detect hallucinations and missing symbols."""
+    whitelist = _load_whitelist()
+    pred_syms = set(_SYMBOL_PATTERN.findall(prediction))
+    ref_syms = set(_SYMBOL_PATTERN.findall(reference))
+    hallucinated = pred_syms - whitelist
+    valid_pred = pred_syms & whitelist
+    precision = len(valid_pred) / len(pred_syms) if pred_syms else 1.0
+    recall = len(ref_syms & pred_syms) / len(ref_syms) if ref_syms else None
+    f1 = (2 * precision * recall / (precision + recall)
+          if recall is not None and (precision + recall) > 0 else None)
+    return {
+        "hallucinated_symbols": sorted(hallucinated),
+        "valid_symbols": sorted(valid_pred),
+        "missing_symbols": sorted(ref_syms - pred_syms),
+        "symbol_precision": round(precision, 4),
+        "symbol_recall": round(recall, 4) if recall is not None else None,
+        "symbol_f1": round(f1, 4) if f1 is not None else None,
+        "has_hallucination": len(hallucinated) > 0,
+    }
+
+
+# ── CodeBLEU ────────────────────────────────────────────────────────────
+
+def compute_codebleu(prediction, reference, lang="javascript"):
+    """Syntax-aware code similarity. Returns None if codebleu package not installed."""
+    try:
+        from codebleu import calc_codebleu
+        result = calc_codebleu([reference], [prediction], lang=lang,
+                               weights=(0.25, 0.25, 0.25, 0.25))
+        return round(result["codebleu"], 4)
+    except Exception:
+        return None
+
+
+# ── Claude Judge ────────────────────────────────────────────────────────
+
+_DOC_CACHE = None
+
+
+def _load_docs():
+    global _DOC_CACHE
+    if _DOC_CACHE is None:
+        _DOC_CACHE = {}
+        for fpath in sorted(glob.glob(DOCS_GLOB)):
+            name = os.path.basename(fpath).replace(".md", "")
+            _DOC_CACHE[name] = open(fpath, encoding="utf-8").read()
+    return _DOC_CACHE
+
+
+def _pick_relevant_doc(instruction, prediction):
+    """Select the 1-2 most relevant doc sections by symbol overlap."""
+    docs = _load_docs()
+    text = instruction + " " + prediction
+    syms = _SYMBOL_PATTERN.findall(text)
+    scores = {}
+    for sym in syms:
+        ns = sym.split(".")[0]
+        for doc_name, doc_text in docs.items():
+            if sym in doc_text:
+                scores[doc_name] = scores.get(doc_name, 0) + 2
+            elif ns in doc_name:
+                scores[doc_name] = scores.get(doc_name, 0) + 1
+    if not scores:
+        return "\n\n---\n\n".join(docs.values())[:3000]
+    best = sorted(scores, key=scores.get, reverse=True)[:2]
+    return "\n\n---\n\n".join(docs[k] for k in best)[:4000]
+
+
+_JUDGE_SYSTEM = (
+    "You are a Cocos2d-x JavaScript API expert and code reviewer.\n"
+    "Evaluate a model-generated response to a Cocos2d-x coding question. Score 1-5.\n\n"
+    "5 = Correct API usage, complete\n"
+    "4 = Correct, minor omissions\n"
+    "3 = Mostly correct, one meaningful error\n"
+    "2 = Partially correct, wrong API calls or logic errors\n"
+    "1 = Mostly wrong or hallucinated APIs\n\n"
+    'Respond in JSON only: {"score": <1-5>, "verdict": "<correct|partial|incorrect>", '
+    '"reason": "<one sentence>", "hallucinated_apis": [<list>]}'
+)
+
+_JUDGE_PROMPT_TMPL = (
+    "### Question:\n{instruction}\n\n"
+    "### Reference Answer:\n{reference}\n\n"
+    "### Model Answer to Evaluate:\n{prediction}\n\n"
+    "Evaluate the model answer. Respond in JSON only."
+)
+
+
+def judge_with_claude(instruction, reference, prediction, anthropic_client,
+                      model="claude-sonnet-4-6"):
+    """Score a prediction semantically using Claude with prompt-cached doc context."""
+    doc_context = _pick_relevant_doc(instruction, prediction)
+    response = anthropic_client.messages.create(
+        model=model,
+        max_tokens=256,
+        system=[{"type": "text", "text": _JUDGE_SYSTEM,
+                 "cache_control": {"type": "ephemeral"}}],
+        messages=[{"role": "user", "content": [
+            {"type": "text", "text": doc_context,
+             "cache_control": {"type": "ephemeral"}},
+            {"type": "text", "text": _JUDGE_PROMPT_TMPL.format(
+                instruction=instruction, reference=reference, prediction=prediction)},
+        ]}],
+    )
+    raw = response.content[0].text.strip()
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        m = re.search(r"\{.*\}", raw, re.DOTALL)
+        if m:
+            return json.loads(m.group())
+        return {"score": None, "verdict": "parse_error", "reason": raw[:200],
+                "hallucinated_apis": []}
+
 
 # ── Chunking & RAG index ────────────────────────────────────────────────
 
@@ -249,43 +387,34 @@ def run_evaluation(base_model, ft_model, tokenizer, embedder, chunk_embs, doc_ch
 
 # ── Metrics ─────────────────────────────────────────────────────────────
 
-_scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=True)
-_smooth = SmoothingFunction().method1
+def compute_metrics(prediction, reference, instruction="", anthropic_client=None):
+    """All metrics for one pair. Pass anthropic_client to enable Claude judge."""
+    sym = check_symbols(prediction, reference)
+    codebleu = compute_codebleu(prediction, reference)
+    judge = None
+    if anthropic_client is not None and instruction:
+        judge = judge_with_claude(instruction, reference, prediction, anthropic_client)
+    return {
+        "symbol_precision": sym["symbol_precision"],
+        "symbol_recall": sym["symbol_recall"],
+        "symbol_f1": sym["symbol_f1"],
+        "has_hallucination": sym["has_hallucination"],
+        "hallucinated_symbols": sym["hallucinated_symbols"],
+        "codebleu": codebleu,
+        "claude_score": judge["score"] if judge else None,
+        "claude_verdict": judge["verdict"] if judge else None,
+        "claude_reason": judge["reason"] if judge else None,
+        "claude_hallucinated_apis": judge.get("hallucinated_apis", []) if judge else [],
+    }
 
 
-def _extract_identifiers(code):
-    return set(re.findall(r"\b(?:cc|ccui|sp|ccs)\.[A-Za-z_.]+\b", code))
-
-
-def compute_metrics(prediction, reference):
-    nltk.download("punkt", quiet=True)
-    nltk.download("punkt_tab", quiet=True)
-
-    ref_tok = nltk.word_tokenize(reference.lower())
-    pred_tok = nltk.word_tokenize(prediction.lower())
-
-    bleu = sentence_bleu([ref_tok], pred_tok, smoothing_function=_smooth)
-    rouge = _scorer.score(reference, prediction)["rougeL"].fmeasure
-
-    ref_ids = _extract_identifiers(reference)
-    pred_ids = _extract_identifiers(prediction)
-    if ref_ids:
-        recall = len(ref_ids & pred_ids) / len(ref_ids)
-        prec = len(ref_ids & pred_ids) / len(pred_ids) if pred_ids else 0
-        f1 = 2 * prec * recall / (prec + recall) if (prec + recall) > 0 else 0
-    else:
-        recall = prec = f1 = None
-
-    has_code = bool(re.search(r"```|\bfunction\b|\bconst\b|\bvar\b|\blet\b|=>|cc\.", prediction))
-
-    return {"bleu": bleu, "rouge_l": rouge, "api_id_recall": recall, "api_id_f1": f1, "has_code": has_code}
-
-
-def compute_all_metrics(results):
+def compute_all_metrics(results, anthropic_client=None):
     ft_m, rag_m = [], []
     for r in results:
-        ft_m.append(compute_metrics(r["finetuned"], r["reference"]))
-        rag_m.append(compute_metrics(r["rag"], r["reference"]))
+        ft_m.append(compute_metrics(r["finetuned"], r["reference"],
+                                    r["instruction"], anthropic_client))
+        rag_m.append(compute_metrics(r["rag"], r["reference"],
+                                     r["instruction"], anthropic_client))
     return ft_m, rag_m
 
 
@@ -295,14 +424,22 @@ def avg(values):
 
 
 def print_summary(metrics, label):
-    print(f'\n{"=" * 50}')
-    print(f"  {label}")
-    print(f'{"=" * 50}')
-    print(f'  BLEU-4:           {avg([m["bleu"] for m in metrics]):.4f}')
-    print(f'  ROUGE-L:          {avg([m["rouge_l"] for m in metrics]):.4f}')
-    print(f'  API ID Recall:    {avg([m["api_id_recall"] for m in metrics]):.4f}')
-    print(f'  API ID F1:        {avg([m["api_id_f1"] for m in metrics]):.4f}')
-    print(f'  Has Code (%):     {avg([1 if m["has_code"] else 0 for m in metrics]) * 100:.1f}%')
+    has_cb = any(m["codebleu"] is not None for m in metrics)
+    has_j = any(m["claude_score"] is not None for m in metrics)
+    print(f'\n{"=" * 55}\n  {label}\n{"=" * 55}')
+    print(f'  Symbol Precision:   {avg([m["symbol_precision"] for m in metrics]):.4f}')
+    print(f'  Symbol Recall:      {avg([m["symbol_recall"] for m in metrics]):.4f}')
+    print(f'  Symbol F1:          {avg([m["symbol_f1"] for m in metrics]):.4f}')
+    print(f'  Hallucination %:    '
+          f'{avg([1 if m["has_hallucination"] else 0 for m in metrics]) * 100:.1f}%')
+    if has_cb:
+        print(f'  CodeBLEU:           {avg([m["codebleu"] for m in metrics]):.4f}')
+    if has_j:
+        print(f'  Claude Score (1-5): {avg([m["claude_score"] for m in metrics]):.2f}')
+        verdicts = [m["claude_verdict"] for m in metrics if m["claude_verdict"]]
+        for v in ["correct", "partial", "incorrect"]:
+            pct = verdicts.count(v) / len(verdicts) * 100 if verdicts else 0
+            print(f'    {v}: {pct:.1f}%')
 
 
 # ── Reporting ───────────────────────────────────────────────────────────
@@ -313,16 +450,21 @@ def build_comparison_df(results, ft_metrics, rag_metrics):
 
     rows = []
     for i, r in enumerate(results):
+        fm, rm = ft_metrics[i], rag_metrics[i]
+        ft_s = fm["claude_score"] or fm["symbol_f1"] or 0
+        rag_s = rm["claude_score"] or rm["symbol_f1"] or 0
         rows.append({
             "idx": r["index"],
             "instruction": r["instruction"][:80] + "...",
-            "ft_bleu": ft_metrics[i]["bleu"],
-            "rag_bleu": rag_metrics[i]["bleu"],
-            "ft_rouge": ft_metrics[i]["rouge_l"],
-            "rag_rouge": rag_metrics[i]["rouge_l"],
-            "ft_api_f1": ft_metrics[i]["api_id_f1"] or 0,
-            "rag_api_f1": rag_metrics[i]["api_id_f1"] or 0,
-            "winner": "FT" if ft_metrics[i]["rouge_l"] > rag_metrics[i]["rouge_l"] else "RAG",
+            "ft_symbol_f1": fm["symbol_f1"],
+            "rag_symbol_f1": rm["symbol_f1"],
+            "ft_codebleu": fm["codebleu"],
+            "rag_codebleu": rm["codebleu"],
+            "ft_claude_score": fm["claude_score"],
+            "rag_claude_score": rm["claude_score"],
+            "ft_hallucinated": fm["has_hallucination"],
+            "rag_hallucinated": rm["has_hallucination"],
+            "winner": "FT" if ft_s > rag_s else "RAG",
         })
     df = pd.DataFrame(rows)
     ft_wr = (df["winner"] == "FT").mean() * 100
@@ -334,23 +476,37 @@ def build_comparison_df(results, ft_metrics, rag_metrics):
 def plot_chart(ft_metrics, rag_metrics):
     import matplotlib.pyplot as plt
 
-    names = ["BLEU-4", "ROUGE-L", "API ID Recall", "API ID F1", "Has Code %"]
-    ft_v = [avg([m["bleu"] for m in ft_metrics]), avg([m["rouge_l"] for m in ft_metrics]),
-            avg([m["api_id_recall"] for m in ft_metrics]), avg([m["api_id_f1"] for m in ft_metrics]),
-            avg([1 if m["has_code"] else 0 for m in ft_metrics])]
-    rag_v = [avg([m["bleu"] for m in rag_metrics]), avg([m["rouge_l"] for m in rag_metrics]),
-             avg([m["api_id_recall"] for m in rag_metrics]), avg([m["api_id_f1"] for m in rag_metrics]),
-             avg([1 if m["has_code"] else 0 for m in rag_metrics])]
+    has_cb = any(m["codebleu"] is not None for m in ft_metrics)
+    has_j = any(m["claude_score"] is not None for m in ft_metrics)
+
+    names = ["Symbol Precision", "Symbol Recall", "Symbol F1", "Hallucination-free %"]
+    ft_v = [avg([m["symbol_precision"] for m in ft_metrics]),
+            avg([m["symbol_recall"] for m in ft_metrics]),
+            avg([m["symbol_f1"] for m in ft_metrics]),
+            1 - avg([1 if m["has_hallucination"] else 0 for m in ft_metrics])]
+    rag_v = [avg([m["symbol_precision"] for m in rag_metrics]),
+             avg([m["symbol_recall"] for m in rag_metrics]),
+             avg([m["symbol_f1"] for m in rag_metrics]),
+             1 - avg([1 if m["has_hallucination"] else 0 for m in rag_metrics])]
+
+    if has_cb:
+        names.append("CodeBLEU")
+        ft_v.append(avg([m["codebleu"] for m in ft_metrics]))
+        rag_v.append(avg([m["codebleu"] for m in rag_metrics]))
+    if has_j:
+        names.append("Claude Score/5")
+        ft_v.append(avg([m["claude_score"] for m in ft_metrics]) / 5)
+        rag_v.append(avg([m["claude_score"] for m in rag_metrics]) / 5)
 
     x = range(len(names))
     w = 0.35
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(12, 5))
     b1 = ax.bar([i - w / 2 for i in x], ft_v, w, label="Fine-Tuned", color="#4CAF50")
     b2 = ax.bar([i + w / 2 for i in x], rag_v, w, label="RAG (Context7)", color="#2196F3")
     ax.set_ylabel("Score")
-    ax.set_title("Fine-Tuned vs RAG (Context7 Docs) — Test Set")
+    ax.set_title("Fine-Tuned vs RAG — Cocos2d-x Test Set")
     ax.set_xticks(x)
-    ax.set_xticklabels(names)
+    ax.set_xticklabels(names, rotation=15, ha="right")
     ax.legend()
     ax.set_ylim(0, 1)
     for bar in list(b1) + list(b2):
@@ -367,18 +523,22 @@ def save_report(results, ft_metrics, rag_metrics, df):
     report = {
         "num_examples": len(results),
         "finetuned": {
-            "bleu": avg([m["bleu"] for m in ft_metrics]),
-            "rouge_l": avg([m["rouge_l"] for m in ft_metrics]),
-            "api_id_recall": avg([m["api_id_recall"] for m in ft_metrics]),
-            "api_id_f1": avg([m["api_id_f1"] for m in ft_metrics]),
-            "has_code_pct": avg([1 if m["has_code"] else 0 for m in ft_metrics]),
+            "symbol_precision": avg([m["symbol_precision"] for m in ft_metrics]),
+            "symbol_recall": avg([m["symbol_recall"] for m in ft_metrics]),
+            "symbol_f1": avg([m["symbol_f1"] for m in ft_metrics]),
+            "hallucination_rate": avg([1 if m["has_hallucination"] else 0
+                                       for m in ft_metrics]),
+            "codebleu": avg([m["codebleu"] for m in ft_metrics]),
+            "claude_score_avg": avg([m["claude_score"] for m in ft_metrics]),
         },
         "rag_context7": {
-            "bleu": avg([m["bleu"] for m in rag_metrics]),
-            "rouge_l": avg([m["rouge_l"] for m in rag_metrics]),
-            "api_id_recall": avg([m["api_id_recall"] for m in rag_metrics]),
-            "api_id_f1": avg([m["api_id_f1"] for m in rag_metrics]),
-            "has_code_pct": avg([1 if m["has_code"] else 0 for m in rag_metrics]),
+            "symbol_precision": avg([m["symbol_precision"] for m in rag_metrics]),
+            "symbol_recall": avg([m["symbol_recall"] for m in rag_metrics]),
+            "symbol_f1": avg([m["symbol_f1"] for m in rag_metrics]),
+            "hallucination_rate": avg([1 if m["has_hallucination"] else 0
+                                       for m in rag_metrics]),
+            "codebleu": avg([m["codebleu"] for m in rag_metrics]),
+            "claude_score_avg": avg([m["claude_score"] for m in rag_metrics]),
         },
         "ft_win_rate": float((df["winner"] == "FT").mean()),
         "rag_win_rate": float((df["winner"] == "RAG").mean()),
@@ -397,6 +557,10 @@ def show_side_by_side(results, ft_metrics, rag_metrics, df, n=5):
     def _show(idx):
         r = results[idx]
         fm, rm = ft_metrics[idx], rag_metrics[idx]
+        ft_sym = f"SymF1={fm['symbol_f1']:.3f}" if fm["symbol_f1"] else "SymF1=N/A"
+        rag_sym = f"SymF1={rm['symbol_f1']:.3f}" if rm["symbol_f1"] else "SymF1=N/A"
+        ft_j = f" Claude={fm['claude_score']}" if fm["claude_score"] else ""
+        rag_j = f" Claude={rm['claude_score']}" if rm["claude_score"] else ""
         display(HTML(f"""
         <div style='border:1px solid #ccc;padding:12px;margin:8px 0;border-radius:8px'>
         <h3>Example {r['index']}</h3>
@@ -404,9 +568,9 @@ def show_side_by_side(results, ft_metrics, rag_metrics, df, n=5):
         <table style='width:100%;border-collapse:collapse'>
         <tr>
           <th style='width:50%;border:1px solid #ddd;padding:8px;background:#e8f5e9'>
-            Fine-Tuned (BLEU={fm['bleu']:.3f} ROUGE={fm['rouge_l']:.3f})</th>
+            Fine-Tuned ({ft_sym}{ft_j})</th>
           <th style='width:50%;border:1px solid #ddd;padding:8px;background:#e3f2fd'>
-            RAG (BLEU={rm['bleu']:.3f} ROUGE={rm['rouge_l']:.3f})</th>
+            RAG ({rag_sym}{rag_j})</th>
         </tr>
         <tr>
           <td style='border:1px solid #ddd;padding:8px;vertical-align:top'>
@@ -420,12 +584,9 @@ def show_side_by_side(results, ft_metrics, rag_metrics, df, n=5):
         </td></tr>
         </table></div>"""))
 
-    ft_wins = df[df["winner"] == "FT"].nlargest(n, "ft_rouge").index.tolist()
-    rag_wins = df[df["winner"] == "RAG"].nlargest(n, "rag_rouge").index.tolist()
-
     print("=== Examples where Fine-Tuned wins ===")
-    for idx in ft_wins:
+    for idx in df[df["winner"] == "FT"].head(n).index.tolist():
         _show(idx)
     print("\n=== Examples where RAG wins ===")
-    for idx in rag_wins:
+    for idx in df[df["winner"] == "RAG"].head(n).index.tolist():
         _show(idx)

@@ -25,7 +25,7 @@ if VARIANT == "longform":
     TRAIN_JSONL = "data/train-longform.jsonl"
     TEST_JSONL = "data/test-longform.jsonl"
 else:
-    TRAIN_JSONL = "data/train-augmented.jsonl"
+    TRAIN_JSONL = "data/train-raft.jsonl"   # RAFT format: includes doc context
     TEST_JSONL = "data/test.jsonl"
 DOCS_GLOB = "local-context7-cocos2d-x-only/docs/*.md"
 SYNTHETIC_QA_JSONL = "data/synthetic-qa.jsonl"
@@ -124,6 +124,11 @@ RAFT_ORACLE_RATIO = 0.7
 RAFT_NUM_DISTRACTORS = 3
 
 
+# Colab local checkpoint dir — keeps mid-training saves off Drive
+COLAB_CHECKPOINTS = "/content/checkpoints"
+
+
 def ensure_drive_dirs():
-    for d in [DRIVE_ROOT, DRIVE_CHECKPOINTS, DRIVE_MODEL]:
+    for d in [DRIVE_ROOT, DRIVE_MODEL]:
         os.makedirs(d, exist_ok=True)
+    os.makedirs(COLAB_CHECKPOINTS, exist_ok=True)
